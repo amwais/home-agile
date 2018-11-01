@@ -17,6 +17,11 @@ export default (state = initialState, action) => {
 				...state,
 				tickets: action.payload
 			};
+		case 'FETCH_TICKET_DETAILS':
+			return {
+				...state,
+				ticket: action.payload
+			};
 		case 'TOGGLE_CREATE_TICKET':
 			return {
 				...state,

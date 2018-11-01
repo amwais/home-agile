@@ -20,10 +20,10 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), (req, res) 
 });
 
 // @route POST api/tickets/
-// @desc Get current user
+// @desc Create a new ticket
 // @access Private
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
-	const { project, subProject, ticketType, title, description, component, assignee, sprint } = req.body;
+	const { project, subProject, ticketType, title, description, component, assignee, sprint, priority } = req.body;
 	const createdBy = req.user.id;
 	const newticket = new Ticket({
 		project,
@@ -34,7 +34,8 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 		component,
 		assignee,
 		sprint,
-		createdBy
+		createdBy,
+		priority
 	});
 
 	newticket.save().then((ticket) => res.json(ticket)).catch((err) => res.status(404).json({ err }));

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Header, Modal, Form } from 'semantic-ui-react';
+import { Button, Modal, Form } from 'semantic-ui-react';
 
 const options = [ { key: 'm', text: 'Male', value: 'male' }, { key: 'f', text: 'Female', value: 'female' } ];
 
@@ -17,6 +17,7 @@ export default class CreateTicketModal extends Component {
 			component: '',
 			assignee: '',
 			sprint: null,
+			priority: null,
 			createdBy: null,
 			createdAt: null
 		}
@@ -35,7 +36,7 @@ export default class CreateTicketModal extends Component {
 
 	onSubmit = (e, ticketData) => {
 		e.preventDefault();
-		this.props.createTicket(ticketData);
+		this.props.createTicket(ticketData, this.props.history);
 	};
 
 	render() {
@@ -104,6 +105,14 @@ export default class CreateTicketModal extends Component {
 								/>
 							</Form.Group>
 							<Form.Group widths="equal">
+								<Form.Select
+									onChange={this.onChange}
+									name="priority"
+									fluid
+									label="Priority"
+									placeholder="Priority"
+									options={options}
+								/>
 								<Form.Select
 									onChange={this.onChange}
 									name="sprint"

@@ -3,13 +3,13 @@ const Schema = mongoose.Schema;
 
 const TicketSchema = new Schema({
 	project: {
-		// type: ObjectId,
+		// type: Schema.Types.ObjectId,
 		type: String,
 		ref: 'projects',
 		required: true
 	},
 	subProject: {
-		// type: ObjectId,
+		// type: Schema.Types.ObjectId,
 		type: String,
 		ref: 'subProjects'
 	},
@@ -24,16 +24,18 @@ const TicketSchema = new Schema({
 		type: String
 	},
 	component: {
-		// type: ObjectId,
+		// type: Schema.Types.ObjectId,
 		type: String,
 		ref: 'components'
 	},
 	assignee: {
-		type: Schema.Types.ObjectId,
+		// type: Schema.Types.ObjectId,
+		type: String,
 		ref: 'users'
 	},
 	priority: {
-		type: Number
+		// type: Number
+		type: String
 	},
 	sprint: {
 		type: Number
