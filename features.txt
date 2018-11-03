@@ -1,2 +1,7 @@
-- Edit a ticket
-- Sprints view dropdown
+- Sprints view dropdown / carousel
+
+- ticket card view design
+
+- ticket page design
+
+- No tickets :O
