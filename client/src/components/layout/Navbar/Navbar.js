@@ -12,11 +12,13 @@ export default class Navbar extends Component {
 
 	onAddButtonClick = (e) => {
 		e.preventDefault();
+		// this.props.clearTicket();
 		this.props.toggleCreateTicket();
 	};
 
 	render() {
 		const { isAuthenticated, user } = this.props.auth;
+		const { isOpen } = this.props.ticket;
 
 		const authLinks = (
 			<ul className="navbar-nav ml-auto">
@@ -83,7 +85,7 @@ export default class Navbar extends Component {
 						</div>
 					</div>
 				</nav>
-				<CreateTicketModal />
+				{isOpen && <CreateTicketModal />}
 			</div>
 		);
 	}

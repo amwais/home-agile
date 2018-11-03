@@ -9,7 +9,8 @@ export const createTicket = (ticketData, history) => (dispatch) => {
 				payload: ticket.data
 			});
 			dispatch({
-				type: 'TOGGLE_CREATE_TICKET'
+				type: 'TOGGLE_CREATE_TICKET',
+				payload: ticket.data
 			});
 			history.push(`/tickets/${ticket.data._id}`);
 		})
@@ -56,8 +57,15 @@ export const fetchTickets = () => (dispatch) => {
 };
 
 // Open create ticket modal
-export const toggleCreateTicket = () => (dispatch) => {
+export const toggleCreateTicket = (ticket) => (dispatch) => {
 	dispatch({
-		type: 'TOGGLE_CREATE_TICKET'
+		type: 'TOGGLE_CREATE_TICKET',
+		payload: ticket
+	});
+};
+
+export const clearTicket = () => (dispatch) => {
+	dispatch({
+		type: 'CLEAR_TICKET'
 	});
 };

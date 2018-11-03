@@ -9,10 +9,11 @@ export default class Ticket extends Component {
 
 	render() {
 		const { ticket } = this.props.ticket;
+
 		return (
 			<div>
 				<Container>
-					<Button animated="vertical">
+					<Button onClick={() => this.props.toggleCreateTicket(ticket)} animated="vertical">
 						<Button.Content hidden>Edit</Button.Content>
 						<Button.Content visible>
 							<Icon name="edit" />
@@ -42,7 +43,7 @@ export default class Ticket extends Component {
 									</p>
 								) : (
 									<p>
-										<strong>Project:</strong> {ticket.project}}
+										<strong>Project:</strong> {ticket.project}
 									</p>
 								)}
 							</Segment>

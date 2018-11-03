@@ -23,6 +23,13 @@ export default class CreateTicketModal extends Component {
 		}
 	};
 
+	componentDidMount() {
+		const { ticket } = this.props;
+		if (ticket.title) {
+			this.setState({ ticket: this.props.ticket });
+		}
+	}
+
 	close = () => this.setState({ open: false });
 
 	onChange = (e, { name, value }) => {
@@ -40,12 +47,12 @@ export default class CreateTicketModal extends Component {
 	};
 
 	render() {
-		const { dimmer } = this.state;
+		const { ticket, dimmer } = this.state;
 
 		return (
 			<div>
-				<Modal dimmer={dimmer} open={this.props.isOpen} onClose={this.props.toggleCreateTicket}>
-					<Modal.Header>Create a new Ticket</Modal.Header>
+				<Modal dimmer={dimmer} open={this.props.isOpen} onClose={() => this.props.toggleCreateTicket(ticket)}>
+					<Modal.Header>Create a new ticket</Modal.Header>
 					<Modal.Content>
 						<Form>
 							<Form.Group widths="equal">
@@ -56,6 +63,7 @@ export default class CreateTicketModal extends Component {
 									label="Project"
 									options={options}
 									placeholder="Project"
+									value={ticket.project}
 								/>
 								<Form.Input
 									onChange={this.onChange}
@@ -64,6 +72,7 @@ export default class CreateTicketModal extends Component {
 									label="Sub-Project"
 									options={options}
 									placeholder="Sub-Project"
+									value={ticket.subProject}
 								/>
 								<Form.Select
 									onChange={this.onChange}
@@ -72,6 +81,7 @@ export default class CreateTicketModal extends Component {
 									label="Ticket Type"
 									options={options}
 									placeholder="Ticket Type"
+									value={ticket.ticketType}
 								/>
 							</Form.Group>
 							<Form.Input
@@ -80,12 +90,14 @@ export default class CreateTicketModal extends Component {
 								fluid
 								label="Title"
 								placeholder="Short description of the task"
+								value={ticket.title}
 							/>
 							<Form.TextArea
 								onChange={this.onChange}
 								name="description"
 								label="Ticket Description"
 								placeholder="Ticket Description"
+								value={ticket.description}
 							/>
 							<Form.Group widths="equal">
 								<Form.Input
@@ -94,6 +106,7 @@ export default class CreateTicketModal extends Component {
 									fluid
 									label="Component"
 									placeholder="Type to search..."
+									value={ticket.component}
 								/>
 								<Form.Select
 									onChange={this.onChange}
@@ -102,6 +115,7 @@ export default class CreateTicketModal extends Component {
 									label="Assignee"
 									placeholder="Assignee"
 									options={options}
+									value={ticket.assignee}
 								/>
 							</Form.Group>
 							<Form.Group widths="equal">
@@ -112,6 +126,7 @@ export default class CreateTicketModal extends Component {
 									label="Priority"
 									placeholder="Priority"
 									options={options}
+									value={ticket.priority}
 								/>
 								<Form.Select
 									onChange={this.onChange}
@@ -121,13 +136,14 @@ export default class CreateTicketModal extends Component {
 									placeholder="Sprint"
 									options={options}
 									disabled
+									value={ticket.sprint}
 								/>
 							</Form.Group>
 							<Form.Checkbox label="Place in backlog (No sprint)" defaultChecked />
 						</Form>
 					</Modal.Content>
 					<Modal.Actions>
-						<Button negative onClick={this.props.toggleCreateTicket}>
+						<Button negative onClick={() => this.props.toggleCreateTicket(ticket)}>
 							Cancel
 						</Button>
 						<Button

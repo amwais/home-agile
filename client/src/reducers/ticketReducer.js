@@ -22,10 +22,16 @@ export default (state = initialState, action) => {
 				...state,
 				ticket: action.payload
 			};
+		case 'CLEAR_TICKET':
+			return {
+				...state,
+				ticket: null
+			};
 		case 'TOGGLE_CREATE_TICKET':
 			return {
 				...state,
-				isOpen: !state.isOpen
+				isOpen: !state.isOpen,
+				ticket: { ...action.payload }
 			};
 		default:
 			return state;
