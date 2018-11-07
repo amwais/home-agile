@@ -29,8 +29,7 @@ const TicketSchema = new Schema({
 		ref: 'components'
 	},
 	assignee: {
-		// type: Schema.Types.ObjectId,
-		type: String,
+		type: Schema.Types.ObjectId,
 		ref: 'users'
 	},
 	priority: {
@@ -50,4 +49,4 @@ const TicketSchema = new Schema({
 	}
 });
 
-module.exports = User = mongoose.model('tickets', TicketSchema);
+module.exports = Ticket = mongoose.model('tickets', TicketSchema);

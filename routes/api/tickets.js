@@ -4,6 +4,7 @@ const keys = require('../../config/keys');
 const passport = require('passport');
 
 const Ticket = require('../../models/Ticket');
+const User = require('../../models/User');
 
 // @route GET api/tickets/
 // @desc Get all tickets
@@ -16,11 +17,16 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
 // @desc Get a ticket
 // @access Private
 router.get('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
-	Ticket.findById(req.params.id).then((ticket) => res.json(ticket)).catch((err) => res.status(404).json({ err }));
+	Ticket.findById(req.params.id)
+		.populate('createdBy', [ 'name', 'avatar' ])
+		.then((ticket) => {
+			res.json(ticket);
+		})
+		.catch((err) => res.status(404).json({ err }));
 });
 
 // @route POST api/tickets/
-// @desc Create or Edit a new ticket
+// @desc Create or Edit a ticket
 // @access Private
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
 	const {
@@ -50,10 +56,26 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 
 	if (_id !== undefined) {
 		Ticket.findOneAndUpdate({ _id }, { $set: ticketFields }, { new: true })
-			.then((updatedTicket) => res.json(updatedTicket))
+			.then((updatedTicket) => {
+				User.findById(req.user.id).then((user) => {
+					let resTicket = { ...updatedTicket._doc };
+					delete resTicket.createdBy;
+
+					resTicket.createdBy = {
+						_id: req.user.id,
+						name: user.name,
+						avatar: user.avatar
+					};
+
+					res.json(resTicket);
+				});
+			})
 			.catch((err) => res.status(404).json({ err }));
+
+		// Ticket.findOneAndUpdate({ _id }, { $set: ticketFields }, { new: true }).then((updatedTicket) =>
+		// 	res.json(updatedTicket)
+		// );
 	} else {
-		ticketFields.createdBy = req.user.id;
 		const newticket = new Ticket(ticketFields);
 		newticket.save().then((ticket) => res.json(ticket)).catch((err) => res.status(404).json({ err }));
 	}

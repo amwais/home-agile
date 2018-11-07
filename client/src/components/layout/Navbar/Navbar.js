@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { AddButton } from '../../Buttons/AddButton';
 import CreateTicketModal from '../../CreateTicketModal';
+import EditTicketModal from '../../EditTicketModal';
 
 export default class Navbar extends Component {
 	onLogOutClick = (e) => {
@@ -12,13 +13,13 @@ export default class Navbar extends Component {
 
 	onAddButtonClick = (e) => {
 		e.preventDefault();
-		// this.props.clearTicket();
+
 		this.props.toggleCreateTicket();
 	};
 
 	render() {
 		const { isAuthenticated, user } = this.props.auth;
-		const { isOpen } = this.props.ticket;
+		const { isCreateOpen, isEditOpen } = this.props.ticket;
 
 		const authLinks = (
 			<ul className="navbar-nav ml-auto">
@@ -85,7 +86,8 @@ export default class Navbar extends Component {
 						</div>
 					</div>
 				</nav>
-				{isOpen && <CreateTicketModal />}
+				{isCreateOpen && <CreateTicketModal />}
+				{isEditOpen && <EditTicketModal />}
 			</div>
 		);
 	}

@@ -3,10 +3,9 @@ import { Button, Modal, Form } from 'semantic-ui-react';
 
 const options = [ { key: 'm', text: 'Male', value: 'male' }, { key: 'f', text: 'Female', value: 'female' } ];
 
-export default class CreateTicketModal extends Component {
+export default class EditTicketModal extends Component {
 	state = {
-		// open: this.props.isOpen,
-		open: true,
+		open: this.props.isOpen,
 		// dimmer: 'blurring',
 		ticket: {
 			id: null,
@@ -25,6 +24,12 @@ export default class CreateTicketModal extends Component {
 	};
 
 	componentDidMount() {
+		const { ticket } = this.props;
+
+		if (ticket) {
+			this.setState({ ticket: this.props.ticket });
+		}
+
 		this.props.fetchUsers();
 	}
 
@@ -39,8 +44,9 @@ export default class CreateTicketModal extends Component {
 
 	onSubmit = (e, ticketData) => {
 		e.preventDefault();
+
 		this.props.createTicket(ticketData, this.props.history);
-		this.props.toggleCreateTicket(this.props.ticket);
+		this.props.toggleEditTicket(this.props.ticket);
 	};
 
 	render() {
@@ -51,7 +57,7 @@ export default class CreateTicketModal extends Component {
 				<Modal
 					dimmer={dimmer}
 					open={this.props.isOpen}
-					onClose={() => this.props.toggleCreateTicket(this.props.ticket)}
+					onClose={() => this.props.toggleEditTicket(this.props.ticket)}
 				>
 					<Modal.Header>Create a new ticket</Modal.Header>
 					<Modal.Content>
@@ -146,7 +152,7 @@ export default class CreateTicketModal extends Component {
 						</Form>
 					</Modal.Content>
 					<Modal.Actions>
-						<Button negative onClick={() => this.props.toggleCreateTicket(this.props.ticket)}>
+						<Button negative onClick={() => this.props.toggleEditTicket(this.props.ticket)}>
 							Cancel
 						</Button>
 						<Button

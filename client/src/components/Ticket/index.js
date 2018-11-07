@@ -1,9 +1,9 @@
 import Ticket from './Ticket';
 import { connect } from 'react-redux';
-import { fetchTicket, toggleCreateTicket } from '../../actions/ticketActions';
+import { fetchTicket, toggleEditTicket } from '../../actions/ticketActions';
 
 const mapStateToProps = ({ ticket }) => ({
 	ticket
 });
 
-export default connect(mapStateToProps, { fetchTicket, toggleCreateTicket })(Ticket);
+export default connect(mapStateToProps, { fetchTicket, toggleEditTicket })(Ticket);

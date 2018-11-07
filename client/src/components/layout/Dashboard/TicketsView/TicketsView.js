@@ -8,6 +8,7 @@ export default class TicketsView extends Component {
 
 	render() {
 		const { tickets } = this.props.ticket;
+		const { auth } = this.props;
 		return (
 			<div>
 				<Card.Group className="tickets-grid-container">
@@ -16,21 +17,22 @@ export default class TicketsView extends Component {
 							<a key={i} href={`/tickets/${ticket._id}`}>
 								<Card>
 									<Card.Content>
-										<Image floated="right" size="mini" src={this.props.auth.user.avatar} />
+										<Image floated="right" size="mini" src={auth.user.avatar} />
 										<Card.Header>{ticket.title}</Card.Header>
-										<Card.Meta>{ticket.project}</Card.Meta>
-										<Card.Description>
-											Steve wants to add you to the group <strong>best friends</strong>
-										</Card.Description>
+										<Card.Meta>
+											{ticket.subProject ? (
+												ticket.project + ' / ' + ticket.subProject
+											) : (
+												ticket.project
+											)}
+										</Card.Meta>
+										<Card.Description>{'Ticket Type: ' + ticket.ticketType}</Card.Description>
+										<br />
+										<Card.Description>{ticket.description}</Card.Description>
 									</Card.Content>
 									<Card.Content extra>
-										<div className="ui two buttons">
-											<Button basic color="green">
-												Approve
-											</Button>
-											<Button basic color="red">
-												Decline
-											</Button>
+										<div className="">
+											<Card.Meta>{'Component: ' + ticket.component}</Card.Meta>
 										</div>
 									</Card.Content>
 								</Card>

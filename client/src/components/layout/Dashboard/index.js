@@ -3,4 +3,4 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = ({ auth }) => ({ auth });
 
-export default connect(mapStateToProps, undefined)(Dashboard);
+export default connect(mapStateToProps, {})(Dashboard);

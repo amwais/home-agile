@@ -8,10 +8,10 @@ export const createTicket = (ticketData, history) => (dispatch) => {
 				type: 'CREATE_TICKET',
 				payload: ticket.data
 			});
-			dispatch({
-				type: 'TOGGLE_CREATE_TICKET',
-				payload: ticket.data
-			});
+			// dispatch({
+			// 	type: 'TOGGLE_CREATE_TICKET',
+			// 	payload: ticket.data
+			// });
 			history.push(`/tickets/${ticket.data._id}`);
 		})
 		.catch((err) =>
@@ -57,9 +57,16 @@ export const fetchTickets = () => (dispatch) => {
 };
 
 // Open create ticket modal
-export const toggleCreateTicket = (ticket) => (dispatch) => {
+export const toggleCreateTicket = () => (dispatch) => {
 	dispatch({
-		type: 'TOGGLE_CREATE_TICKET',
+		type: 'TOGGLE_CREATE_TICKET'
+	});
+};
+
+// Open create ticket modal
+export const toggleEditTicket = (ticket) => (dispatch) => {
+	dispatch({
+		type: 'TOGGLE_EDIT_TICKET',
 		payload: ticket
 	});
 };

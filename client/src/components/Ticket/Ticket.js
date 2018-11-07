@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Header, Divider, Segment, Icon, Button } from 'semantic-ui-react';
+import { Container, Header, Divider, Image, Segment, Icon, Button } from 'semantic-ui-react';
 
 export default class Ticket extends Component {
 	componentDidMount() {
@@ -13,7 +13,7 @@ export default class Ticket extends Component {
 		return (
 			<div>
 				<Container>
-					<Button onClick={() => this.props.toggleCreateTicket(ticket)} animated="vertical">
+					<Button onClick={() => this.props.toggleEditTicket(ticket)} animated="vertical">
 						<Button.Content hidden>Edit</Button.Content>
 						<Button.Content visible>
 							<Icon name="edit" />
@@ -69,7 +69,8 @@ export default class Ticket extends Component {
 								<br />
 								<br />
 								<strong>Created by: </strong>
-								{ticket.createdBy}
+								{ticket.createdBy && <Image size="mini" src={ticket.createdBy.avatar} />}
+								{ticket.createdBy && ticket.createdBy.name}
 							</Segment>
 						</div>
 					)}

@@ -2,7 +2,8 @@ const initialState = {
 	ticket: null,
 	tickets: null,
 	isLoading: false,
-	isOpen: false
+	isCreateOpen: false,
+	isEditOpen: false
 };
 
 export default (state = initialState, action) => {
@@ -30,8 +31,13 @@ export default (state = initialState, action) => {
 		case 'TOGGLE_CREATE_TICKET':
 			return {
 				...state,
-				isOpen: !state.isOpen,
-				ticket: { ...action.payload }
+				isCreateOpen: !state.isCreateOpen
+			};
+		case 'TOGGLE_EDIT_TICKET':
+			return {
+				...state,
+				isEditOpen: !state.isEditOpen,
+				ticket: action.payload
 			};
 		default:
 			return state;

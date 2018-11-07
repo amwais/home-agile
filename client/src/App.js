@@ -4,7 +4,6 @@ import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authActions';
 import Navbar from './components/layout/Navbar';
-// import Footer from './components/layout/Footer';
 import Landing from './components/layout/Landing';
 import Ticket from './components/Ticket';
 import Dashboard from './components/layout/Dashboard';

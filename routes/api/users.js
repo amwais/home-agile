@@ -103,16 +103,11 @@ router.post('/login', (req, res) => {
 	});
 });
 
-// @route GET api/users/current
-// @desc Get current user
+// @route GET api/users/
+// @desc Get all users
 // @access Private
-router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
-	const { id, name, email } = req.user;
-	res.json({
-		id,
-		name,
-		email
-	});
+router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
+	User.find().then((users) => res.json(users)).catch((err) => res.status(404).json({ err }));
 });
 
 module.exports = router;
