@@ -65,7 +65,7 @@ export default class Ticket extends Component {
 							</Segment>
 							<Segment raised>
 								<strong>Assignee: </strong>
-								{ticket.assignee}
+								{ticket.assignee.name}
 								<br />
 								<br />
 								<strong>Created by: </strong>

@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { Button, Card, Image } from 'semantic-ui-react';
+import { Card, Image } from 'semantic-ui-react';
 
 export default class TicketsView extends Component {
 	componentDidMount() {
 		this.props.fetchTickets();
+		this.props.fetchUsers();
 	}
 
 	render() {
 		const { tickets } = this.props.ticket;
-		const { auth } = this.props;
+		// const { auth } = this.props;
 		return (
 			<div>
 				<Card.Group className="tickets-grid-container">
@@ -17,7 +18,7 @@ export default class TicketsView extends Component {
 							<a key={i} href={`/tickets/${ticket._id}`}>
 								<Card>
 									<Card.Content>
-										<Image floated="right" size="mini" src={auth.user.avatar} />
+										<Image floated="right" size="mini" src={ticket.assignee.avatar} />
 										<Card.Header>{ticket.title}</Card.Header>
 										<Card.Meta>
 											{ticket.subProject ? (

@@ -8,10 +8,6 @@ export const createTicket = (ticketData, history) => (dispatch) => {
 				type: 'CREATE_TICKET',
 				payload: ticket.data
 			});
-			// dispatch({
-			// 	type: 'TOGGLE_CREATE_TICKET',
-			// 	payload: ticket.data
-			// });
 			history.push(`/tickets/${ticket.data._id}`);
 		})
 		.catch((err) =>

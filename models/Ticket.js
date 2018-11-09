@@ -29,8 +29,16 @@ const TicketSchema = new Schema({
 		ref: 'components'
 	},
 	assignee: {
-		type: Schema.Types.ObjectId,
-		ref: 'users'
+		_id: {
+			type: Schema.Types.ObjectId,
+			ref: 'users'
+		},
+		name: {
+			type: String
+		},
+		avatar: {
+			type: String
+		}
 	},
 	priority: {
 		// type: Number
@@ -40,8 +48,16 @@ const TicketSchema = new Schema({
 		type: Number
 	},
 	createdBy: {
-		type: Schema.Types.ObjectId,
-		ref: 'users'
+		_id: {
+			type: Schema.Types.ObjectId,
+			ref: 'users'
+		},
+		name: {
+			type: String
+		},
+		avatar: {
+			type: String
+		}
 	},
 	createdAt: {
 		type: Date,

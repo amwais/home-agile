@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Modal, Form } from 'semantic-ui-react';
+import { ticketTypes, priorities } from '../../constants';
 
 const options = [ { key: 'm', text: 'Male', value: 'male' }, { key: 'f', text: 'Female', value: 'female' } ];
 
@@ -25,7 +26,7 @@ export default class CreateTicketModal extends Component {
 	};
 
 	componentDidMount() {
-		this.props.fetchUsers();
+		// this.props.fetchUsers();
 	}
 
 	onChange = (e, { name, value }) => {
@@ -80,7 +81,7 @@ export default class CreateTicketModal extends Component {
 									name="ticketType"
 									fluid
 									label="Ticket Type"
-									options={options}
+									options={ticketTypes}
 									placeholder="Ticket Type"
 									value={ticket.ticketType}
 								/>
@@ -128,7 +129,7 @@ export default class CreateTicketModal extends Component {
 									fluid
 									label="Priority"
 									placeholder="Priority"
-									options={options}
+									options={priorities}
 									value={ticket.priority}
 								/>
 								<Form.Select

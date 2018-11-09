@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Modal, Form } from 'semantic-ui-react';
+import { Button, Modal, Form, Dropdown } from 'semantic-ui-react';
+import { ticketTypes, priorities } from '../../constants';
 
 const options = [ { key: 'm', text: 'Male', value: 'male' }, { key: 'f', text: 'Female', value: 'female' } ];
 
@@ -16,7 +17,7 @@ export default class EditTicketModal extends Component {
 			description: '',
 			component: '',
 			assignee: '',
-			sprint: null,
+			sprint: '',
 			priority: null,
 			createdBy: null,
 			createdAt: null
@@ -34,23 +35,40 @@ export default class EditTicketModal extends Component {
 	}
 
 	onChange = (e, { name, value }) => {
-		this.setState({
-			ticket: {
-				...this.state.ticket,
-				[name]: value
-			}
-		});
+		if (name === 'assignee') {
+			const assignee = this.props.users.filter((user) => user._id === value)[0];
+
+			this.setState({
+				ticket: {
+					...this.state.ticket,
+					assignee: {
+						_id: assignee._id,
+						name: assignee.name,
+						avatar: assignee.avatar
+					}
+				}
+			});
+		} else {
+			this.setState({
+				ticket: {
+					...this.state.ticket,
+					[name]: value
+				}
+			});
+		}
 	};
 
 	onSubmit = (e, ticketData) => {
 		e.preventDefault();
-
 		this.props.createTicket(ticketData, this.props.history);
 		this.props.toggleEditTicket(this.props.ticket);
 	};
 
 	render() {
 		const { ticket, dimmer } = this.state;
+		const userOptions = this.props.users.map((user) => {
+			return { text: user.name, value: user._id };
+		});
 
 		return (
 			<div>
@@ -86,7 +104,7 @@ export default class EditTicketModal extends Component {
 									name="ticketType"
 									fluid
 									label="Ticket Type"
-									options={options}
+									options={ticketTypes}
 									placeholder="Ticket Type"
 									value={ticket.ticketType}
 								/>
@@ -121,10 +139,8 @@ export default class EditTicketModal extends Component {
 									fluid
 									label="Assignee"
 									placeholder="Assignee"
-									options={this.props.users.map((user) => {
-										return { text: user.name, value: user._id };
-									})}
-									value={ticket.assignee}
+									options={userOptions}
+									value={ticket.assignee.name}
 								/>
 							</Form.Group>
 							<Form.Group widths="equal">
@@ -134,7 +150,7 @@ export default class EditTicketModal extends Component {
 									fluid
 									label="Priority"
 									placeholder="Priority"
-									options={options}
+									options={priorities}
 									value={ticket.priority}
 								/>
 								<Form.Select

@@ -18,7 +18,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
 // @access Private
 router.get('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
 	Ticket.findById(req.params.id)
-		.populate('createdBy', [ 'name', 'avatar' ])
+		// .populate('createdBy', [ 'name', 'avatar' ])
 		.then((ticket) => {
 			res.json(ticket);
 		})
@@ -55,29 +55,30 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 	};
 
 	if (_id !== undefined) {
-		Ticket.findOneAndUpdate({ _id }, { $set: ticketFields }, { new: true })
-			.then((updatedTicket) => {
-				User.findById(req.user.id).then((user) => {
-					let resTicket = { ...updatedTicket._doc };
-					delete resTicket.createdBy;
-
-					resTicket.createdBy = {
-						_id: req.user.id,
-						name: user.name,
-						avatar: user.avatar
-					};
-
-					res.json(resTicket);
-				});
+		User.findById(ticketFields.assignee)
+			.populate('assignee', [ 'name', 'avatar' ])
+			.then((assignee) => {
+				ticketFields.assignee = assignee;
+				Ticket.findOneAndUpdate({ _id }, { $set: ticketFields }, { new: true }).then((updatedTicket) =>
+					res.json(updatedTicket)
+				);
 			})
 			.catch((err) => res.status(404).json({ err }));
-
-		// Ticket.findOneAndUpdate({ _id }, { $set: ticketFields }, { new: true }).then((updatedTicket) =>
-		// 	res.json(updatedTicket)
-		// );
 	} else {
-		const newticket = new Ticket(ticketFields);
-		newticket.save().then((ticket) => res.json(ticket)).catch((err) => res.status(404).json({ err }));
+		User.findById(req.user.id).populate('createdBy', [ 'name', 'avatar' ]).then((createdBy) => {
+			User.findById(ticketFields.assignee).populate('assignee', [ 'name', 'avatar' ]).then((assignee) => {
+				ticketFields.createdBy = createdBy;
+				ticketFields.assignee = assignee;
+
+				const newticket = new Ticket(ticketFields);
+				newticket
+					.save()
+					.then((ticket) => {
+						res.json(ticket);
+					})
+					.catch((err) => res.status(404).json({ err }));
+			});
+		});
 	}
 });
 
