@@ -66,6 +66,7 @@ export default class EditTicketModal extends Component {
 
 	render() {
 		const { ticket, dimmer } = this.state;
+
 		const userOptions = this.props.users.map((user) => {
 			return { text: user.name, value: user._id };
 		});
@@ -77,7 +78,7 @@ export default class EditTicketModal extends Component {
 					open={this.props.isOpen}
 					onClose={() => this.props.toggleEditTicket(this.props.ticket)}
 				>
-					<Modal.Header>Create a new ticket</Modal.Header>
+					<Modal.Header>Edit Ticket</Modal.Header>
 					<Modal.Content>
 						<Form>
 							<Form.Group widths="equal">
@@ -175,7 +176,7 @@ export default class EditTicketModal extends Component {
 							positive
 							icon="checkmark"
 							labelPosition="right"
-							content="Add Ticket"
+							content="Confirm"
 							onClick={(e) => this.onSubmit(e, this.state.ticket)}
 						/>
 					</Modal.Actions>

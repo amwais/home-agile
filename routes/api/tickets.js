@@ -6,11 +6,29 @@ const passport = require('passport');
 const Ticket = require('../../models/Ticket');
 const User = require('../../models/User');
 
+// // @route GET api/tickets/
+// // @desc Get all tickets
+// // @access Private
+// router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
+// 	// Ticket.find().then((tickets) => res.json(tickets)).catch((err) => res.status(404).json({ err }));
+// 	Ticket.find().then((tickets) =>
+// 		tickets
+// 			.map((ticket) =>
+// 				ticket.populate('createdBy', [ 'name', 'avatar' ]).populate('assignee', [ 'name', 'avatar' ])
+// 			)
+// 			.then((populatedTickets) => res.json(populatedTickets))
+// 			.catch((err) => res.status(404).json({ err }))
+// 	);
+// });
+
 // @route GET api/tickets/
 // @desc Get all tickets
 // @access Private
 router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
-	Ticket.find().then((tickets) => res.json(tickets)).catch((err) => res.status(404).json({ err }));
+	Ticket.find()
+		.populate('assignee', [ 'name', 'avatar' ])
+		.populate('createdBy', [ 'name', 'avatar' ])
+		.then((tickets) => res.json(tickets));
 });
 
 // @route GET api/tickets/:id
@@ -18,7 +36,8 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
 // @access Private
 router.get('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
 	Ticket.findById(req.params.id)
-		// .populate('createdBy', [ 'name', 'avatar' ])
+		.populate('createdBy', [ 'name', 'avatar' ])
+		.populate('assignee', [ 'name', 'avatar' ])
 		.then((ticket) => {
 			res.json(ticket);
 		})
@@ -87,7 +106,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 // @access Private
 router.delete('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
 	Ticket.findById(req.params.id).then((ticket) => {
-		if (ticket.createdBy.toString() === req.user.id) {
+		if (ticket.createdBy == req.user.id) {
 			ticket
 				.remove()
 				.then(() => {

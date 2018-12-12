@@ -3,8 +3,7 @@ const Schema = mongoose.Schema;
 
 const TicketSchema = new Schema({
 	project: {
-		// type: Schema.Types.ObjectId,
-		type: String,
+		type: Schema.Types.ObjectId,
 		ref: 'projects',
 		required: true
 	},
@@ -29,16 +28,8 @@ const TicketSchema = new Schema({
 		ref: 'components'
 	},
 	assignee: {
-		_id: {
-			type: Schema.Types.ObjectId,
-			ref: 'users'
-		},
-		name: {
-			type: String
-		},
-		avatar: {
-			type: String
-		}
+		type: Schema.Types.ObjectId,
+		ref: 'users'
 	},
 	priority: {
 		// type: Number
@@ -48,16 +39,8 @@ const TicketSchema = new Schema({
 		type: Number
 	},
 	createdBy: {
-		_id: {
-			type: Schema.Types.ObjectId,
-			ref: 'users'
-		},
-		name: {
-			type: String
-		},
-		avatar: {
-			type: String
-		}
+		type: Schema.Types.ObjectId,
+		ref: 'users'
 	},
 	createdAt: {
 		type: Date,
