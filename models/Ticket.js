@@ -4,13 +4,11 @@ const Schema = mongoose.Schema;
 const TicketSchema = new Schema({
 	project: {
 		type: Schema.Types.ObjectId,
-		ref: 'projects',
-		required: true
+		ref: 'projects'
 	},
 	subProject: {
-		// type: Schema.Types.ObjectId,
-		type: String,
-		ref: 'subProjects'
+		type: Schema.Types.ObjectId,
+		ref: 'projects'
 	},
 	ticketType: {
 		type: String

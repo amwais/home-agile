@@ -5,6 +5,7 @@ export default class TicketsView extends Component {
 	componentDidMount() {
 		this.props.fetchTickets();
 		this.props.fetchUsers();
+		this.props.fetchProjects();
 	}
 
 	render() {
@@ -23,9 +24,9 @@ export default class TicketsView extends Component {
 										<Card.Header>{ticket.title}</Card.Header>
 										<Card.Meta>
 											{ticket.subProject ? (
-												ticket.project + ' / ' + ticket.subProject
+												ticket.project.name + ' / ' + ticket.subProject.name
 											) : (
-												ticket.project
+												ticket.project.name
 											)}
 										</Card.Meta>
 										<Card.Description>{'Ticket Type: ' + ticket.ticketType}</Card.Description>

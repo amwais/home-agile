@@ -25,10 +25,6 @@ export default class CreateTicketModal extends Component {
 		}
 	};
 
-	componentDidMount() {
-		// this.props.fetchUsers();
-	}
-
 	onChange = (e, { name, value }) => {
 		this.setState({
 			ticket: {
@@ -46,6 +42,7 @@ export default class CreateTicketModal extends Component {
 
 	render() {
 		const { ticket, dimmer } = this.state;
+		const projectsNames = this.props.projects.map((project) => project.name);
 
 		return (
 			<div>
@@ -63,16 +60,20 @@ export default class CreateTicketModal extends Component {
 									name="project"
 									fluid
 									label="Project"
-									options={options}
+									options={this.props.projects.map((project) => {
+										return { text: project.name, value: project._id };
+									})}
 									placeholder="Project"
 									value={ticket.project}
 								/>
-								<Form.Input
+								<Form.Select
 									onChange={this.onChange}
 									name="subProject"
 									fluid
 									label="Sub-Project"
-									options={options}
+									options={this.props.projects.map((project) => {
+										return { text: project.name, value: project._id };
+									})}
 									placeholder="Sub-Project"
 									value={ticket.subProject}
 								/>

@@ -5,3 +5,12 @@
 - ticket page design
 
 - No tickets :O
+
+
+!! edit ticket
+
+!! create project
+
+!! edit project
+
+!! project <-> ticket relationship

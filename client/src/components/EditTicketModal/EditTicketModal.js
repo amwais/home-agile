@@ -30,32 +30,17 @@ export default class EditTicketModal extends Component {
 		if (ticket) {
 			this.setState({ ticket: this.props.ticket });
 		}
-
+		this.props.fetchProjects();
 		this.props.fetchUsers();
 	}
 
 	onChange = (e, { name, value }) => {
-		if (name === 'assignee') {
-			const assignee = this.props.users.filter((user) => user._id === value)[0];
-
-			this.setState({
-				ticket: {
-					...this.state.ticket,
-					assignee: {
-						_id: assignee._id,
-						name: assignee.name,
-						avatar: assignee.avatar
-					}
-				}
-			});
-		} else {
-			this.setState({
-				ticket: {
-					...this.state.ticket,
-					[name]: value
-				}
-			});
-		}
+		this.setState({
+			ticket: {
+				...this.state.ticket,
+				[name]: value
+			}
+		});
 	};
 
 	onSubmit = (e, ticketData) => {
@@ -84,21 +69,36 @@ export default class EditTicketModal extends Component {
 							<Form.Group widths="equal">
 								<Form.Select
 									onChange={this.onChange}
-									name="project"
+									name="Project"
 									fluid
 									label="Project"
-									options={options}
-									placeholder="Project"
-									value={ticket.project}
+									value={ticket.project._id}
+									options={
+										this.props.projects ? (
+											this.props.projects.map((project, i) => {
+												return { key: i, text: project.name, value: project._id };
+											})
+										) : (
+											[]
+										)
+									}
 								/>
-								<Form.Input
+								<Form.Select
 									onChange={this.onChange}
 									name="subProject"
 									fluid
 									label="Sub-Project"
-									options={options}
-									placeholder="Sub-Project"
-									value={ticket.subProject}
+									options={
+										this.props.projects ? (
+											this.props.projects.map((project, i) => {
+												return { key: i, text: project.name, value: project._id };
+											})
+										) : (
+											[]
+										)
+									}
+									value={ticket.subProject._id}
+									placeholder={'Sub-Project'}
 								/>
 								<Form.Select
 									onChange={this.onChange}

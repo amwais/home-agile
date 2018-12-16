@@ -28,6 +28,8 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
 	Ticket.find()
 		.populate('assignee', [ 'name', 'avatar' ])
 		.populate('createdBy', [ 'name', 'avatar' ])
+		.populate('project', [ 'name' ])
+		.populate('subProject', [ 'name' ])
 		.then((tickets) => res.json(tickets));
 });
 
@@ -38,6 +40,8 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), (req, res) 
 	Ticket.findById(req.params.id)
 		.populate('createdBy', [ 'name', 'avatar' ])
 		.populate('assignee', [ 'name', 'avatar' ])
+		.populate('project', [ 'name' ])
+		.populate('subProject', [ 'name' ])
 		.then((ticket) => {
 			res.json(ticket);
 		})
@@ -45,7 +49,7 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), (req, res) 
 });
 
 // @route POST api/tickets/
-// @desc Create or Edit a ticket
+// @desc Create a ticket
 // @access Private
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
 	const {
@@ -73,32 +77,43 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 		priority
 	};
 
-	if (_id !== undefined) {
-		User.findById(ticketFields.assignee)
-			.populate('assignee', [ 'name', 'avatar' ])
-			.then((assignee) => {
-				ticketFields.assignee = assignee;
-				Ticket.findOneAndUpdate({ _id }, { $set: ticketFields }, { new: true }).then((updatedTicket) =>
-					res.json(updatedTicket)
-				);
-			})
-			.catch((err) => res.status(404).json({ err }));
-	} else {
-		User.findById(req.user.id).populate('createdBy', [ 'name', 'avatar' ]).then((createdBy) => {
-			User.findById(ticketFields.assignee).populate('assignee', [ 'name', 'avatar' ]).then((assignee) => {
-				ticketFields.createdBy = createdBy;
-				ticketFields.assignee = assignee;
+	User.findById(req.user.id).populate('createdBy', [ 'name', 'avatar' ]).then((createdBy) => {
+		User.findById(ticketFields.assignee).populate('assignee', [ 'name', 'avatar' ]).then((assignee) => {
+			ticketFields.createdBy = createdBy;
+			ticketFields.assignee = assignee;
 
-				const newticket = new Ticket(ticketFields);
-				newticket
-					.save()
-					.then((ticket) => {
-						res.json(ticket);
-					})
-					.catch((err) => res.status(404).json({ err }));
-			});
+			const newticket = new Ticket(ticketFields);
+			newticket
+				.save()
+				.then((ticket) => {
+					res.json(ticket);
+				})
+				.catch((err) => res.status(404).json({ err }));
 		});
-	}
+	});
+});
+
+// @route POST api/tickets/:id
+// @desc Edit a ticket
+// @access Private
+router.post('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+	const { project, subProject, ticketType, title, description, component, assignee, sprint, priority } = req.body;
+
+	const ticketFields = {
+		project,
+		subProject,
+		ticketType,
+		title,
+		description,
+		component,
+		assignee,
+		sprint,
+		priority
+	};
+
+	Ticket.findByIdAndUpdate(req.params.id, { $set: ticketFields }, { new: true })
+		.then((updatedTicket) => res.json(updatedTicket))
+		.catch((err) => res.status(404).json({ err }));
 });
 
 // @route DELETE api/tickets/:id

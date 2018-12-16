@@ -36,14 +36,14 @@ export default class Ticket extends Component {
 							<Segment raised>
 								{ticket.subProject ? (
 									<p>
-										<strong>Project:</strong> {ticket.project}
+										<strong>Project:</strong> {ticket.project.name}
 										<br />
 										<br />
-										<strong>Sub-Project:</strong> {ticket.subProject}
+										<strong>Sub-Project:</strong> {ticket.subProject.name}
 									</p>
 								) : (
 									<p>
-										<strong>Project:</strong> {ticket.project}
+										<strong>Project:</strong> {ticket.project.name}
 									</p>
 								)}
 							</Segment>

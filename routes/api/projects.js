@@ -49,32 +49,34 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), (req, res) 
 });
 
 // @route POST api/projects/
-// @desc Create or edit a project
+// @desc Create a project
 // @access Private
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
-	const { _id, name, privateProject, tickets, owner } = req.body;
-	const projectFields = { _id, name, privateProject, tickets, owner };
+	const { name, privateProject, tickets } = req.body;
+	const projectFields = { name, privateProject, tickets };
 
-	if (_id !== undefined) {
-		if (!projectFields.tickets) {
-			projectFields.tickets = [];
-		}
+	projectFields.owner = req.user.id;
+	const newProject = new Project(projectFields);
+	newProject.save().then((project) => res.json(project)).catch((err) => res.status(404).json({ err }));
+});
 
-		Project.findById(_id).then((project) => {
+// @route POST api/projects/:id
+// @desc edit a project
+// @access Private
+router.post('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+	Project.findById(req.params.id)
+		.then((project) => {
 			if (project.owner == req.user.id) {
-				projectFields.owner = req.user.id;
-				Project.findOneAndUpdate({ _id }, { $set: projectFields }, { new: true })
+				const { name, privateProject, tickets, subProject } = req.body;
+				const projectFields = { name, privateProject, tickets, subProject };
+				Project.findByIdAndUpdate(req.params.id, { $set: projectFields }, { new: true })
 					.then((updatedProject) => res.json(updatedProject))
 					.catch((err) => res.status(404).json({ err }));
 			} else {
 				res.status(404).json({ Unauthorized: 'Cannot edit a project you do not own' });
 			}
-		});
-	} else {
-		projectFields.owner = req.user.id;
-		const newProject = new Project(projectFields);
-		newProject.save().then((project) => res.json(project)).catch((err) => res.status(404).json({ err }));
-	}
+		})
+		.catch((err) => res.status(404).json(err));
 });
 
 // @route DELETE api/projects/:id
