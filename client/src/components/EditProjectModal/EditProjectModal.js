@@ -24,7 +24,7 @@ export default class EditProjectModal extends Component {
 	onChange = (e, { name, value }) => {
 		this.setState({
 			project: {
-				...this.state.ticket,
+				...this.state.project,
 				[name]: value
 			}
 		});
