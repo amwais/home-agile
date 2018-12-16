@@ -35,17 +35,59 @@ export default class EditTicketModal extends Component {
 	}
 
 	onChange = (e, { name, value }) => {
-		this.setState({
-			ticket: {
-				...this.state.ticket,
-				[name]: value
-			}
-		});
+		if (name === 'assignee') {
+			const user = this.props.users.filter((user) => user._id === value)[0];
+			const { _id, name, avatar } = user;
+			const populatedUser = {
+				_id,
+				name,
+				avatar
+			};
+			this.setState({
+				ticket: {
+					...this.state.ticket,
+					assignee: populatedUser
+				}
+			});
+		} else if (name === 'project') {
+			const project = this.props.projects.filter((project) => project._id === value)[0];
+			const { _id, name } = project;
+			const populatedProject = {
+				_id,
+				name
+			};
+			this.setState({
+				ticket: {
+					...this.state.ticket,
+					project: populatedProject
+				}
+			});
+		} else if (name === 'subProject') {
+			const project = this.props.projects.filter((project) => project._id === value)[0];
+			const { _id, name } = project;
+			const populatedProject = {
+				_id,
+				name
+			};
+			this.setState({
+				ticket: {
+					...this.state.ticket,
+					subProject: populatedProject
+				}
+			});
+		} else {
+			this.setState({
+				ticket: {
+					...this.state.ticket,
+					[name]: value
+				}
+			});
+		}
 	};
 
 	onSubmit = (e, ticketData) => {
 		e.preventDefault();
-		this.props.createTicket(ticketData, this.props.history);
+		this.props.editTicket(ticketData, this.props.history);
 		this.props.toggleEditTicket(this.props.ticket);
 	};
 
@@ -69,7 +111,7 @@ export default class EditTicketModal extends Component {
 							<Form.Group widths="equal">
 								<Form.Select
 									onChange={this.onChange}
-									name="Project"
+									name="project"
 									fluid
 									label="Project"
 									value={ticket.project._id}
@@ -141,7 +183,7 @@ export default class EditTicketModal extends Component {
 									label="Assignee"
 									placeholder="Assignee"
 									options={userOptions}
-									value={ticket.assignee.name}
+									value={ticket.assignee._id}
 								/>
 							</Form.Group>
 							<Form.Group widths="equal">

@@ -3,12 +3,15 @@ import { Container, Header, Divider, Image, Segment, Icon, Button } from 'semant
 
 export default class Ticket extends Component {
 	componentDidMount() {
+		console.log(this.props.match);
+
 		const { id } = this.props.match.params;
 		this.props.fetchTicket(id);
 	}
 
 	render() {
 		const { ticket } = this.props.ticket;
+		console.log(ticket);
 
 		return (
 			<div>

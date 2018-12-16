@@ -13,6 +13,11 @@ export default (state = initialState, action) => {
 				...state,
 				ticket: action.payload
 			};
+		case 'EDIT_TICKET':
+			return {
+				...state,
+				ticket: action.payload
+			};
 		case 'FETCH_TICKETS':
 			return {
 				...state,

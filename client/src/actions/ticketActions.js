@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { get } from 'mongoose';
 
 export const createTicket = (ticketData, history) => (dispatch) => {
 	axios
@@ -6,6 +7,25 @@ export const createTicket = (ticketData, history) => (dispatch) => {
 		.then((ticket) => {
 			dispatch({
 				type: 'CREATE_TICKET',
+				payload: ticket.data
+			});
+			history.push(`/tickets/${ticket.data._id}`);
+		})
+		.catch((err) =>
+			dispatch({
+				type: 'GET_ERRORS',
+				payload: err.response.data
+			})
+		);
+};
+
+export const editTicket = (ticketData, history) => (dispatch) => {
+	axios
+		.post(`/api/tickets/${ticketData._id}`, ticketData)
+		.then((ticket) => axios.get(`/api/tickets/${ticketData._id}`))
+		.then((ticket) => {
+			dispatch({
+				type: 'EDIT_TICKET',
 				payload: ticket.data
 			});
 			history.push(`/tickets/${ticket.data._id}`);

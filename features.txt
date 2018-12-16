@@ -7,8 +7,6 @@
 - No tickets :O
 
 
-!! edit ticket
-
 !! create project
 
 !! edit project

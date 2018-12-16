@@ -1,6 +1,6 @@
 import EditTicketModal from './EditTicketModal';
 import { connect } from 'react-redux';
-import { createTicket, toggleEditTicket } from '../../actions/ticketActions';
+import { editTicket, toggleEditTicket } from '../../actions/ticketActions';
 import { fetchUsers } from '../../actions/userActions';
 import { fetchProjects } from '../../actions/projectActions';
 import { withRouter } from 'react-router-dom';
@@ -12,6 +12,6 @@ const mapStateToProps = ({ ticket, users, projects }) => ({
 	projects: projects.projects
 });
 
-export default connect(mapStateToProps, { createTicket, toggleEditTicket, fetchUsers, fetchProjects })(
+export default connect(mapStateToProps, { editTicket, toggleEditTicket, fetchUsers, fetchProjects })(
 	withRouter(EditTicketModal)
 );
