@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Select } from 'semantic-ui-react';
 import { AddButton } from '../../Buttons/AddButton';
 import CreateTicketModal from '../../CreateTicketModal';
 import CreateProjectModal from '../../CreateProjectModal';
 import EditTicketModal from '../../EditTicketModal';
+import EditProjectModal from '../../EditProjectModal';
 
 export default class Navbar extends Component {
 	onLogOutClick = (e) => {
@@ -22,6 +24,10 @@ export default class Navbar extends Component {
 		e.preventDefault();
 
 		this.props.toggleCreateProject();
+	};
+
+	handleViewChange = (e, { value }) => {
+		this.props.setView(value);
 	};
 
 	render() {
@@ -89,6 +95,20 @@ export default class Navbar extends Component {
 									<li className="nav-item">
 										<AddButton label="Project" onClick={this.onProjectAddButtonClick} />
 									</li>
+									<li className="nav-item">
+										<br />
+									</li>
+									<li className="nav-item">
+										<Select
+											placeholder="Select View"
+											options={[
+												{ key: 'tk', value: 'tickets', text: 'Tickets View' },
+												{ key: 'pr', value: 'projects', text: 'Projects View' }
+											]}
+											value={this.props.navbar.view}
+											onChange={this.handleViewChange}
+										/>
+									</li>
 								</ul>
 							) : (
 								undefined
@@ -100,7 +120,7 @@ export default class Navbar extends Component {
 				{isCreateTicketOpen && <CreateTicketModal />}
 				{isEditTicketOpen && <EditTicketModal />}
 				{isCreateProjectOpen && <CreateProjectModal />}
-				{isEditProjectOpen && <EditTicketModal />}
+				{isEditProjectOpen && <EditProjectModal />}
 			</div>
 		);
 	}

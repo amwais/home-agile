@@ -11,7 +11,6 @@ export default class TicketsView extends Component {
 	render() {
 		const { tickets } = this.props.ticket;
 
-		// const { auth } = this.props;
 		return (
 			<div>
 				<Card.Group className="tickets-grid-container">

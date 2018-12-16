@@ -6,6 +6,7 @@ import { setCurrentUser, logoutUser } from './actions/authActions';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
 import Ticket from './components/Ticket';
+import Project from './components/Project';
 import Dashboard from './components/layout/Dashboard';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
@@ -62,6 +63,7 @@ class App extends Component {
 							<Route exact path="/login" component={Login} />
 							<PrivateRoute exact path="/dashboard" component={Dashboard} />
 							<PrivateRoute path="/tickets/:id" component={Ticket} />
+							<PrivateRoute path="/projects/:id" component={Project} />
 						</div>
 					</div>
 				</Router>

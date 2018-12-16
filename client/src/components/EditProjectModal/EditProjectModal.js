@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Modal, Form } from 'semantic-ui-react';
 
-export default class CreateProjectModal extends Component {
+export default class EditProjectModal extends Component {
 	state = {
 		open: true,
 		dimmer: 'blurring',
@@ -12,10 +12,19 @@ export default class CreateProjectModal extends Component {
 		}
 	};
 
+	componentDidMount() {
+		const { project } = this.props;
+
+		if (project) {
+			this.setState({ project });
+		}
+		this.props.fetchProjects();
+	}
+
 	onChange = (e, { name, value }) => {
 		this.setState({
 			project: {
-				...this.state.project,
+				...this.state.ticket,
 				[name]: value
 			}
 		});
@@ -23,21 +32,22 @@ export default class CreateProjectModal extends Component {
 
 	onSubmit = (e, projectData) => {
 		e.preventDefault();
-		this.props.createProject(projectData, this.props.history);
-		this.props.toggleCreateProject();
+		this.props.editProject(projectData, this.props.history);
+		this.props.toggleEditProject(this.props.project);
 	};
 
 	render() {
 		const { project, dimmer } = this.state;
+		console.log(project);
 
 		return (
 			<div>
 				<Modal
 					dimmer={dimmer}
 					open={this.props.isOpen}
-					onClose={() => this.props.toggleCreateProject(this.props.project)}
+					onClose={() => this.props.toggleEditProject(this.props.project)}
 				>
-					<Modal.Header>Create a new project</Modal.Header>
+					<Modal.Header>Edit Project</Modal.Header>
 					<Modal.Content>
 						<Form>
 							<Form.Group widths="equal">
@@ -47,7 +57,7 @@ export default class CreateProjectModal extends Component {
 									fluid
 									label="Title"
 									placeholder="Project Title"
-									value={project.title}
+									value={project.name}
 								/>
 							</Form.Group>
 							<Form.Group widths="equal">
@@ -56,9 +66,15 @@ export default class CreateProjectModal extends Component {
 									name="parentProject"
 									fluid
 									label="Parent Project"
-									options={this.props.projects.map((project) => {
-										return { text: project.name, value: project._id };
-									})}
+									options={
+										this.props.projects ? (
+											this.props.projects.map((project) => {
+												return { text: project.name, value: project._id };
+											})
+										) : (
+											[]
+										)
+									}
 									placeholder="Project"
 									value={project.parentProject}
 								/>
@@ -81,7 +97,7 @@ export default class CreateProjectModal extends Component {
 						</Form>
 					</Modal.Content>
 					<Modal.Actions>
-						<Button negative onClick={() => this.props.toggleCreateProject()}>
+						<Button negative onClick={() => this.props.toggleEditProject(this.props.project)}>
 							Cancel
 						</Button>
 						<Button

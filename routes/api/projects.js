@@ -10,25 +10,19 @@ const Project = require('../../models/Project');
 // @access Private
 router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
 	Project.find()
+		.populate('owner', [ 'name', 'avatar' ])
 		.then((projects) => {
-			if (projects.length < 1) {
-				res.json({
-					notFound: 'No projects found.'
-				});
-			} else {
-				let resProjects = projects.filter((project) => {
-					if (!project.privateProject) {
+			let resProjects = projects.filter((project) => {
+				if (!project.privateProject) {
+					return true;
+				} else {
+					if (project.owner._id == req.user.id) {
 						return true;
-					} else {
-						if (project.owner == req.user.id) {
-							return true;
-						}
 					}
-					return false;
-				});
-				res.json(resProjects);
-				// res.json(projects); // Return all
-			}
+				}
+				return false;
+			});
+			res.json(resProjects);
 		})
 		.catch((err) => res.status(404).json({ err }));
 });
@@ -38,6 +32,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
 // @access Private
 router.get('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
 	Project.findById(req.params.id)
+		.populate('owner', [ 'name', 'avatar' ])
 		.then((project) => {
 			if (project) {
 				res.json(project);
