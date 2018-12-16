@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { AddButton } from '../../Buttons/AddButton';
 import CreateTicketModal from '../../CreateTicketModal';
+import CreateProjectModal from '../../CreateProjectModal';
 import EditTicketModal from '../../EditTicketModal';
 
 export default class Navbar extends Component {
@@ -11,15 +12,22 @@ export default class Navbar extends Component {
 		this.props.logoutUser();
 	};
 
-	onAddButtonClick = (e) => {
+	onTicketAddButtonClick = (e) => {
 		e.preventDefault();
 
 		this.props.toggleCreateTicket();
 	};
 
+	onProjectAddButtonClick = (e) => {
+		e.preventDefault();
+
+		this.props.toggleCreateProject();
+	};
+
 	render() {
 		const { isAuthenticated, user } = this.props.auth;
-		const { isCreateOpen, isEditOpen } = this.props.ticket;
+		const { isCreateTicketOpen, isEditTicketOpen } = this.props.ticket;
+		const { isCreateProjectOpen, isEditProjectOpen } = this.props.projects;
 
 		const authLinks = (
 			<ul className="navbar-nav ml-auto">
@@ -76,7 +84,10 @@ export default class Navbar extends Component {
 							{isAuthenticated ? (
 								<ul className="navbar-nav mr-auto">
 									<li className="nav-item">
-										<AddButton onClick={this.onAddButtonClick} />
+										<AddButton label="Ticket" onClick={this.onTicketAddButtonClick} />
+									</li>
+									<li className="nav-item">
+										<AddButton label="Project" onClick={this.onProjectAddButtonClick} />
 									</li>
 								</ul>
 							) : (
@@ -86,8 +97,10 @@ export default class Navbar extends Component {
 						</div>
 					</div>
 				</nav>
-				{isCreateOpen && <CreateTicketModal />}
-				{isEditOpen && <EditTicketModal />}
+				{isCreateTicketOpen && <CreateTicketModal />}
+				{isEditTicketOpen && <EditTicketModal />}
+				{isCreateProjectOpen && <CreateProjectModal />}
+				{isEditProjectOpen && <EditTicketModal />}
 			</div>
 		);
 	}

@@ -6,21 +6,6 @@ const passport = require('passport');
 const Ticket = require('../../models/Ticket');
 const User = require('../../models/User');
 
-// // @route GET api/tickets/
-// // @desc Get all tickets
-// // @access Private
-// router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
-// 	// Ticket.find().then((tickets) => res.json(tickets)).catch((err) => res.status(404).json({ err }));
-// 	Ticket.find().then((tickets) =>
-// 		tickets
-// 			.map((ticket) =>
-// 				ticket.populate('createdBy', [ 'name', 'avatar' ]).populate('assignee', [ 'name', 'avatar' ])
-// 			)
-// 			.then((populatedTickets) => res.json(populatedTickets))
-// 			.catch((err) => res.status(404).json({ err }))
-// 	);
-// });
-
 // @route GET api/tickets/
 // @desc Get all tickets
 // @access Private
@@ -30,7 +15,8 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
 		.populate('createdBy', [ 'name', 'avatar' ])
 		.populate('project', [ 'name' ])
 		.populate('subProject', [ 'name' ])
-		.then((tickets) => res.json(tickets));
+		.then((tickets) => res.json(tickets))
+		.catch((err) => res.status(404).json({ err }));
 });
 
 // @route GET api/tickets/:id

@@ -5,7 +5,7 @@ import { fetchUsers } from '../../actions/userActions';
 import { withRouter } from 'react-router-dom';
 
 const mapStateToProps = ({ ticket, users, projects }) => ({
-	isOpen: ticket.isCreateOpen,
+	isOpen: ticket.isCreateTicketOpen,
 	ticket: ticket.ticket,
 	projects: projects.projects,
 	users: users.users

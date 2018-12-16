@@ -2,8 +2,8 @@ const initialState = {
 	project: null,
 	projects: null,
 	isLoading: false,
-	isCreateOpen: false,
-	isEditOpen: false
+	isCreateProjectOpen: false,
+	isEditProjectOpen: false
 };
 
 export default (state = initialState, action) => {
@@ -28,11 +28,11 @@ export default (state = initialState, action) => {
 		// 		...state,
 		// 		ticket: null
 		// 	};
-		// case 'TOGGLE_CREATE_TICKET':
-		// 	return {
-		// 		...state,
-		// 		isCreateOpen: !state.isCreateOpen
-		// 	};
+		case 'TOGGLE_CREATE_PROJECT':
+			return {
+				...state,
+				isCreateProjectOpen: !state.isCreateProjectOpen
+			};
 		// case 'TOGGLE_EDIT_TICKET':
 		// 	return {
 		// 		...state,

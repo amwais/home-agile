@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, Form, Dropdown } from 'semantic-ui-react';
+import { Button, Modal, Form } from 'semantic-ui-react';
 import { ticketTypes, priorities } from '../../constants';
 
 const options = [ { key: 'm', text: 'Male', value: 'male' }, { key: 'f', text: 'Female', value: 'female' } ];
@@ -132,9 +132,11 @@ export default class EditTicketModal extends Component {
 									label="Sub-Project"
 									options={
 										this.props.projects ? (
-											this.props.projects.map((project, i) => {
-												return { key: i, text: project.name, value: project._id };
-											})
+											this.props.projects
+												.map((project, i) => {
+													return { key: i, text: project.name, value: project._id };
+												})
+												.filter((project) => project.text !== ticket.project.name)
 										) : (
 											[]
 										)

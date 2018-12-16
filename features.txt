@@ -6,6 +6,7 @@
 
 - No tickets :O
 
+- ERROR HANDLING
 
 !! create project
 

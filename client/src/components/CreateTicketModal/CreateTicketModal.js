@@ -6,9 +6,8 @@ const options = [ { key: 'm', text: 'Male', value: 'male' }, { key: 'f', text: '
 
 export default class CreateTicketModal extends Component {
 	state = {
-		// open: this.props.isOpen,
 		open: true,
-		// dimmer: 'blurring',
+		dimmer: 'blurring',
 		ticket: {
 			id: null,
 			project: '',
@@ -42,7 +41,6 @@ export default class CreateTicketModal extends Component {
 
 	render() {
 		const { ticket, dimmer } = this.state;
-		const projectsNames = this.props.projects.map((project) => project.name);
 
 		return (
 			<div>
@@ -71,9 +69,11 @@ export default class CreateTicketModal extends Component {
 									name="subProject"
 									fluid
 									label="Sub-Project"
-									options={this.props.projects.map((project) => {
-										return { text: project.name, value: project._id };
-									})}
+									options={this.props.projects
+										.map((project) => {
+											return { text: project.name, value: project._id };
+										})
+										.filter((option) => option.value !== ticket.project)}
 									placeholder="Sub-Project"
 									value={ticket.subProject}
 								/>
@@ -148,7 +148,7 @@ export default class CreateTicketModal extends Component {
 						</Form>
 					</Modal.Content>
 					<Modal.Actions>
-						<Button negative onClick={() => this.props.toggleCreateTicket(this.props.ticket)}>
+						<Button negative onClick={() => this.props.toggleCreateTicket()}>
 							Cancel
 						</Button>
 						<Button

@@ -52,12 +52,12 @@ export const fetchProjects = () => (dispatch) => {
 		);
 };
 
-// // Open create ticket modal
-// export const toggleCreateTicket = () => (dispatch) => {
-// 	dispatch({
-// 		type: 'TOGGLE_CREATE_TICKET'
-// 	});
-// };
+// Open create project modal
+export const toggleCreateProject = () => (dispatch) => {
+	dispatch({
+		type: 'TOGGLE_CREATE_PROJECT'
+	});
+};
 
 // // Open create ticket modal
 // export const toggleEditTicket = (ticket) => (dispatch) => {
