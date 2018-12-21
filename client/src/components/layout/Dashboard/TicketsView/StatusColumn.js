@@ -1,19 +1,22 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import TicketCard from './TicketCard';
 
+class InnerList extends PureComponent {
+	render() {
+		const { ticket, index } = this.props;
+
+		return <TicketCard ticket={ticket} index={index} />;
+	}
+}
+
 const StatusColumn = (props) => {
 	const { tickets } = props;
+
 	return (
 		<div>
-			<Droppable droppableId="all-cols" direction="horizontal" type="column">
-				{(provided) => (
-					<div {...provided.droppableProps} ref={provided.innerRef}>
-						<h3>{props.column.title}</h3>
-						{tickets.map((ticket, i) => <TicketCard key={i} ticket={ticket} />)}
-					</div>
-				)}
-			</Droppable>
+			<h3>{props.column.title}</h3>
+			{tickets.map((ticket, i) => <InnerList key={i} ticket={ticket} index={i} />)}
 		</div>
 	);
 };

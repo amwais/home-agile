@@ -26,34 +26,19 @@ export default class TicketsView extends Component {
 		const { ticketsView } = this.props;
 
 		return (
-			<div>
-				<DragDropContext
-					onDragEnd={this.onDragEnd}
-					onDragStart={this.onDragStart}
-					onDragUpdate={this.onDragUpdate}
-				>
-					<Droppable droppableId="all-cols" direction="horizontal">
-						{(provided) => (
-							<div
-								style={{
-									display: 'flex'
-								}}
-								{...provided.droppableProps}
-								ref={provided.innerRef}
-							>
-								{ticketsView.colIds.map((colId, index) => {
-									const column = ticketsView.columns[colId];
+			<div
+				style={{
+					display: 'flex',
+					justifyContent: 'space-evenly'
+				}}
+			>
+				{ticketsView.colIds.map((colId, index) => {
+					const column = ticketsView.columns[colId];
 
-									const colTickets = tickets.filter((ticket) => ticket.status === column.id);
+					const colTickets = tickets.filter((ticket) => ticket.status === column.id);
 
-									return (
-										<InnerList key={column.id} column={column} index={index} tickets={colTickets} />
-									);
-								})}
-							</div>
-						)}
-					</Droppable>
-				</DragDropContext>
+					return <InnerList key={column.id} column={column} index={index} tickets={colTickets} />;
+				})}
 			</div>
 		);
 	}

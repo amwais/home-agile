@@ -76,12 +76,7 @@ export const fetchTickets = () => (dispatch, getState) => {
 				payload: populatedCols
 			});
 		})
-		.catch((err) =>
-			dispatch({
-				type: 'GET_ERRORS',
-				payload: err.response.data
-			})
-		);
+		.catch((err) => console.log(err));
 };
 
 // Open create ticket modal
