@@ -1,6 +1,6 @@
 const initialState = {
 	ticket: null,
-	tickets: null,
+	tickets: [],
 	isLoading: false,
 	isCreateTicketOpen: false,
 	isEditTicketOpen: false

@@ -43,6 +43,10 @@ const TicketSchema = new Schema({
 	createdAt: {
 		type: Date,
 		default: Date.now()
+	},
+	status: {
+		type: String,
+		default: 'toDo'
 	}
 });
 

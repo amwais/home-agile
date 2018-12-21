@@ -1,46 +1,66 @@
-import React, { Component } from 'react';
-import { Card, Image } from 'semantic-ui-react';
+import React, { Component, PureComponent } from 'react';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import StatusColumn from './StatusColumn';
+
+class InnerList extends PureComponent {
+	render() {
+		const { column, ticketMap, index } = this.props;
+		const tickets = column.ticketIds.map((ticketId) => ticketMap[ticketId]);
+
+		return <StatusColumn column={column} tickets={tickets} index={index} />;
+	}
+}
 
 export default class TicketsView extends Component {
+	state = {};
+
 	componentDidMount() {
 		this.props.fetchTickets();
 		this.props.fetchUsers();
 		this.props.fetchProjects();
+		const { tickets } = this.props.ticket;
+		this.props.populateTickets(tickets);
 	}
+
+	onDragStart = (start) => {};
+	onDragUpdate = (update) => {};
+	onDragEnd = (result) => {};
 
 	render() {
 		const { tickets } = this.props.ticket;
+		const { ticketsView } = this.props;
+		console.log(this.props);
+		// console.log(tickets);
+
+		// console.log(ticketsView);
 
 		return (
 			<div>
-				<Card.Group className="tickets-grid-container">
-					{tickets &&
-						tickets.map((ticket, i) => (
-							<a key={i} href={`/tickets/${ticket._id}`}>
-								<Card>
-									<Card.Content>
-										<Image floated="right" size="mini" src={ticket.assignee.avatar} />
-										<Card.Header>{ticket.title}</Card.Header>
-										<Card.Meta>
-											{ticket.subProject ? (
-												ticket.project.name + ' / ' + ticket.subProject.name
-											) : (
-												ticket.project.name
-											)}
-										</Card.Meta>
-										<Card.Description>{'Ticket Type: ' + ticket.ticketType}</Card.Description>
-										<br />
-										<Card.Description>{ticket.description}</Card.Description>
-									</Card.Content>
-									<Card.Content extra>
-										<div className="">
-											<Card.Meta>{'Component: ' + ticket.component}</Card.Meta>
-										</div>
-									</Card.Content>
-								</Card>
-							</a>
-						))}
-				</Card.Group>
+				<DragDropContext
+					onDragEnd={this.onDragEnd}
+					onDragStart={this.onDragStart}
+					onDragUpdate={this.onDragUpdate}
+				>
+					<Droppable droppableId="all-cols" direction="horizontal">
+						{(provided) => (
+							<div
+								style={{
+									display: 'flex'
+								}}
+								{...provided.droppableProps}
+								ref={provided.innerRef}
+							>
+								{ticketsView.colIds.map((colId, index) => {
+									const column = ticketsView.columns[colId];
+
+									return (
+										<InnerList key={column.id} column={column} ticketMap={tickets} index={index} />
+									);
+								})}
+							</div>
+						)}
+					</Droppable>
+				</DragDropContext>
 			</div>
 		);
 	}
