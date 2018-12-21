@@ -4,22 +4,17 @@ import StatusColumn from './StatusColumn';
 
 class InnerList extends PureComponent {
 	render() {
-		const { column, ticketMap, index } = this.props;
-		const tickets = column.ticketIds.map((ticketId) => ticketMap[ticketId]);
+		const { column, tickets, index } = this.props;
 
 		return <StatusColumn column={column} tickets={tickets} index={index} />;
 	}
 }
 
 export default class TicketsView extends Component {
-	state = {};
-
 	componentDidMount() {
 		this.props.fetchTickets();
 		this.props.fetchUsers();
 		this.props.fetchProjects();
-		const { tickets } = this.props.ticket;
-		this.props.populateTickets(tickets);
 	}
 
 	onDragStart = (start) => {};
@@ -29,10 +24,6 @@ export default class TicketsView extends Component {
 	render() {
 		const { tickets } = this.props.ticket;
 		const { ticketsView } = this.props;
-		console.log(this.props);
-		// console.log(tickets);
-
-		// console.log(ticketsView);
 
 		return (
 			<div>
@@ -53,8 +44,10 @@ export default class TicketsView extends Component {
 								{ticketsView.colIds.map((colId, index) => {
 									const column = ticketsView.columns[colId];
 
+									const colTickets = tickets.filter((ticket) => ticket.status === column.id);
+
 									return (
-										<InnerList key={column.id} column={column} ticketMap={tickets} index={index} />
+										<InnerList key={column.id} column={column} index={index} tickets={colTickets} />
 									);
 								})}
 							</div>

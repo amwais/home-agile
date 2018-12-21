@@ -7,7 +7,7 @@ const initialState = {
 		},
 		inProgress: {
 			id: 'inProgress',
-			title: 'In progress',
+			title: 'In Progress',
 			ticketIds: []
 		},
 		inReview: {
@@ -21,17 +21,11 @@ const initialState = {
 			ticketIds: []
 		}
 	},
-	tickets: [],
 	colIds: [ 'toDo', 'inProgress', 'inReview', 'done' ]
 };
 
 export default (state = initialState, action) => {
 	switch (action.type) {
-		case 'FETCH_TICKET_IDS':
-			return {
-				...state,
-				tickets: action.payload
-			};
 		case 'POPULATE_TICKETS':
 			return {
 				...state,

@@ -54,13 +54,26 @@ export const fetchTicket = (ticketId) => (dispatch) => {
 		);
 };
 
-export const fetchTickets = () => (dispatch) => {
+export const fetchTickets = () => (dispatch, getState) => {
 	axios
 		.get('/api/tickets/')
 		.then((tickets) => {
 			dispatch({
 				type: 'FETCH_TICKETS',
 				payload: tickets.data
+			});
+
+			const { ticketsView } = getState();
+
+			const populatedCols = { ...ticketsView.columns };
+
+			tickets.data.forEach((ticket) => {
+				populatedCols[ticket.status]['ticketIds'].push(ticket._id);
+			});
+
+			dispatch({
+				type: 'POPULATE_TICKETS',
+				payload: populatedCols
 			});
 		})
 		.catch((err) =>

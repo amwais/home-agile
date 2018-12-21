@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { fetchTickets } from '../../../../actions/ticketActions';
 import { fetchUsers } from '../../../../actions/userActions';
 import { fetchProjects } from '../../../../actions/projectActions';
-import { populateTickets } from '../../../../actions/ticketsViewActions';
 
 const mapStateToProps = ({ auth, ticket, users, ticketsView }) => ({ auth, ticket, users, ticketsView });
 
-export default connect(mapStateToProps, { fetchTickets, fetchUsers, fetchProjects, populateTickets })(TicketsView);
+export default connect(mapStateToProps, { fetchTickets, fetchUsers, fetchProjects })(TicketsView);

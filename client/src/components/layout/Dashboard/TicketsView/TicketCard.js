@@ -3,6 +3,7 @@ import { Card, Image, List } from 'semantic-ui-react';
 
 const TicketCard = (props) => {
 	const { ticket } = props;
+
 	return (
 		<List.Item>
 			<List.Content>
@@ -29,12 +30,13 @@ const TicketCard = (props) => {
 							)}
 						</Card.Meta>
 						<Card.Description>{'Ticket Type: ' + ticket.ticketType}</Card.Description>
+						<Card.Meta>{'Component: ' + ticket.component}</Card.Meta>
 						<br />
 						<Card.Description>{ticket.description}</Card.Description>
 					</Card.Content>
 					<Card.Content extra>
 						<div className="">
-							<Card.Meta>{'Component: ' + ticket.component}</Card.Meta>
+							<Card.Meta>{'Status: ' + ticket.status}</Card.Meta>
 						</div>
 					</Card.Content>
 				</Card>

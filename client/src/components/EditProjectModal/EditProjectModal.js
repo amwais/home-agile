@@ -38,7 +38,6 @@ export default class EditProjectModal extends Component {
 
 	render() {
 		const { project, dimmer } = this.state;
-		console.log(project);
 
 		return (
 			<div>
