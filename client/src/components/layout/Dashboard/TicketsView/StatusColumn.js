@@ -14,10 +14,19 @@ const StatusColumn = (props) => {
 	const { tickets } = props;
 
 	return (
-		<div>
-			<h3>{props.column.title}</h3>
-			{tickets.map((ticket, i) => <InnerList key={i} ticket={ticket} index={i} />)}
-		</div>
+		<Droppable droppableId={props.column.id}>
+			{(provided, snapshot) => (
+				<div
+					ref={provided.innerRef}
+					{...provided.droppableProps}
+					style={{ backgroundColor: snapshot.isDraggingOver ? 'blue' : 'yellow' }}
+				>
+					<h3>{props.column.title}</h3>
+					{tickets.map((ticket, i) => <InnerList key={i} ticket={ticket} index={i} />)}
+					{provided.placeholder}
+				</div>
+			)}
+		</Droppable>
 	);
 };
 
