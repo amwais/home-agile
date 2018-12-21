@@ -37,6 +37,24 @@ export const editTicket = (ticketData, history) => (dispatch) => {
 		);
 };
 
+export const editTicketStatus = (ticketData) => (dispatch) => {
+	axios
+		.post(`/api/tickets/${ticketData._id}`, ticketData)
+		.then((ticket) => axios.get(`/api/tickets/${ticketData._id}`))
+		.then((ticket) => {
+			dispatch({
+				type: 'EDIT_TICKET',
+				payload: ticket.data
+			});
+		})
+		.catch((err) =>
+			dispatch({
+				type: 'GET_ERRORS',
+				payload: err.response.data
+			})
+		);
+};
+
 export const fetchTicket = (ticketId) => (dispatch) => {
 	axios
 		.get(`/api/tickets/${ticketId}`)

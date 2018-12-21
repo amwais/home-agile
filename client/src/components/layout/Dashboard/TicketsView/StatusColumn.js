@@ -14,12 +14,12 @@ const StatusColumn = (props) => {
 	const { tickets } = props;
 
 	return (
-		<Droppable droppableId={props.column.id}>
+		<Droppable droppableId={props.column.id} type="ticket">
 			{(provided, snapshot) => (
 				<div
 					ref={provided.innerRef}
 					{...provided.droppableProps}
-					style={{ backgroundColor: snapshot.isDraggingOver ? 'blue' : 'yellow' }}
+					style={{ backgroundColor: snapshot.isDraggingOver ? 'yellowgreen' : 'inherit' }}
 				>
 					<h3>{props.column.title}</h3>
 					{tickets.map((ticket, i) => <InnerList key={i} ticket={ticket} index={i} />)}

@@ -12,7 +12,6 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import { Provider } from 'react-redux';
 import store from './store';
-import { DragDropContext } from 'react-beautiful-dnd';
 
 import './App.css';
 
@@ -70,24 +69,17 @@ class App extends Component {
 		return (
 			<Provider store={store}>
 				<Router>
-					<DragDropContext
-						onBeforeDragStart={this.onBeforeDragStart}
-						onDragStart={this.onDragStart}
-						onDragUpdate={this.onDragUpdate}
-						onDragEnd={this.onDragEnd}
-					>
-						<div className="App">
-							<Navbar />
-							<Route exact path="/" component={Landing} />
-							<div>
-								<Route exact path="/register" component={Register} />
-								<Route exact path="/login" component={Login} />
-								<PrivateRoute exact path="/dashboard" component={Dashboard} />
-								<PrivateRoute path="/tickets/:id" component={Ticket} />
-								<PrivateRoute path="/projects/:id" component={Project} />
-							</div>
+					<div className="App">
+						<Navbar />
+						<Route exact path="/" component={Landing} />
+						<div>
+							<Route exact path="/register" component={Register} />
+							<Route exact path="/login" component={Login} />
+							<PrivateRoute exact path="/dashboard" component={Dashboard} />
+							<PrivateRoute path="/tickets/:id" component={Ticket} />
+							<PrivateRoute path="/projects/:id" component={Project} />
 						</div>
-					</DragDropContext>
+					</div>
 				</Router>
 			</Provider>
 		);
