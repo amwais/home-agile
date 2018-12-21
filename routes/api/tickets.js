@@ -83,7 +83,18 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 // @desc Edit a ticket
 // @access Private
 router.post('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
-	const { project, subProject, ticketType, title, description, component, assignee, sprint, priority } = req.body;
+	const {
+		project,
+		subProject,
+		ticketType,
+		title,
+		description,
+		component,
+		assignee,
+		sprint,
+		priority,
+		status
+	} = req.body;
 
 	const ticketFields = {
 		project,
@@ -94,7 +105,8 @@ router.post('/:id', passport.authenticate('jwt', { session: false }), (req, res)
 		component,
 		assignee,
 		sprint,
-		priority
+		priority,
+		status
 	};
 
 	Ticket.findByIdAndUpdate(req.params.id, { $set: ticketFields }, { new: true })

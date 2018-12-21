@@ -5,6 +5,7 @@ import ticketReducer from './ticketReducer';
 import usersReducer from './usersReducer';
 import projectsReducer from './projectsReducer';
 import navbarReducer from './navbarReducer';
+import ticketsViewReducer from './ticketsViewReducer';
 
 export default combineReducers({
 	auth: authReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
 	errors: errorReducer,
 	users: usersReducer,
 	projects: projectsReducer,
-	navbar: navbarReducer
+	navbar: navbarReducer,
+	ticketsView: ticketsViewReducer
 });

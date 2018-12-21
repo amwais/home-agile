@@ -20,7 +20,8 @@ export default class EditTicketModal extends Component {
 			sprint: '',
 			priority: null,
 			createdBy: null,
-			createdAt: null
+			createdAt: null,
+			status: null
 		}
 	};
 
@@ -93,9 +94,16 @@ export default class EditTicketModal extends Component {
 
 	render() {
 		const { ticket, dimmer } = this.state;
+		const { columns } = this.props.ticketsView;
 
 		const userOptions = this.props.users.map((user) => {
 			return { text: user.name, value: user._id };
+		});
+
+		const statusOptions = Object.keys(columns).map((column) => {
+			const val = columns[column];
+
+			return { text: val.title, value: val.id };
 		});
 
 		return (
@@ -186,6 +194,15 @@ export default class EditTicketModal extends Component {
 									placeholder="Assignee"
 									options={userOptions}
 									value={ticket.assignee._id}
+								/>
+								<Form.Select
+									onChange={this.onChange}
+									name="status"
+									fluid
+									label="Status"
+									placeholder="Status"
+									options={statusOptions}
+									value={ticket.status}
 								/>
 							</Form.Group>
 							<Form.Group widths="equal">

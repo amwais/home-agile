@@ -56,6 +56,10 @@ export default class Ticket extends Component {
 								{ticket.ticketType}
 								<br />
 								<br />
+								<strong>Status: </strong>
+								{ticket.status}
+								<br />
+								<br />
 								<strong>Component: </strong>
 								{ticket.component}
 								<br />

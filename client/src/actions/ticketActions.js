@@ -37,6 +37,24 @@ export const editTicket = (ticketData, history) => (dispatch) => {
 		);
 };
 
+export const editTicketStatus = (ticketData) => (dispatch) => {
+	axios
+		.post(`/api/tickets/${ticketData._id}`, ticketData)
+		.then((ticket) => axios.get(`/api/tickets/${ticketData._id}`))
+		.then((ticket) => {
+			dispatch({
+				type: 'EDIT_TICKET',
+				payload: ticket.data
+			});
+		})
+		.catch((err) =>
+			dispatch({
+				type: 'GET_ERRORS',
+				payload: err.response.data
+			})
+		);
+};
+
 export const fetchTicket = (ticketId) => (dispatch) => {
 	axios
 		.get(`/api/tickets/${ticketId}`)
@@ -54,7 +72,7 @@ export const fetchTicket = (ticketId) => (dispatch) => {
 		);
 };
 
-export const fetchTickets = () => (dispatch) => {
+export const fetchTickets = () => (dispatch, getState) => {
 	axios
 		.get('/api/tickets/')
 		.then((tickets) => {
@@ -62,13 +80,21 @@ export const fetchTickets = () => (dispatch) => {
 				type: 'FETCH_TICKETS',
 				payload: tickets.data
 			});
-		})
-		.catch((err) =>
+
+			const { ticketsView } = getState();
+
+			const populatedCols = { ...ticketsView.columns };
+
+			tickets.data.forEach((ticket) => {
+				populatedCols[ticket.status]['ticketIds'].push(ticket._id);
+			});
+
 			dispatch({
-				type: 'GET_ERRORS',
-				payload: err.response.data
-			})
-		);
+				type: 'POPULATE_TICKETS',
+				payload: populatedCols
+			});
+		})
+		.catch((err) => console.log(err));
 };
 
 // Open create ticket modal

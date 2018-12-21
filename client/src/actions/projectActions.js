@@ -1,8 +1,6 @@
 import axios from 'axios';
 
 export const createProject = (projectData, history) => (dispatch) => {
-	console.log(projectData);
-
 	axios
 		.post('/api/projects/', projectData)
 		.then((project) => {
@@ -70,8 +68,6 @@ export const toggleEditProject = (project) => (dispatch) => {
 };
 
 export const editProject = (projectData, history) => (dispatch) => {
-	console.log(projectData);
-
 	axios
 		.post(`/api/projects/${projectData._id}`, projectData)
 		.then((project) => axios.get(`/api/projects/${projectData._id}`))
