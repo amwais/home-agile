@@ -6,13 +6,16 @@ import usersReducer from './usersReducer';
 import projectsReducer from './projectsReducer';
 import navbarReducer from './navbarReducer';
 import ticketsViewReducer from './ticketsViewReducer';
+import optimist from 'redux-optimist';
 
-export default combineReducers({
-	auth: authReducer,
-	ticket: ticketReducer,
-	errors: errorReducer,
-	users: usersReducer,
-	projects: projectsReducer,
-	navbar: navbarReducer,
-	ticketsView: ticketsViewReducer
-});
+export default optimist(
+	combineReducers({
+		auth: authReducer,
+		ticket: ticketReducer,
+		errors: errorReducer,
+		users: usersReducer,
+		projects: projectsReducer,
+		navbar: navbarReducer,
+		ticketsView: ticketsViewReducer
+	})
+);

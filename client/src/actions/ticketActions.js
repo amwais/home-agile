@@ -37,7 +37,23 @@ export const editTicket = (ticketData, history) => (dispatch) => {
 		);
 };
 
-export const editTicketStatus = (ticketData) => (dispatch) => {
+export const editTicketStatus = (ticketData) => (dispatch, getState) => {
+	const { tickets } = getState().ticket;
+
+	const optimisticUpdatedTickets = tickets.map((ticket) => {
+		if (ticket._id == ticketData._id) {
+			ticket.status = ticketData.status;
+			return ticket;
+		} else {
+			return ticket;
+		}
+	});
+
+	dispatch({
+		type: 'FETCH_TICKETS',
+		payload: optimisticUpdatedTickets
+	});
+
 	axios
 		.post(`/api/tickets/${ticketData._id}`, ticketData)
 		.then((ticket) => axios.get(`/api/tickets/${ticketData._id}`))
@@ -48,10 +64,16 @@ export const editTicketStatus = (ticketData) => (dispatch) => {
 			});
 		})
 		.catch((err) =>
-			dispatch({
-				type: 'GET_ERRORS',
-				payload: err.response.data
-			})
+			dispatch(
+				{
+					type: 'GET_ERRORS',
+					payload: err.response.data
+				},
+				{
+					type: 'FETCH_TICKETS',
+					payload: tickets
+				}
+			)
 		);
 };
 
@@ -82,8 +104,7 @@ export const fetchTickets = () => (dispatch, getState) => {
 			});
 
 			const { ticketsView } = getState();
-
-			const populatedCols = { ...ticketsView.columns };
+			const populatedCols = ticketsView.columns;
 
 			tickets.data.forEach((ticket) => {
 				populatedCols[ticket.status]['ticketIds'].push(ticket._id);

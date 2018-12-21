@@ -17,6 +17,10 @@ export default class TicketsView extends Component {
 		this.props.fetchProjects();
 	}
 
+	// componentDidUpdate() {
+	// 	this.props.fetchTickets();
+	// }
+
 	onDragStart = (start) => {
 		this.props.fetchTicket(start.draggableId);
 	};
@@ -34,7 +38,8 @@ export default class TicketsView extends Component {
 		updatedTicket['status'] = result.destination.droppableId;
 
 		this.props.editTicketStatus(updatedTicket);
-		this.props.fetchTickets();
+
+		this.props.clearTicket();
 	};
 
 	render() {
@@ -56,7 +61,6 @@ export default class TicketsView extends Component {
 				>
 					{ticketsView.colIds.map((colId, index) => {
 						const column = ticketsView.columns[colId];
-
 						const colTickets = tickets.filter((ticket) => ticket.status === column.id);
 
 						return <InnerList key={column.id} column={column} index={index} tickets={colTickets} />;

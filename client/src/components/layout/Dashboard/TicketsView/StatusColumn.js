@@ -19,7 +19,9 @@ const StatusColumn = (props) => {
 				<div
 					ref={provided.innerRef}
 					{...provided.droppableProps}
-					style={{ backgroundColor: snapshot.isDraggingOver ? 'yellowgreen' : 'inherit' }}
+					style={{
+						backgroundColor: snapshot.isDraggingOver ? 'yellowgreen' : 'inherit'
+					}}
 				>
 					<h3>{props.column.title}</h3>
 					{tickets.map((ticket, i) => <InnerList key={i} ticket={ticket} index={i} />)}
