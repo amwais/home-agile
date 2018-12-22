@@ -41,40 +41,29 @@ export const editTicketStatus = (ticketData) => (dispatch, getState) => {
 	const { tickets } = getState().ticket;
 
 	const optimisticUpdatedTickets = tickets.map((ticket) => {
-		if (ticket._id == ticketData._id) {
+		if (ticket._id === ticketData._id) {
 			ticket.status = ticketData.status;
 			return ticket;
 		} else {
 			return ticket;
 		}
 	});
-
 	dispatch({
 		type: 'FETCH_TICKETS',
 		payload: optimisticUpdatedTickets
 	});
-
-	axios
-		.post(`/api/tickets/${ticketData._id}`, ticketData)
-		.then((ticket) => axios.get(`/api/tickets/${ticketData._id}`))
-		.then((ticket) => {
-			dispatch({
-				type: 'EDIT_TICKET',
-				payload: ticket.data
-			});
-		})
-		.catch((err) =>
-			dispatch(
-				{
-					type: 'GET_ERRORS',
-					payload: err.response.data
-				},
-				{
-					type: 'FETCH_TICKETS',
-					payload: tickets
-				}
-			)
-		);
+	axios.post(`/api/tickets/${ticketData._id}`, ticketData).catch((err) =>
+		dispatch(
+			{
+				type: 'FETCH_TICKETS',
+				payload: tickets
+			},
+			{
+				type: 'GET_ERRORS',
+				payload: err.response.data
+			}
+		)
+	);
 };
 
 export const fetchTicket = (ticketId) => (dispatch) => {
