@@ -1,15 +1,9 @@
-- Sprints view dropdown / carousel
+- ticket page redesign - modal
 
-- ticket card view design
+!!! projects dropdown (show only project tickets)
 
-- ticket page design
+- project knows about his parent (Backend)
 
-- No tickets :O
+- start managing the development in home-agile
 
-- ERROR HANDLING
-
-!! create project
-
-!! edit project
-
-!! project <-> ticket relationship
+- error when no assignee in creat ticket

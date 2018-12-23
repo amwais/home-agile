@@ -1,12 +1,18 @@
 import React, { PureComponent } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import TicketCard from './TicketCard';
+import { Divider } from 'semantic-ui-react';
 
 class InnerList extends PureComponent {
 	render() {
-		const { ticket, index } = this.props;
+		const { ticket, index, onEditClick } = this.props;
 
-		return <TicketCard ticket={ticket} index={index} />;
+		return (
+			<div>
+				<TicketCard onEditClick={onEditClick} ticket={ticket} index={index} />
+				<Divider hidden />
+			</div>
+		);
 	}
 }
 
@@ -20,11 +26,18 @@ const StatusColumn = (props) => {
 					ref={provided.innerRef}
 					{...provided.droppableProps}
 					style={{
-						backgroundColor: snapshot.isDraggingOver ? 'yellowgreen' : 'inherit'
+						width: '300px'
+						//backgroundColor: snapshot.isDraggingOver ? 'rgba(53,81,92, 0.6)' : 'inherit'
 					}}
 				>
 					<h3>{props.column.title}</h3>
-					{tickets.map((ticket, i) => <InnerList key={i} ticket={ticket} index={i} />)}
+					<Divider />
+					{console.log(tickets.sort((a, b) => (a.priority > b.priority ? 1 : -1)))}
+					{tickets
+						.sort((a, b) => (a.priority > b.priority ? 1 : -1))
+						.map((ticket, i) => (
+							<InnerList onEditClick={props.onEditClick} key={i} ticket={ticket} index={i} />
+						))}
 					{provided.placeholder}
 				</div>
 			)}

@@ -1,16 +1,40 @@
 import React, { Component } from 'react';
-import { Card, Image } from 'semantic-ui-react';
+import { Card, Image, Button, Label, Icon } from 'semantic-ui-react';
 import { Draggable } from 'react-beautiful-dnd';
 
 export default class TicketCard extends Component {
 	render() {
-		const { ticket, index } = this.props;
+		const { ticket, index, onEditClick } = this.props;
 		return (
 			<Draggable draggableId={ticket._id} index={index}>
 				{(provided, snapshot) => (
 					<div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
 						<Card>
 							<Card.Content>
+								<Button
+									basic
+									color="red"
+									content={ticket.ticketType}
+									style={{
+										cursor: 'inherit'
+									}}
+								/>
+								<Button
+									onClick={() => onEditClick(ticket)}
+									animated="vertical"
+									style={{
+										marginRight: '10px',
+										position: 'absolute',
+										right: '0'
+									}}
+								>
+									<Button.Content hidden>Edit</Button.Content>
+									<Button.Content visible>
+										<Icon name="edit" />
+									</Button.Content>
+								</Button>
+								<br />
+								<br />
 								<Image floated="right" size="mini" src={ticket.assignee.avatar} />
 
 								<Card.Header style={{ marginBottom: '8px' }}>
@@ -30,14 +54,15 @@ export default class TicketCard extends Component {
 										ticket.project.name
 									)}
 								</Card.Meta>
-								<Card.Description>{'Ticket Type: ' + ticket.ticketType}</Card.Description>
-								<Card.Meta>{'Component: ' + ticket.component}</Card.Meta>
-								<br />
 								<Card.Description>{ticket.description}</Card.Description>
 							</Card.Content>
 							<Card.Content extra>
 								<div className="">
-									<Card.Meta>{'Status: ' + ticket.status}</Card.Meta>
+									<Card.Meta>
+										<Label as="a" color="red">
+											{ticket.priority}
+										</Label>
+									</Card.Meta>
 								</div>
 							</Card.Content>
 						</Card>
