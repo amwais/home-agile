@@ -9,7 +9,7 @@
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm --prefix client install && npm --prefix client run build"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run start && npm --prefix client install && npm --prefix client run build"
   },
   "author": "Amir Waisman",
   "license": "ISC",
