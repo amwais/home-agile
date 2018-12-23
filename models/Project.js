@@ -6,13 +6,9 @@ const ProjectSchema = new Schema({
 		type: String,
 		required: true
 	},
-	subProject: [
-		{
-			// type: Schema.Types.ObjectId,
-			type: String,
-			ref: 'projects'
-		}
-	],
+	description: {
+		type: String
+	},
 	description: {
 		type: String
 	},

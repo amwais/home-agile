@@ -135,6 +135,14 @@ export const toggleEditTicket = (ticket) => (dispatch) => {
 	});
 };
 
+// toggle edit ticket modal
+export const toggleDisplayTicket = (ticket) => (dispatch) => {
+	dispatch({
+		type: 'TOGGLE_DISPLAY_TICKET',
+		payload: ticket
+	});
+};
+
 export const clearTicket = () => (dispatch) => {
 	dispatch({
 		type: 'CLEAR_TICKET'

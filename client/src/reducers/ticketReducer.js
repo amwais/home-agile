@@ -1,9 +1,10 @@
 const initialState = {
-	ticket: null,
+	ticket: {},
 	tickets: [],
 	isLoading: false,
 	isCreateTicketOpen: false,
-	isEditTicketOpen: false
+	isEditTicketOpen: false,
+	isDisplayTicketOpen: false
 };
 
 export default (state = initialState, action) => {
@@ -32,6 +33,11 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				ticket: null
+			};
+		case 'TOGGLE_DISPLAY_TICKET':
+			return {
+				...state,
+				isDisplayTicketOpen: !state.isDisplayTicketOpen
 			};
 		case 'TOGGLE_CREATE_TICKET':
 			return {

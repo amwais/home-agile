@@ -1,84 +1,66 @@
 import React, { Component } from 'react';
-import { Container, Header, Divider, Image, Segment, Icon, Button } from 'semantic-ui-react';
+import { Modal, Button, Image, Header } from 'semantic-ui-react';
 
 export default class Ticket extends Component {
+	state = {
+		open: true,
+		dimmer: 'blurring',
+		ticket: {
+			id: null,
+			project: {
+				name: '',
+				id: null
+			},
+			ticketType: '',
+			title: '',
+			description: '',
+			component: '',
+			assignee: '',
+			sprint: '',
+			priority: null,
+			createdBy: null,
+			createdAt: null,
+			status: null
+		}
+	};
+
 	componentDidMount() {
 		const { id } = this.props.match.params;
 		this.props.fetchTicket(id);
+
+		this.setState({ ticket: this.props.ticket.ticket });
 	}
 
+	close = () => this.setState({ open: false });
+
 	render() {
-		const { ticket } = this.props.ticket;
+		const { open, dimmer, ticket } = this.state;
+
+		// const { name, _id } = ticket.project;
 
 		return (
 			<div>
-				<Container>
-					<Button onClick={() => this.props.toggleEditTicket(ticket)} animated="vertical">
-						<Button.Content hidden>Edit</Button.Content>
-						<Button.Content visible>
-							<Icon name="edit" />
-						</Button.Content>
-					</Button>
-				</Container>
-
-				<Container className="ticket">
-					{ticket && (
-						<div>
-							<Header className="ticket-header" as="h2">
-								{ticket.title}
-							</Header>
-							<Divider />
-							<Segment raised>
-								<p>
-									<strong>Description:</strong> {ticket.description}
-								</p>
-							</Segment>
-							<Segment raised>
-								{ticket.subProject ? (
-									<p>
-										<strong>Project:</strong> {ticket.project.name}
-										<br />
-										<br />
-										<strong>Sub-Project:</strong> {ticket.subProject.name}
-									</p>
-								) : (
-									<p>
-										<strong>Project:</strong> {ticket.project.name}
-									</p>
-								)}
-							</Segment>
-							<Segment raised>
-								<strong>Created at: </strong>
-								{ticket.createdAt}
-								<br />
-								<br />
-								<strong>Type: </strong>
-								{ticket.ticketType}
-								<br />
-								<br />
-								<strong>Status: </strong>
-								{ticket.status}
-								<br />
-								<br />
-								<strong>Component: </strong>
-								{ticket.component}
-								<br />
-								<br />
-								<strong>Priority: </strong>
-								{ticket.priority}
-							</Segment>
-							<Segment raised>
-								<strong>Assignee: </strong>
-								{ticket.assignee.name}
-								<br />
-								<br />
-								<strong>Created by: </strong>
-								{ticket.createdBy && <Image size="mini" src={ticket.createdBy.avatar} />}
-								{ticket.createdBy && ticket.createdBy.name}
-							</Segment>
-						</div>
-					)}
-				</Container>
+				<Modal dimmer={dimmer} open={open} onClose={this.close}>
+					<Modal.Header>{ticket.title}</Modal.Header>
+					<Modal.Content image>
+						<Image
+							wrapped
+							size="medium"
+							src="https://react.semantic-ui.com/images/avatar/large/rachel.png"
+						/>
+						<Modal.Description>
+							<Header>Status: {ticket.status}</Header>
+							<Button
+								basic
+								color="red"
+								content={ticket.ticketType}
+								style={{
+									cursor: 'inherit'
+								}}
+							/>
+						</Modal.Description>
+					</Modal.Content>
+				</Modal>
 			</div>
 		);
 	}

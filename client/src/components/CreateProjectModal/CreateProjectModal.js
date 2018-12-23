@@ -8,7 +8,7 @@ export default class CreateProjectModal extends Component {
 		project: {
 			name: '',
 			privateProject: false,
-			parentProject: ''
+			description: ''
 		}
 	};
 
@@ -51,19 +51,14 @@ export default class CreateProjectModal extends Component {
 								/>
 							</Form.Group>
 							<Form.Group widths="equal">
-								<Form.Select
+								<Form.TextArea
 									onChange={this.onChange}
-									name="parentProject"
-									fluid
-									label="Parent Project"
-									options={this.props.projects.map((project) => {
-										return { text: project.name, value: project._id };
-									})}
-									placeholder="Project"
-									value={project.parentProject}
+									name="description"
+									label="Project Description"
+									placeholder="Project Description"
+									value={project.description}
 								/>
 							</Form.Group>
-
 							<Form.Group widths="equal">
 								<Form.Checkbox
 									name="privateProject"
@@ -88,7 +83,7 @@ export default class CreateProjectModal extends Component {
 							positive
 							icon="checkmark"
 							labelPosition="right"
-							content="Add Ticket"
+							content="Add Project"
 							onClick={(e) => this.onSubmit(e, this.state.project)}
 						/>
 					</Modal.Actions>

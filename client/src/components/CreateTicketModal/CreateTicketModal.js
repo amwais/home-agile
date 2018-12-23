@@ -11,7 +11,6 @@ export default class CreateTicketModal extends Component {
 		ticket: {
 			id: null,
 			project: '',
-			subProject: '',
 			ticketType: '',
 			title: '',
 			description: '',
@@ -63,19 +62,6 @@ export default class CreateTicketModal extends Component {
 									})}
 									placeholder="Project"
 									value={ticket.project}
-								/>
-								<Form.Select
-									onChange={this.onChange}
-									name="subProject"
-									fluid
-									label="Sub-Project"
-									options={this.props.projects
-										.map((project) => {
-											return { text: project.name, value: project._id };
-										})
-										.filter((option) => option.value !== ticket.project)}
-									placeholder="Sub-Project"
-									value={ticket.subProject}
 								/>
 								<Form.Select
 									onChange={this.onChange}

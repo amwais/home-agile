@@ -11,7 +11,6 @@ export default class EditTicketModal extends Component {
 		ticket: {
 			id: null,
 			project: '',
-			subProject: '',
 			ticketType: '',
 			title: '',
 			description: '',
@@ -61,19 +60,6 @@ export default class EditTicketModal extends Component {
 				ticket: {
 					...this.state.ticket,
 					project: populatedProject
-				}
-			});
-		} else if (name === 'subProject') {
-			const project = this.props.projects.filter((project) => project._id === value)[0];
-			const { _id, name } = project;
-			const populatedProject = {
-				_id,
-				name
-			};
-			this.setState({
-				ticket: {
-					...this.state.ticket,
-					subProject: populatedProject
 				}
 			});
 		} else {
@@ -132,25 +118,6 @@ export default class EditTicketModal extends Component {
 											[]
 										)
 									}
-								/>
-								<Form.Select
-									onChange={this.onChange}
-									name="subProject"
-									fluid
-									label="Sub-Project"
-									options={
-										this.props.projects ? (
-											this.props.projects
-												.map((project, i) => {
-													return { key: i, text: project.name, value: project._id };
-												})
-												.filter((project) => project.text !== ticket.project.name)
-										) : (
-											[]
-										)
-									}
-									value={ticket.subProject._id}
-									placeholder={'Sub-Project'}
 								/>
 								<Form.Select
 									onChange={this.onChange}

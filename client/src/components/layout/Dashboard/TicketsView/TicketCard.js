@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Card, Image, Button, Label, Icon } from 'semantic-ui-react';
 import { Draggable } from 'react-beautiful-dnd';
+import { toggleEditTicket, toggleDisplayTicket } from '../../../../actions/ticketActions';
 
 export default class TicketCard extends Component {
 	render() {
@@ -20,7 +21,7 @@ export default class TicketCard extends Component {
 									}}
 								/>
 								<Button
-									onClick={() => onEditClick(ticket)}
+									onClick={() => toggleEditTicket(ticket)}
 									animated="vertical"
 									style={{
 										marginRight: '10px',

@@ -47,8 +47,8 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), (req, res) 
 // @desc Create a project
 // @access Private
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
-	const { name, privateProject, tickets } = req.body;
-	const projectFields = { name, privateProject, tickets };
+	const { name, privateProject, tickets, description } = req.body;
+	const projectFields = { name, privateProject, tickets, description };
 
 	projectFields.owner = req.user.id;
 	const newProject = new Project(projectFields);
@@ -62,8 +62,8 @@ router.post('/:id', passport.authenticate('jwt', { session: false }), (req, res)
 	Project.findById(req.params.id)
 		.then((project) => {
 			if (project.owner == req.user.id) {
-				const { name, privateProject, tickets, subProject } = req.body;
-				const projectFields = { name, privateProject, tickets, subProject };
+				const { name, privateProject, tickets, description } = req.body;
+				const projectFields = { name, privateProject, tickets, description };
 				Project.findByIdAndUpdate(req.params.id, { $set: projectFields }, { new: true })
 					.then((updatedProject) => res.json(updatedProject))
 					.catch((err) => res.status(404).json({ err }));

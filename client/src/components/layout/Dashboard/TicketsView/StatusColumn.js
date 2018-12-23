@@ -32,7 +32,6 @@ const StatusColumn = (props) => {
 				>
 					<h3>{props.column.title}</h3>
 					<Divider />
-					{console.log(tickets.sort((a, b) => (a.priority > b.priority ? 1 : -1)))}
 					{tickets
 						.sort((a, b) => (a.priority > b.priority ? 1 : -1))
 						.map((ticket, i) => (
