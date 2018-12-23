@@ -4,9 +4,9 @@ import { DragDropContext } from 'react-beautiful-dnd';
 
 class InnerList extends PureComponent {
 	render() {
-		const { column, tickets, index } = this.props;
+		const { column, tickets, index, onEditClick } = this.props;
 
-		return <StatusColumn column={column} tickets={tickets} index={index} />;
+		return <StatusColumn column={column} tickets={tickets} index={index} onEditClick={onEditClick} />;
 	}
 }
 
@@ -17,15 +17,9 @@ export default class TicketsView extends Component {
 		this.props.fetchProjects();
 	}
 
-	// componentDidUpdate() {
-	// 	this.props.fetchTickets();
-	// }
-
 	onDragStart = (start) => {
 		this.props.fetchTicket(start.draggableId);
 	};
-
-	onDragUpdate = (update) => {};
 
 	onDragEnd = (result) => {
 		const { ticket } = this.props.ticket;
@@ -35,7 +29,7 @@ export default class TicketsView extends Component {
 		}
 		const updatedTicket = ticket;
 
-		updatedTicket['status'] = result.destination.droppableId;
+		updatedTicket.status = result.destination.droppableId;
 
 		this.props.editTicketStatus(updatedTicket);
 
@@ -53,17 +47,20 @@ export default class TicketsView extends Component {
 					justifyContent: 'space-evenly'
 				}}
 			>
-				<DragDropContext
-					onBeforeDragStart={this.onBeforeDragStart}
-					onDragStart={this.onDragStart}
-					onDragUpdate={this.onDragUpdate}
-					onDragEnd={this.onDragEnd}
-				>
+				<DragDropContext onDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
 					{ticketsView.colIds.map((colId, index) => {
 						const column = ticketsView.columns[colId];
 						const colTickets = tickets.filter((ticket) => ticket.status === column.id);
 
-						return <InnerList key={column.id} column={column} index={index} tickets={colTickets} />;
+						return (
+							<InnerList
+								key={column.id}
+								column={column}
+								index={index}
+								tickets={colTickets}
+								onEditClick={this.props.toggleEditTicket}
+							/>
+						);
 					})}
 				</DragDropContext>
 			</div>

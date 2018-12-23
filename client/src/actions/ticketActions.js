@@ -18,7 +18,8 @@ export const createTicket = (ticketData, history) => (dispatch) => {
 		);
 };
 
-export const editTicket = (ticketData, history) => (dispatch) => {
+export const editTicket = (ticketData, history) => (dispatch, getState) => {
+	const { tickets } = getState().ticket;
 	axios
 		.post(`/api/tickets/${ticketData._id}`, ticketData)
 		.then((ticket) => axios.get(`/api/tickets/${ticketData._id}`))
@@ -27,7 +28,19 @@ export const editTicket = (ticketData, history) => (dispatch) => {
 				type: 'EDIT_TICKET',
 				payload: ticket.data
 			});
-			history.push(`/tickets/${ticket.data._id}`);
+			const optimisticUpdatedTickets = tickets.map((ticket) => {
+				if (ticket._id === ticketData._id) {
+					ticket = ticketData;
+					return ticket;
+				} else {
+					return ticket;
+				}
+			});
+			dispatch({
+				type: 'FETCH_TICKETS',
+				payload: optimisticUpdatedTickets
+			});
+			toggleEditTicket(ticketData);
 		})
 		.catch((err) =>
 			dispatch({
@@ -107,14 +120,14 @@ export const fetchTickets = () => (dispatch, getState) => {
 		.catch((err) => console.log(err));
 };
 
-// Open create ticket modal
+// toggle create ticket modal
 export const toggleCreateTicket = () => (dispatch) => {
 	dispatch({
 		type: 'TOGGLE_CREATE_TICKET'
 	});
 };
 
-// Open create ticket modal
+// toggle edit ticket modal
 export const toggleEditTicket = (ticket) => (dispatch) => {
 	dispatch({
 		type: 'TOGGLE_EDIT_TICKET',

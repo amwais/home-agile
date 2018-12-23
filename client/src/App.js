@@ -51,20 +51,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 handleAuth();
 
 class App extends Component {
-	onBeforeDragStart = () => {
-		/*...*/
-	};
-
-	onDragStart = () => {
-		/*...*/
-	};
-	onDragUpdate = () => {
-		/*...*/
-	};
-	onDragEnd = () => {
-		// the only one that is required
-	};
-
 	render() {
 		return (
 			<Provider store={store}>
