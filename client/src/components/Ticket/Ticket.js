@@ -36,28 +36,62 @@ export default class Ticket extends Component {
 	render() {
 		const { open, dimmer, ticket } = this.state;
 
-		// const { name, _id } = ticket.project;
-
 		return (
 			<div>
-				<Modal dimmer={dimmer} open={open} onClose={() => this.props.toggleDisplayTicket()}>
+				<Modal
+					style={{
+						top: '100px',
+						bottom: 'auto',
+						//right: 'auto',
+						//left: 'auto',
+						height: '62%'
+					}}
+					dimmer={dimmer}
+					open={open}
+					onClose={() => this.props.toggleDisplayTicket()}
+				>
 					<Modal.Header>{ticket.title}</Modal.Header>
-					<Modal.Content image>
+					<Modal.Content image style={{ backgroundColor: 'rgba(229, 233, 235, 0.4)' }}>
 						<Image
 							wrapped
 							size="medium"
-							src="https://react.semantic-ui.com/images/avatar/large/rachel.png"
+							src={require('../../images/agenda-concept-development-7376.jpg')}
 						/>
 						<Modal.Description>
-							<Header>Status: {ticket.status}</Header>
-							<Button
-								basic
-								color="red"
-								content={ticket.ticketType}
-								style={{
-									cursor: 'inherit'
-								}}
-							/>
+							<h5>
+								Status:{' '}
+								<Button
+									basic
+									color="red"
+									content={ticket.status}
+									style={{
+										cursor: 'inherit',
+										marginBottom: '10px'
+									}}
+								/>
+							</h5>
+							<h5>
+								Type:{' '}
+								<Button
+									basic
+									color="red"
+									content={ticket.ticketType}
+									style={{
+										cursor: 'inherit',
+										marginBottom: '10px'
+									}}
+								/>
+							</h5>
+
+							<div>description: {ticket.description}</div>
+							<br />
+							<br />
+							<p>Created at: {ticket.createdAt}</p>
+							<p>Project: {ticket.project.name}</p>
+							<p>component: {ticket.component}</p>
+							<p>Assignee: {ticket.assignee.name}</p>
+							<p>Priority: {ticket.priority}</p>
+							<p>Created By: {ticket.createdBy && ticket.createdBy.name}</p>
 						</Modal.Description>
 					</Modal.Content>
 				</Modal>
