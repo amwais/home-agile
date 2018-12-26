@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { Card, Image, Button, Label, Icon } from 'semantic-ui-react';
 import { Draggable } from 'react-beautiful-dnd';
-import { toggleEditTicket, toggleDisplayTicket } from '../../../../actions/ticketActions';
 
-export default class TicketCard extends Component {
+class TicketCard extends Component {
 	render() {
-		const { ticket, index, onEditClick } = this.props;
+		const { ticket, index, toggleEditTicket, toggleDisplayTicket } = this.props;
 		return (
 			<Draggable draggableId={ticket._id} index={index}>
 				{(provided, snapshot) => (
@@ -40,7 +39,10 @@ export default class TicketCard extends Component {
 
 								<Card.Header style={{ marginBottom: '8px' }}>
 									<a
-										href={`/tickets/${ticket._id}`}
+										onClick={() => {
+											toggleDisplayTicket(ticket);
+										}}
+										href="javascript:void(0)"
 										style={{
 											color: 'green'
 										}}
@@ -73,3 +75,5 @@ export default class TicketCard extends Component {
 		);
 	}
 }
+
+export default TicketCard;

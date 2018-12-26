@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Select } from 'semantic-ui-react';
 import { AddButton } from '../../Buttons/AddButton';
+import Ticket from '../../Ticket';
 import CreateTicketModal from '../../CreateTicketModal';
 import CreateProjectModal from '../../CreateProjectModal';
 import EditTicketModal from '../../EditTicketModal';
@@ -32,7 +33,7 @@ export default class Navbar extends Component {
 
 	render() {
 		const { isAuthenticated, user } = this.props.auth;
-		const { isCreateTicketOpen, isEditTicketOpen } = this.props.ticket;
+		const { isCreateTicketOpen, isEditTicketOpen, isDisplayTicketOpen } = this.props.ticket;
 		const { isCreateProjectOpen, isEditProjectOpen } = this.props.projects;
 
 		const authLinks = (
@@ -117,6 +118,7 @@ export default class Navbar extends Component {
 						</div>
 					</div>
 				</nav>
+				{isDisplayTicketOpen && <Ticket />}
 				{isCreateTicketOpen && <CreateTicketModal />}
 				{isEditTicketOpen && <EditTicketModal />}
 				{isCreateProjectOpen && <CreateProjectModal />}

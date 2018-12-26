@@ -5,7 +5,8 @@ import {
 	editTicketStatus,
 	fetchTicket,
 	clearTicket,
-	toggleEditTicket
+	toggleEditTicket,
+	toggleDisplayTicket
 } from '../../../../actions/ticketActions';
 
 import { fetchUsers } from '../../../../actions/userActions';
@@ -20,5 +21,6 @@ export default connect(mapStateToProps, {
 	editTicketStatus,
 	fetchTicket,
 	clearTicket,
-	toggleEditTicket
+	toggleEditTicket,
+	toggleDisplayTicket
 })(TicketsView);

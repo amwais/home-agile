@@ -79,7 +79,7 @@ export default class EditTicketModal extends Component {
 	};
 
 	render() {
-		const { ticket, dimmer } = this.state;
+		const { ticket, dimmer, open } = this.state;
 		const { columns } = this.props.ticketsView;
 
 		const userOptions = this.props.users.map((user) => {
@@ -94,11 +94,7 @@ export default class EditTicketModal extends Component {
 
 		return (
 			<div>
-				<Modal
-					dimmer={dimmer}
-					open={this.props.isOpen}
-					onClose={() => this.props.toggleEditTicket(this.props.ticket)}
-				>
+				<Modal dimmer={dimmer} open={open} onClose={() => this.props.toggleEditTicket(this.props.ticket)}>
 					<Modal.Header>Edit Ticket</Modal.Header>
 					<Modal.Content>
 						<Form>

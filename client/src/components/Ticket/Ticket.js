@@ -3,7 +3,7 @@ import { Modal, Button, Image, Header } from 'semantic-ui-react';
 
 export default class Ticket extends Component {
 	state = {
-		open: true,
+		open: this.props.isOpen,
 		dimmer: 'blurring',
 		ticket: {
 			id: null,
@@ -25,10 +25,10 @@ export default class Ticket extends Component {
 	};
 
 	componentDidMount() {
-		const { id } = this.props.match.params;
-		this.props.fetchTicket(id);
-
-		this.setState({ ticket: this.props.ticket.ticket });
+		const { ticket } = this.props;
+		if (ticket) {
+			this.setState({ ticket: this.props.ticket });
+		}
 	}
 
 	close = () => this.setState({ open: false });
@@ -40,7 +40,7 @@ export default class Ticket extends Component {
 
 		return (
 			<div>
-				<Modal dimmer={dimmer} open={open} onClose={this.close}>
+				<Modal dimmer={dimmer} open={open} onClose={() => this.props.toggleDisplayTicket()}>
 					<Modal.Header>{ticket.title}</Modal.Header>
 					<Modal.Content image>
 						<Image

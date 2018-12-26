@@ -137,6 +137,13 @@ export const toggleEditTicket = (ticket) => (dispatch) => {
 
 // toggle edit ticket modal
 export const toggleDisplayTicket = (ticket) => (dispatch) => {
+	if (ticket) {
+		dispatch({
+			type: 'FETCH_TICKET_DETAILS',
+			payload: ticket
+		});
+	}
+
 	dispatch({
 		type: 'TOGGLE_DISPLAY_TICKET',
 		payload: ticket

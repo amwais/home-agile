@@ -1,9 +1,13 @@
-- ticket page redesign - modal
+* ticket page redesign - modal
 
 ! projects dropdown (show only project tickets)
 
-!!* project knows about his tickets (Backend)
+!! project knows about his tickets (Backend)
 
 - start managing the development in home-agile
 
 - error when no assignee in creat ticket
+
+- colors for type and statuses
+
+-components

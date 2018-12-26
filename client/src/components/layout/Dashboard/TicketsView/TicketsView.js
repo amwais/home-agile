@@ -4,9 +4,17 @@ import { DragDropContext } from 'react-beautiful-dnd';
 
 class InnerList extends PureComponent {
 	render() {
-		const { column, tickets, index, onEditClick } = this.props;
+		const { column, tickets, index, toggleEditTicket, toggleDisplayTicket } = this.props;
 
-		return <StatusColumn column={column} tickets={tickets} index={index} onEditClick={onEditClick} />;
+		return (
+			<StatusColumn
+				column={column}
+				tickets={tickets}
+				index={index}
+				toggleEditTicket={toggleEditTicket}
+				toggleDisplayTicket={toggleDisplayTicket}
+			/>
+		);
 	}
 }
 
@@ -58,7 +66,8 @@ export default class TicketsView extends Component {
 								column={column}
 								index={index}
 								tickets={colTickets}
-								onEditClick={this.props.toggleEditTicket}
+								toggleEditTicket={this.props.toggleEditTicket}
+								toggleDisplayTicket={this.props.toggleDisplayTicket}
 							/>
 						);
 					})}

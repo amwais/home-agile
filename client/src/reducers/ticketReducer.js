@@ -37,7 +37,8 @@ export default (state = initialState, action) => {
 		case 'TOGGLE_DISPLAY_TICKET':
 			return {
 				...state,
-				isDisplayTicketOpen: !state.isDisplayTicketOpen
+				isDisplayTicketOpen: !state.isDisplayTicketOpen,
+				ticket: !action.payload ? {} : state.ticket
 			};
 		case 'TOGGLE_CREATE_TICKET':
 			return {

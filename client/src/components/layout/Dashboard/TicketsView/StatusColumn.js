@@ -5,11 +5,16 @@ import { Divider } from 'semantic-ui-react';
 
 class InnerList extends PureComponent {
 	render() {
-		const { ticket, index, onEditClick } = this.props;
+		const { ticket, index, toggleEditTicket, toggleDisplayTicket } = this.props;
 
 		return (
 			<div>
-				<TicketCard onEditClick={onEditClick} ticket={ticket} index={index} />
+				<TicketCard
+					toggleDisplayTicket={toggleDisplayTicket}
+					toggleEditTicket={toggleEditTicket}
+					ticket={ticket}
+					index={index}
+				/>
 				<Divider hidden />
 			</div>
 		);
@@ -35,7 +40,13 @@ const StatusColumn = (props) => {
 					{tickets
 						.sort((a, b) => (a.priority > b.priority ? 1 : -1))
 						.map((ticket, i) => (
-							<InnerList onEditClick={props.onEditClick} key={i} ticket={ticket} index={i} />
+							<InnerList
+								toggleEditTicket={props.toggleEditTicket}
+								key={i}
+								ticket={ticket}
+								index={i}
+								toggleDisplayTicket={props.toggleDisplayTicket}
+							/>
 						))}
 					{provided.placeholder}
 				</div>
