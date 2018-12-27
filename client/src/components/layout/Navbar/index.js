@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { logoutUser } from '../../../actions/authActions';
 import { toggleCreateTicket, clearTicket } from '../../../actions/ticketActions';
 import { toggleCreateProject } from '../../../actions/projectActions';
-import { setView } from '../../../actions/navBarActions';
+import { setProjectView } from '../../../actions/navBarActions';
 import { withRouter } from 'react-router-dom';
 
 const mapStateToProps = ({ auth, ticket, projects, navbar }) => ({
@@ -13,6 +13,10 @@ const mapStateToProps = ({ auth, ticket, projects, navbar }) => ({
 	navbar
 });
 
-export default connect(mapStateToProps, { logoutUser, toggleCreateTicket, toggleCreateProject, clearTicket, setView })(
-	withRouter(Navbar)
-);
+export default connect(mapStateToProps, {
+	logoutUser,
+	toggleCreateTicket,
+	toggleCreateProject,
+	clearTicket,
+	setProjectView
+})(withRouter(Navbar));

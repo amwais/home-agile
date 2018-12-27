@@ -1,6 +1,6 @@
-export const setView = (view) => (dispatch) => {
+export const setProjectView = (project) => (dispatch) => {
 	dispatch({
-		type: 'SET_VIEW',
-		payload: view
+		type: 'SET_PROJECT',
+		payload: project
 	});
 };

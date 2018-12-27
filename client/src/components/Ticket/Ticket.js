@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Button, Image, Header } from 'semantic-ui-react';
+import { Modal, Button, Image } from 'semantic-ui-react';
 
 export default class Ticket extends Component {
 	state = {

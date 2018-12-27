@@ -1,13 +1,13 @@
 const initialState = {
-	view: 'tickets'
+	project: '0'
 };
 
 export default (state = initialState, action) => {
 	switch (action.type) {
-		case 'SET_VIEW':
+		case 'SET_PROJECT':
 			return {
 				...state,
-				view: action.payload
+				project: action.payload
 			};
 		default:
 			return state;
