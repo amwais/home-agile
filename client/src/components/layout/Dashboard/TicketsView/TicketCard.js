@@ -50,13 +50,7 @@ class TicketCard extends Component {
 										{ticket.title}
 									</a>
 								</Card.Header>
-								<Card.Meta>
-									{ticket.subProject ? (
-										ticket.project.name + ' / ' + ticket.subProject.name
-									) : (
-										ticket.project.name
-									)}
-								</Card.Meta>
+								<Card.Meta>{ticket.project.name}</Card.Meta>
 								<Card.Description>{ticket.description}</Card.Description>
 							</Card.Content>
 							<Card.Content extra>

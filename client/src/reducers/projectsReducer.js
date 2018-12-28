@@ -1,6 +1,6 @@
 const initialState = {
 	project: null,
-	projects: null,
+	projects: [],
 	isLoading: false,
 	isCreateProjectOpen: false,
 	isEditProjectOpen: false

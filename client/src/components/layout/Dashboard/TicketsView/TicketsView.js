@@ -31,16 +31,12 @@ export default class TicketsView extends Component {
 
 	onDragEnd = (result) => {
 		const { ticket } = this.props.ticket;
-
 		if (!result.destination) {
 			return;
 		}
 		const updatedTicket = ticket;
-
 		updatedTicket.status = result.destination.droppableId;
-
 		this.props.editTicketStatus(updatedTicket);
-
 		this.props.clearTicket();
 	};
 

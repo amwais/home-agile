@@ -28,7 +28,19 @@ export default class Navbar extends Component {
 	};
 
 	handleViewChange = (e, { value }) => {
-		this.props.setView(value);
+		this.props.setProjectView(value);
+	};
+
+	projectViewOptions = () => {
+		const { projects } = this.props.projects;
+
+		const projectOptions = projects
+			.map((project, i) => {
+				return { key: i, text: project.name, value: project._id };
+			})
+			.sort((a, b) => (a.text > b.text ? 1 : -1));
+
+		return [ ...projectOptions, { key: 100, text: 'All Projects', value: '0' } ];
 	};
 
 	render() {
@@ -101,12 +113,9 @@ export default class Navbar extends Component {
 									</li>
 									<li className="nav-item">
 										<Select
-											placeholder="Select View"
-											options={[
-												{ key: 'tk', value: 'tickets', text: 'Tickets View' },
-												{ key: 'pr', value: 'projects', text: 'Projects View' }
-											]}
-											value={this.props.navbar.view}
+											placeholder="Select Project"
+											options={this.projectViewOptions()}
+											value={this.props.navbar.project}
 											onChange={this.handleViewChange}
 										/>
 									</li>

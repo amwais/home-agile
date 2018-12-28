@@ -24,7 +24,6 @@
     "mongoose": "^5.2.6",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
-    "react-beautiful-dnd": "^10.0.3",
     "redux-optimist": "^1.0.0",
     "validator": "^10.5.0"
   },
