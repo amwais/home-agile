@@ -54,7 +54,14 @@ export default class TicketsView extends Component {
 				<DragDropContext onDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
 					{ticketsView.colIds.map((colId, index) => {
 						const column = ticketsView.columns[colId];
-						const colTickets = tickets.filter((ticket) => ticket.status === column.id);
+						const { project } = this.props.navbar;
+
+						const colTickets =
+							project === '0'
+								? tickets.filter((ticket) => ticket.status === column.id)
+								: tickets.filter(
+										(ticket) => ticket.status === column.id && ticket.project._id === project
+									);
 
 						return (
 							<InnerList

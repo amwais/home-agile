@@ -27,6 +27,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
 		.catch((err) => res.status(404).json({ err }));
 });
 
+// TBD 'Access forbidden'
 // @route GET api/projects/:id
 // @desc Get a project
 // @access Private
@@ -35,9 +36,14 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), (req, res) 
 		.populate('owner', [ 'name', 'avatar' ])
 		.then((project) => {
 			if (project) {
-				res.json(project);
+				console.log(project);
+
+				if (project.privateProject && project.owner._id != req.user.id) {
+					return res.status(404).json({ forbidden: 'Access denied' });
+				}
+				return res.json(project);
 			} else {
-				res.status(404).json({ notFound: 'Project not found.' });
+				return res.status(404).json({ notFound: 'Project not found.' });
 			}
 		})
 		.catch((err) => res.status(404).json({ err }));

@@ -23,6 +23,7 @@ class InnerList extends PureComponent {
 
 const StatusColumn = (props) => {
 	const { tickets } = props;
+	tickets.sort((a, b) => (a.priority > b.priority ? 1 : -1));
 
 	return (
 		<Droppable droppableId={props.column.id} type="ticket">
@@ -37,17 +38,15 @@ const StatusColumn = (props) => {
 				>
 					<h3>{props.column.title}</h3>
 					<Divider />
-					{tickets
-						.sort((a, b) => (a.priority > b.priority ? 1 : -1))
-						.map((ticket, i) => (
-							<InnerList
-								toggleEditTicket={props.toggleEditTicket}
-								key={i}
-								ticket={ticket}
-								index={i}
-								toggleDisplayTicket={props.toggleDisplayTicket}
-							/>
-						))}
+					{tickets.map((ticket, i) => (
+						<InnerList
+							toggleEditTicket={props.toggleEditTicket}
+							key={i}
+							ticket={ticket}
+							index={i}
+							toggleDisplayTicket={props.toggleDisplayTicket}
+						/>
+					))}
 					{provided.placeholder}
 				</div>
 			)}

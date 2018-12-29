@@ -4,6 +4,7 @@ const keys = require('../../config/keys');
 const passport = require('passport');
 
 const Ticket = require('../../models/Ticket');
+const Project = require('../../models/Project');
 const User = require('../../models/User');
 
 // @route GET api/tickets/
@@ -13,9 +14,18 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
 	Ticket.find()
 		.populate('assignee', [ 'name', 'avatar' ])
 		.populate('createdBy', [ 'name', 'avatar' ])
-		.populate('project', [ 'name' ])
+		.populate('project', [ 'name', 'privateProject', 'owner' ])
 		.populate('subProject', [ 'name' ])
-		.then((tickets) => res.json(tickets))
+		.then((tickets) => {
+			const filteredTickets = tickets.filter((ticket) => {
+				const { privateProject, owner } = ticket.project;
+				if (privateProject && owner != req.user.id) {
+					return false;
+				}
+				return true;
+			});
+			res.json(filteredTickets);
+		})
 		.catch((err) => res.status(404).json({ err }));
 });
 
@@ -29,7 +39,13 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), (req, res) 
 		.populate('project', [ 'name' ])
 		.populate('subProject', [ 'name' ])
 		.then((ticket) => {
-			res.json(ticket);
+			Project.findById(ticket.project._id).then((project) => {
+				if (project.privateProject && project.owner != req.user.id) {
+					return res.status(404).json({ notAllowed: 'You are not allowed to see this ticket' });
+				}
+
+				return res.json(ticket);
+			});
 		})
 		.catch((err) => res.status(404).json({ err }));
 });
