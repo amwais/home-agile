@@ -12,7 +12,13 @@ import {
 import { fetchUsers } from '../../../../actions/userActions';
 import { fetchProjects } from '../../../../actions/projectActions';
 
-const mapStateToProps = ({ auth, ticket, users, ticketsView }) => ({ auth, ticket, users, ticketsView });
+const mapStateToProps = ({ auth, ticket, users, ticketsView, navbar }) => ({
+	auth,
+	ticket,
+	users,
+	ticketsView,
+	navbar
+});
 
 export default connect(mapStateToProps, {
 	fetchTickets,
