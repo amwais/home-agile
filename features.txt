@@ -1,13 +1,13 @@
-* ticket page redesign - modal
-
-! projects dropdown (show only project tickets)
-
-!! project knows about his tickets (Backend)
-
-- start managing the development in home-agile
+* ticket modal - with url link
 
 - error when no assignee in creat ticket
 
 - colors for type and statuses
 
--components
+- components
+
+- cool background image for each project
+
+- fix bug when creating tickets (redirection)
+
+- column is self scrolling

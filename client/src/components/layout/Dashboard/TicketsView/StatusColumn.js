@@ -33,20 +33,28 @@ const StatusColumn = (props) => {
 					{...provided.droppableProps}
 					style={{
 						width: '300px'
-						//backgroundColor: snapshot.isDraggingOver ? 'rgba(53,81,92, 0.6)' : 'inherit'
 					}}
 				>
 					<h3>{props.column.title}</h3>
 					<Divider />
-					{tickets.map((ticket, i) => (
-						<InnerList
-							toggleEditTicket={props.toggleEditTicket}
-							key={i}
-							ticket={ticket}
-							index={i}
-							toggleDisplayTicket={props.toggleDisplayTicket}
-						/>
-					))}
+					<div
+						style={{
+							height: snapshot.isDraggingOver ? '95%' : 'inherit',
+							border: snapshot.isDraggingOver ? '3px dashed black' : 'none',
+							backgroundColor: snapshot.isDraggingOver ? 'rgba(51, 102, 255, 0.2)' : 'inherit'
+						}}
+					>
+						{tickets.map((ticket, i) => (
+							<InnerList
+								toggleEditTicket={props.toggleEditTicket}
+								key={i}
+								ticket={ticket}
+								index={i}
+								toggleDisplayTicket={props.toggleDisplayTicket}
+							/>
+						))}
+					</div>
+
 					{provided.placeholder}
 				</div>
 			)}
