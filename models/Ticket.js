@@ -6,10 +6,6 @@ const TicketSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'projects'
 	},
-	subProject: {
-		type: Schema.Types.ObjectId,
-		ref: 'projects'
-	},
 	ticketType: {
 		type: String
 	},
@@ -32,9 +28,6 @@ const TicketSchema = new Schema({
 	priority: {
 		// type: Number
 		type: String
-	},
-	sprint: {
-		type: Number
 	},
 	createdBy: {
 		type: Schema.Types.ObjectId,
