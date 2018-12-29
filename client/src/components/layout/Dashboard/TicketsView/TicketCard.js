@@ -42,6 +42,7 @@ class TicketCard extends Component {
 										onClick={() => {
 											toggleDisplayTicket(ticket);
 										}}
+										// eslint-disable-next-line
 										href="javascript:void(0)"
 										style={{
 											color: 'green'
