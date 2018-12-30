@@ -7,8 +7,14 @@ img {
 }
 
 .App {
+  background-image: url('./images/field-corn-air-frisch-158827.jpeg');
+  /* Full height */
   min-height: 100vh;
-  background-color: rgba(229, 233, 235, 0.4);
+  /* Center and scale the image nicely */
+  background-position: center !important;
+  background-repeat: repeat-y !important;
+  background-size: cover !important;
+  background-attachment: fixed !important;
 }
 
 .landing {

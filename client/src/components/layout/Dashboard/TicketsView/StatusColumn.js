@@ -35,8 +35,15 @@ const StatusColumn = (props) => {
 						width: '300px'
 					}}
 				>
-					<h3>{props.column.title}</h3>
-					<Divider />
+					<h3
+						style={{
+							fontFamily: 'Courier New',
+							textAlign: 'center'
+						}}
+					>
+						{props.column.title}
+					</h3>
+					<Divider clearing />
 					<div
 						style={{
 							height: snapshot.isDraggingOver ? '95%' : 'inherit',
