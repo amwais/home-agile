@@ -1,4 +1,4 @@
-* ticket modal - with url link
+- ticket modal - with url link
 
 - error when no assignee in creat ticket
 
