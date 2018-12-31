@@ -39,7 +39,7 @@ const StatusColumn = (props) => {
 						style={{
 							position: 'sticky',
 							top: '0',
-							zIndex: '120'
+							zIndex: '2'
 						}}
 					>
 						<h3
