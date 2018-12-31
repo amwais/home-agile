@@ -11,28 +11,36 @@ class TicketCard extends Component {
 					<div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
 						<Card>
 							<Card.Content>
-								<Button
-									basic
-									color="red"
-									content={ticket.ticketType}
-									style={{
-										cursor: 'inherit'
-									}}
-								/>
-								<Button
-									onClick={() => toggleEditTicket(ticket)}
-									animated="vertical"
-									style={{
-										marginRight: '10px',
-										position: 'absolute',
-										right: '0'
-									}}
-								>
-									<Button.Content hidden>Edit</Button.Content>
-									<Button.Content visible>
-										<Icon name="edit" />
-									</Button.Content>
-								</Button>
+								<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+									<Button
+										basic
+										color="red"
+										content={ticket.ticketType}
+										style={{
+											cursor: 'inherit'
+										}}
+										size="mini"
+									/>
+									<Label as="a" color="red">
+										{ticket.priority}
+									</Label>
+									<Button
+										onClick={() => toggleEditTicket(ticket)}
+										animated="vertical"
+										/*style={{
+											marginRight: '10px',
+											position: 'absolute',
+											right: '0'
+										}}*/
+										size="mini"
+									>
+										<Button.Content hidden>Edit</Button.Content>
+										<Button.Content visible>
+											<Icon name="edit" />
+										</Button.Content>
+									</Button>
+								</div>
+
 								<br />
 								<br />
 								<Image floated="right" size="mini" src={ticket.assignee.avatar} />
@@ -53,15 +61,6 @@ class TicketCard extends Component {
 								</Card.Header>
 								<Card.Meta>{ticket.project.name}</Card.Meta>
 								<Card.Description>{ticket.description}</Card.Description>
-							</Card.Content>
-							<Card.Content extra>
-								<div className="">
-									<Card.Meta>
-										<Label as="a" color="red">
-											{ticket.priority}
-										</Label>
-									</Card.Meta>
-								</div>
 							</Card.Content>
 						</Card>
 					</div>

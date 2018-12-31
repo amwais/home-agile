@@ -85,9 +85,22 @@ export default class Navbar extends Component {
 
 		return (
 			<div>
-				<nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
+				<nav
+					style={{
+						display: 'flex',
+						justifyContent: 'space-between'
+					}}
+					className="navbar navbar-expand-sm navbar-dark bg-dark mb-4"
+				>
 					<div className="container">
-						<Link className="nav-link" to="/">
+						<Link
+							style={{
+								fontFamily: 'Courier New',
+								fontSize: '18px'
+							}}
+							className="nav-link"
+							to="/"
+						>
 							Home Agile
 						</Link>
 						<button
