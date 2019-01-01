@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Select } from 'semantic-ui-react';
+import { Select, Button } from 'semantic-ui-react';
 import { AddButton } from '../../Buttons/AddButton';
 import Ticket from '../../Ticket';
 import CreateTicketModal from '../../CreateTicketModal';
@@ -88,21 +88,22 @@ export default class Navbar extends Component {
 				<nav
 					style={{
 						display: 'flex',
-						justifyContent: 'space-between'
+						justifyContent: 'space-between',
+						backgroundColor: 'black'
 					}}
-					className="navbar navbar-expand-sm navbar-dark bg-dark mb-4"
+					className="navbar navbar-expand-sm navbar-dark  mb-4"
 				>
 					<div className="container">
-						<Link
+						<Button
+							primary
+							basic
 							style={{
 								fontFamily: 'Courier New',
 								fontSize: '18px'
 							}}
-							className="nav-link"
-							to="/"
-						>
-							Home Agile
-						</Link>
+							content="Home Agile"
+						/>
+
 						<button
 							className="navbar-toggler"
 							type="button"

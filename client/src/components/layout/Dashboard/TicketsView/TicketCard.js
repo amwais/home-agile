@@ -9,7 +9,11 @@ class TicketCard extends Component {
 			<Draggable draggableId={ticket._id} index={index}>
 				{(provided, snapshot) => (
 					<div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-						<Card>
+						<Card
+							style={{
+								margin: '0 auto'
+							}}
+						>
 							<Card.Content>
 								<div style={{ display: 'flex', justifyContent: 'space-between' }}>
 									<Button

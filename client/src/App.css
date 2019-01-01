@@ -7,7 +7,7 @@ img {
 }
 
 .App {
-  background-image: url('./images/field-corn-air-frisch-158827.jpeg');
+  background-image: url('./images/astronomy-cosmos-dark-733475.jpg');
   /* Full height */
   min-height: 100vh;
   /* Center and scale the image nicely */
@@ -15,6 +15,7 @@ img {
   background-repeat: repeat-y !important;
   background-size: cover !important;
   background-attachment: fixed !important;
+  color: rgb(54, 219, 4);
 }
 
 .landing {

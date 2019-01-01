@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import TicketCard from './TicketCard';
-import { Divider } from 'semantic-ui-react';
+import { Divider, Button } from 'semantic-ui-react';
 
 class InnerList extends PureComponent {
 	render() {
@@ -42,14 +42,19 @@ const StatusColumn = (props) => {
 							zIndex: '2'
 						}}
 					>
-						<h3
+						<Button
+							fluid
+							color="green"
 							style={{
-								fontFamily: 'Courier New',
-								textAlign: 'center'
+								//fontFamily: 'Courier New',
+								color: 'black',
+								fontSize: '18px',
+								backgroundColor: snapshot.isDraggingOver ? 'rgba(51, 102, 255, 0.9)' : undefined
+								//opacity: '0.9'
 							}}
 						>
 							{props.column.title}
-						</h3>
+						</Button>
 						<Divider clearing />
 					</div>
 
