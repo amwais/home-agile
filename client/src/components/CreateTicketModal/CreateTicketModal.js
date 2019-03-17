@@ -64,7 +64,7 @@ export default class CreateTicketModal extends Component {
 		if (errorState.project || errorState.assignee || errorState.title || errorState.title) {
 			return;
 		} else {
-			this.props.createTicket(ticketData, this.props.history);
+			this.props.createTicket(ticketData);
 			this.props.toggleCreateTicket(this.props.ticket);
 		}
 	};

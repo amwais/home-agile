@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-export const createTicket = (ticketData, history) => (dispatch) => {
+export const createTicket = (ticketData) => (dispatch, getState) => {
+	const { tickets } = getState().ticket;
 	axios
 		.post('/api/tickets/', ticketData)
 		.then((ticket) => {
@@ -8,7 +9,11 @@ export const createTicket = (ticketData, history) => (dispatch) => {
 				type: 'CREATE_TICKET',
 				payload: ticket.data
 			});
-			history.push(`/tickets/${ticket.data._id}`);
+			const optimisticUpdatedTickets = [ ...tickets, ticket.data ];
+			dispatch({
+				type: 'FETCH_TICKETS',
+				payload: optimisticUpdatedTickets
+			});
 		})
 		.catch((err) =>
 			dispatch({
@@ -18,7 +23,7 @@ export const createTicket = (ticketData, history) => (dispatch) => {
 		);
 };
 
-export const editTicket = (ticketData, history) => (dispatch, getState) => {
+export const editTicket = (ticketData) => (dispatch, getState) => {
 	const { tickets } = getState().ticket;
 	axios
 		.post(`/api/tickets/${ticketData._id}`, ticketData)

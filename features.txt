@@ -1,11 +1,7 @@
 - project modal - fix bottom spacing
 
-- error when no assignee in creat ticket
-
 - colors for type and statuses
 
 - remove component from ticket
-
-- fix bug when creating tickets (redirection)
 
 - Improve top navbar design
