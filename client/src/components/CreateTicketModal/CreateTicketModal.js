@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Button, Modal, Form, Message } from 'semantic-ui-react';
 import { ticketTypes, priorities } from '../../constants';
 
-const options = [ { key: 'm', text: 'Male', value: 'male' }, { key: 'f', text: 'Female', value: 'female' } ];
-
 export default class CreateTicketModal extends Component {
 	state = {
 		open: true,
