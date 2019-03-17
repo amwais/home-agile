@@ -19,14 +19,23 @@ export default class CreateTicketModal extends Component {
 			createdAt: null
 		},
 		errors: {
-			projectError: false,
-			ticketTypeError: false,
-			titleError: false,
-			assigneeError: false
+			project: false,
+			ticketType: false,
+			title: false,
+			assignee: false
 		}
 	};
 
 	onChange = (e, { name, value }) => {
+		if ([ name ]) {
+			this.setState({
+				errors: {
+					...this.state.errors,
+					[name]: false
+				}
+			});
+		}
+
 		this.setState({
 			ticket: {
 				...this.state.ticket,
@@ -40,10 +49,10 @@ export default class CreateTicketModal extends Component {
 		const { project, assignee, title, ticketType } = ticketData;
 
 		const errorState = {
-			projectError: !project,
-			ticketTypeError: !ticketType,
-			titleError: !title,
-			assigneeError: !assignee
+			project: !project,
+			ticketType: !ticketType,
+			title: !title,
+			assignee: !assignee
 		};
 
 		this.setState({
@@ -52,9 +61,7 @@ export default class CreateTicketModal extends Component {
 			}
 		});
 
-		const { projectError, assigneeError, titleError, ticketTypeError } = errorState;
-
-		if (projectError || assigneeError || titleError || ticketTypeError) {
+		if (errorState.project || errorState.assignee || errorState.title || errorState.title) {
 			return;
 		} else {
 			this.props.createTicket(ticketData, this.props.history);
@@ -86,7 +93,7 @@ export default class CreateTicketModal extends Component {
 									})}
 									placeholder="Project"
 									value={ticket.project}
-									error={errors.projectError}
+									error={errors.project}
 								/>
 								<Form.Select
 									onChange={this.onChange}
@@ -96,7 +103,7 @@ export default class CreateTicketModal extends Component {
 									options={ticketTypes}
 									placeholder="Ticket Type"
 									value={ticket.ticketType}
-									error={errors.ticketTypeError}
+									error={errors.ticketType}
 								/>
 							</Form.Group>
 							<Form.Input
@@ -106,7 +113,7 @@ export default class CreateTicketModal extends Component {
 								label="Title"
 								placeholder="Short description of the task"
 								value={ticket.title}
-								error={errors.titleError}
+								error={errors.title}
 							/>
 							<Form.TextArea
 								onChange={this.onChange}
@@ -126,7 +133,7 @@ export default class CreateTicketModal extends Component {
 										return { text: user.name, value: user._id };
 									})}
 									value={ticket.assignee}
-									error={errors.assigneeError}
+									error={errors.assignee}
 								/>
 								<Form.Select
 									onChange={this.onChange}
@@ -138,10 +145,7 @@ export default class CreateTicketModal extends Component {
 									value={ticket.priority}
 								/>
 							</Form.Group>
-							{(errors.projectError ||
-								errors.ticketTypeError ||
-								errors.titleError ||
-								errors.assigneeError) && (
+							{(errors.project || errors.ticketType || errors.title || errors.assignee) && (
 								<Message
 									error
 									header="Missing Fields"
