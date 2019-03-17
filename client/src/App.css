@@ -7,7 +7,8 @@ img {
 }
 
 .App {
-  background-image: url('./images/astronomy-cosmos-dark-733475.jpg');
+  /* background-image: url('./images/astronomy-cosmos-dark-733475.jpg'); */
+  background-color: #172a3a;
   /* Full height */
   min-height: 100vh;
   /* Center and scale the image nicely */
@@ -15,7 +16,7 @@ img {
   background-repeat: repeat-y !important;
   background-size: cover !important;
   background-attachment: fixed !important;
-  color: rgb(54, 219, 4);
+  color: rgb(54, 219, 4, 0.7);
 }
 
 .landing {
