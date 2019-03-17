@@ -1,9 +1,8 @@
-- project modal - fix bottom spacing
 
 - colors for type and statuses
 
-- remove component from ticket
-
 - Improve top navbar design
 
-- Dashboard loading spinner
+- Redo ticket modal - with url link?
+
+- add ALL form validations

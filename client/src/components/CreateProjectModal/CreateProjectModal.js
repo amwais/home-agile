@@ -33,6 +33,10 @@ export default class CreateProjectModal extends Component {
 		return (
 			<div>
 				<Modal
+					style={{
+						height: '56%',
+						marginTop: '5%'
+					}}
 					dimmer={dimmer}
 					open={this.props.isOpen}
 					onClose={() => this.props.toggleCreateProject(this.props.project)}
