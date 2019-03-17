@@ -27,7 +27,7 @@ export default class CreateTicketModal extends Component {
 	};
 
 	onChange = (e, { name, value }) => {
-		if ([ name ]) {
+		if ([ name ] && this.state.errors[[ name ]]) {
 			this.setState({
 				errors: {
 					...this.state.errors,
