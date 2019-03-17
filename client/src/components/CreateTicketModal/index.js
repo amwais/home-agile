@@ -4,7 +4,7 @@ import { createTicket, toggleCreateTicket } from '../../actions/ticketActions';
 import { fetchUsers } from '../../actions/userActions';
 import { withRouter } from 'react-router-dom';
 
-const mapStateToProps = ({ ticket, users, projects }) => ({
+const mapStateToProps = ({ ticket, users, projects, errors }) => ({
 	isOpen: ticket.isCreateTicketOpen,
 	ticket: ticket.ticket,
 	projects: projects.projects,

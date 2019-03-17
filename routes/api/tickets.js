@@ -54,30 +54,20 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), (req, res) 
 // @desc Create a ticket
 // @access Private
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
-	const {
-		project,
-		subProject,
-		ticketType,
-		title,
-		description,
-		component,
-		assignee,
-		sprint,
-		priority,
-		_id
-	} = req.body;
+	const { project, ticketType, title, description, assignee, priority } = req.body;
 
 	const ticketFields = {
 		project,
-		subProject,
 		ticketType,
 		title,
 		description,
-		component,
 		assignee,
-		sprint,
 		priority
 	};
+
+	if (!project || !assignee || !ticketType || !title) {
+		return res.status(404).json({ error: 'Some fields are missing' });
+	}
 
 	User.findById(req.user.id).populate('createdBy', [ 'name', 'avatar' ]).then((createdBy) => {
 		User.findById(ticketFields.assignee).populate('assignee', [ 'name', 'avatar' ]).then((assignee) => {

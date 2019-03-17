@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, Form } from 'semantic-ui-react';
+import { Button, Modal, Form, Message } from 'semantic-ui-react';
 import { ticketTypes, priorities } from '../../constants';
 
 const options = [ { key: 'm', text: 'Male', value: 'male' }, { key: 'f', text: 'Female', value: 'female' } ];
@@ -9,17 +9,20 @@ export default class CreateTicketModal extends Component {
 		open: true,
 		dimmer: 'blurring',
 		ticket: {
-			id: null,
-			project: '',
-			ticketType: '',
+			project: null,
+			ticketType: null,
 			title: '',
 			description: '',
-			component: '',
-			assignee: '',
-			sprint: null,
+			assignee: null,
 			priority: null,
 			createdBy: null,
 			createdAt: null
+		},
+		errors: {
+			projectError: false,
+			ticketTypeError: false,
+			titleError: false,
+			assigneeError: false
 		}
 	};
 
@@ -34,12 +37,33 @@ export default class CreateTicketModal extends Component {
 
 	onSubmit = (e, ticketData) => {
 		e.preventDefault();
-		this.props.createTicket(ticketData, this.props.history);
-		this.props.toggleCreateTicket(this.props.ticket);
+		const { project, assignee, title, ticketType } = ticketData;
+
+		const errorState = {
+			projectError: !project,
+			ticketTypeError: !ticketType,
+			titleError: !title,
+			assigneeError: !assignee
+		};
+
+		this.setState({
+			errors: {
+				...errorState
+			}
+		});
+
+		const { projectError, assigneeError, titleError, ticketTypeError } = errorState;
+
+		if (projectError || assigneeError || titleError || ticketTypeError) {
+			return;
+		} else {
+			this.props.createTicket(ticketData, this.props.history);
+			this.props.toggleCreateTicket(this.props.ticket);
+		}
 	};
 
 	render() {
-		const { ticket, dimmer } = this.state;
+		const { ticket, dimmer, errors } = this.state;
 
 		return (
 			<div>
@@ -50,7 +74,7 @@ export default class CreateTicketModal extends Component {
 				>
 					<Modal.Header>Create a new ticket</Modal.Header>
 					<Modal.Content>
-						<Form>
+						<Form error>
 							<Form.Group widths="equal">
 								<Form.Select
 									onChange={this.onChange}
@@ -62,6 +86,7 @@ export default class CreateTicketModal extends Component {
 									})}
 									placeholder="Project"
 									value={ticket.project}
+									error={errors.projectError}
 								/>
 								<Form.Select
 									onChange={this.onChange}
@@ -71,6 +96,7 @@ export default class CreateTicketModal extends Component {
 									options={ticketTypes}
 									placeholder="Ticket Type"
 									value={ticket.ticketType}
+									error={errors.ticketTypeError}
 								/>
 							</Form.Group>
 							<Form.Input
@@ -80,6 +106,7 @@ export default class CreateTicketModal extends Component {
 								label="Title"
 								placeholder="Short description of the task"
 								value={ticket.title}
+								error={errors.titleError}
 							/>
 							<Form.TextArea
 								onChange={this.onChange}
@@ -89,14 +116,6 @@ export default class CreateTicketModal extends Component {
 								value={ticket.description}
 							/>
 							<Form.Group widths="equal">
-								<Form.Input
-									onChange={this.onChange}
-									name="component"
-									fluid
-									label="Component"
-									placeholder="Type to search..."
-									value={ticket.component}
-								/>
 								<Form.Select
 									onChange={this.onChange}
 									name="assignee"
@@ -107,9 +126,8 @@ export default class CreateTicketModal extends Component {
 										return { text: user.name, value: user._id };
 									})}
 									value={ticket.assignee}
+									error={errors.assigneeError}
 								/>
-							</Form.Group>
-							<Form.Group widths="equal">
 								<Form.Select
 									onChange={this.onChange}
 									name="priority"
@@ -119,18 +137,17 @@ export default class CreateTicketModal extends Component {
 									options={priorities}
 									value={ticket.priority}
 								/>
-								<Form.Select
-									onChange={this.onChange}
-									name="sprint"
-									fluid
-									label="Sprint"
-									placeholder="Sprint"
-									options={options}
-									disabled
-									value={ticket.sprint}
-								/>
 							</Form.Group>
-							<Form.Checkbox label="Place in backlog (No sprint)" defaultChecked />
+							{(errors.projectError ||
+								errors.ticketTypeError ||
+								errors.titleError ||
+								errors.assigneeError) && (
+								<Message
+									error
+									header="Missing Fields"
+									content="Please complete all the required fields."
+								/>
+							)}
 						</Form>
 					</Modal.Content>
 					<Modal.Actions>
