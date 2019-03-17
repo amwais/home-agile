@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Select, Button } from 'semantic-ui-react';
+import { Select, Label, Menu } from 'semantic-ui-react';
 import { AddButton } from '../../Buttons/AddButton';
 import Ticket from '../../Ticket';
 import CreateTicketModal from '../../CreateTicketModal';
@@ -49,34 +49,31 @@ export default class Navbar extends Component {
 		const { isCreateProjectOpen, isEditProjectOpen } = this.props.projects;
 
 		const authLinks = (
-			<ul className="navbar-nav ml-auto">
-				<li className="nav-item">
-					<a href="" className="nav-link" onClick={this.onLogOutClick}>
-						<img
-							className="rounded-circle"
-							style={{
-								width: '25px',
-								marginRight: '5px'
-							}}
-							src={user.avatar}
-							alt={user.name}
-							title="Gravatar goes here"
-						/>{' '}
-						Logout
-					</a>
-				</li>
-			</ul>
+			<div style={{ marginTop: 'auto', marginBottom: 'auto', left: '200px', position: 'relative' }}>
+				<img
+					className="rounded-circle"
+					style={{
+						width: '25px'
+					}}
+					src={user.avatar}
+					alt={user.name}
+					title="Gravatar goes here"
+				/>
+				<Label as="a" onClick={this.onLogOutClick} color="red" ribbon="right">
+					Logout
+				</Label>
+			</div>
 		);
 
 		const guestLinks = (
-			<ul className="navbar-nav ml-auto">
-				<li className="nav-item">
-					<Link className="nav-link" to="/register">
+			<ul className="">
+				<li className="">
+					<Link className="" to="/register">
 						Sign Up
 					</Link>
 				</li>
-				<li className="nav-item">
-					<Link className="nav-link" to="/login">
+				<li className="">
+					<Link className="" to="/login">
 						Login
 					</Link>
 				</li>
@@ -84,63 +81,50 @@ export default class Navbar extends Component {
 		);
 
 		return (
-			<div>
-				<nav
+			<div
+				style={{
+					marginBottom: '25px'
+				}}
+			>
+				<Menu
 					style={{
 						display: 'flex',
-						justifyContent: 'space-between',
-						backgroundColor: 'black'
+						justifyContent: 'space-around',
+						backgroundColor: '#010814'
 					}}
-					className="navbar navbar-expand-sm navbar-dark  mb-4"
 				>
-					<div className="container">
-						<Button
-							primary
-							basic
+					<Menu.Item style={{ right: '50px', position: 'relative' }}>
+						<Label style={{ color: 'white' }} as="a" href="/dashboard" color="blue" ribbon>
+							Home Agile
+						</Label>
+					</Menu.Item>
+
+					{isAuthenticated ? (
+						<span
 							style={{
-								fontFamily: 'Courier New',
-								fontSize: '18px'
+								display: 'flex'
 							}}
-							content="Home Agile"
-						/>
-
-						<button
-							className="navbar-toggler"
-							type="button"
-							data-toggle="collapse"
-							data-target="#mobile-nav"
 						>
-							<span className="navbar-toggler-icon" />
-						</button>
-
-						<div className="collapse navbar-collapse" id="mobile-nav">
-							{isAuthenticated ? (
-								<ul className="navbar-nav mr-auto">
-									<li className="nav-item">
-										<AddButton label="Ticket" onClick={this.onTicketAddButtonClick} />
-									</li>
-									<li className="nav-item">
-										<AddButton label="Project" onClick={this.onProjectAddButtonClick} />
-									</li>
-									<li className="nav-item">
-										<br />
-									</li>
-									<li className="nav-item">
-										<Select
-											placeholder="Select Project"
-											options={this.projectViewOptions()}
-											value={this.props.navbar.project}
-											onChange={this.handleViewChange}
-										/>
-									</li>
-								</ul>
-							) : (
-								undefined
-							)}
-							{isAuthenticated ? authLinks : guestLinks}
-						</div>
-					</div>
-				</nav>
+							<Menu.Item>
+								<AddButton label="Ticket" onClick={this.onTicketAddButtonClick} />
+							</Menu.Item>
+							<Menu.Item>
+								<AddButton label="Project" onClick={this.onProjectAddButtonClick} />
+							</Menu.Item>
+							<Menu.Item>
+								<Select
+									placeholder="Select Project"
+									options={this.projectViewOptions()}
+									value={this.props.navbar.project}
+									onChange={this.handleViewChange}
+								/>
+							</Menu.Item>
+						</span>
+					) : (
+						undefined
+					)}
+					{isAuthenticated ? authLinks : guestLinks}
+				</Menu>
 				{isDisplayTicketOpen && <Ticket />}
 				{isCreateTicketOpen && <CreateTicketModal />}
 				{isEditTicketOpen && <EditTicketModal />}

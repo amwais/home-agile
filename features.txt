@@ -1,8 +1,10 @@
 
 - colors for type and statuses
 
-- Improve top navbar design
-
 - Redo ticket modal - with url link?
 
 - add ALL form validations
+
+- manage projects
+
+- think about how to allow external users
