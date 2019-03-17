@@ -1,6 +1,7 @@
 import React, { Component, PureComponent } from 'react';
 import StatusColumn from './StatusColumn';
 import { DragDropContext } from 'react-beautiful-dnd';
+import { Dimmer, Loader, Image, Segment } from 'semantic-ui-react';
 
 class InnerList extends PureComponent {
 	render() {
@@ -51,6 +52,9 @@ export default class TicketsView extends Component {
 					justifyContent: 'space-evenly'
 				}}
 			>
+				<Dimmer active={ticketsView.loading}>
+					<Loader size="large">Loading</Loader>
+				</Dimmer>
 				<DragDropContext onDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
 					{ticketsView.colIds.map((colId, index) => {
 						const column = ticketsView.columns[colId];

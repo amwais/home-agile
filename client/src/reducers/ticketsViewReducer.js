@@ -21,7 +21,8 @@ const initialState = {
 			ticketIds: []
 		}
 	},
-	colIds: [ 'toDo', 'inProgress', 'inReview', 'done' ]
+	colIds: [ 'toDo', 'inProgress', 'inReview', 'done' ],
+	loading: false
 };
 
 export default (state = initialState, action) => {
@@ -30,6 +31,11 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				columns: action.payload
+			};
+		case 'TOGGLE_LOADING':
+			return {
+				...state,
+				loading: !state.loading
 			};
 		default:
 			return state;

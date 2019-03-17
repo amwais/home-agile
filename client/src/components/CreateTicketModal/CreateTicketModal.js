@@ -20,7 +20,8 @@ export default class CreateTicketModal extends Component {
 			project: false,
 			ticketType: false,
 			title: false,
-			assignee: false
+			assignee: false,
+			priority: false
 		}
 	};
 
@@ -44,13 +45,14 @@ export default class CreateTicketModal extends Component {
 
 	onSubmit = (e, ticketData) => {
 		e.preventDefault();
-		const { project, assignee, title, ticketType } = ticketData;
+		const { project, assignee, title, ticketType, priority } = ticketData;
 
 		const errorState = {
 			project: !project,
 			ticketType: !ticketType,
 			title: !title,
-			assignee: !assignee
+			assignee: !assignee,
+			priority: !priority
 		};
 
 		this.setState({
@@ -59,7 +61,7 @@ export default class CreateTicketModal extends Component {
 			}
 		});
 
-		if (errorState.project || errorState.assignee || errorState.title || errorState.title) {
+		if (errorState.project || errorState.assignee || errorState.title || errorState.title || errorState.priority) {
 			return;
 		} else {
 			this.props.createTicket(ticketData);
@@ -141,6 +143,7 @@ export default class CreateTicketModal extends Component {
 									placeholder="Priority"
 									options={priorities}
 									value={ticket.priority}
+									error={errors.priority}
 								/>
 							</Form.Group>
 							{(errors.project || errors.ticketType || errors.title || errors.assignee) && (

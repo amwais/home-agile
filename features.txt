@@ -5,3 +5,5 @@
 - remove component from ticket
 
 - Improve top navbar design
+
+- Dashboard loading spinner

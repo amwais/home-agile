@@ -102,6 +102,9 @@ export const fetchTicket = (ticketId) => (dispatch) => {
 };
 
 export const fetchTickets = () => (dispatch, getState) => {
+	dispatch({
+		type: 'TOGGLE_LOADING'
+	});
 	axios
 		.get('/api/tickets/')
 		.then((tickets) => {
@@ -116,10 +119,12 @@ export const fetchTickets = () => (dispatch, getState) => {
 			tickets.data.forEach((ticket) => {
 				populatedCols[ticket.status]['ticketIds'].push(ticket._id);
 			});
-
 			dispatch({
 				type: 'POPULATE_TICKETS',
 				payload: populatedCols
+			});
+			dispatch({
+				type: 'TOGGLE_LOADING'
 			});
 		})
 		.catch((err) => console.log(err));

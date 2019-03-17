@@ -25,9 +25,11 @@ class TicketCard extends Component {
 										}}
 										size="mini"
 									/>
-									<Label as="a" color="red">
-										{ticket.priority}
-									</Label>
+									{ticket.priority && (
+										<Label as="a" color="red">
+											{ticket.priority}
+										</Label>
+									)}
 									<Button
 										onClick={() => toggleEditTicket(ticket)}
 										animated="vertical"
