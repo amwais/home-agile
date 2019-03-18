@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Select, Label, Menu } from 'semantic-ui-react';
+import { Select, Label, Menu, Button } from 'semantic-ui-react';
 import { AddButton } from '../../Buttons/AddButton';
 import Ticket from '../../Ticket';
 import CreateTicketModal from '../../CreateTicketModal';
@@ -66,18 +66,22 @@ export default class Navbar extends Component {
 		);
 
 		const guestLinks = (
-			<ul className="">
-				<li className="">
-					<Link className="" to="/register">
-						Sign Up
-					</Link>
-				</li>
-				<li className="">
-					<Link className="" to="/login">
-						Login
-					</Link>
-				</li>
-			</ul>
+			<Button.Group
+				style={{
+					marginTop: 'auto',
+					marginBottom: 'auto',
+					left: '500px',
+					position: 'relative'
+				}}
+			>
+				<Button as="a" href="/login" positive>
+					Login
+				</Button>
+				<Button.Or />
+				<Button as="a" href="/register" color="blue">
+					Sign Up
+				</Button>
+			</Button.Group>
 		);
 
 		return (
@@ -89,12 +93,18 @@ export default class Navbar extends Component {
 				<Menu
 					style={{
 						display: 'flex',
-						justifyContent: 'space-around',
+						justifyContent: isAuthenticated ? 'space-around' : 'space-between',
 						backgroundColor: '#010814'
 					}}
 				>
-					<Menu.Item style={{ right: '50px', position: 'relative' }}>
-						<Label style={{ color: 'white' }} as="a" href="/dashboard" color="blue" ribbon>
+					<Menu.Item style={isAuthenticated ? { right: '50px', position: 'relative' } : {}}>
+						<Label
+							style={{ color: 'white' }}
+							as="a"
+							href="/dashboard"
+							color="blue"
+							ribbon={isAuthenticated}
+						>
 							Home Agile
 						</Label>
 					</Menu.Item>
