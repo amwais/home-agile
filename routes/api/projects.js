@@ -13,14 +13,8 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
 		.populate('owner', [ 'name', 'avatar' ])
 		.then((projects) => {
 			let resProjects = projects.filter((project) => {
-				if (!project.privateProject) {
-					return true;
-				} else {
-					if (project.owner._id == req.user.id) {
-						return true;
-					}
-				}
-				return false;
+				const members = project.members.map((member) => member.toString());
+				return members.includes(req.user.id);
 			});
 			res.json(resProjects);
 		})
@@ -36,9 +30,9 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), (req, res) 
 		.populate('owner', [ 'name', 'avatar' ])
 		.then((project) => {
 			if (project) {
-				console.log(project);
+				const members = project.members.map((member) => member.toString());
 
-				if (project.privateProject && project.owner._id != req.user.id) {
+				if (!members.includes(req.user.id)) {
 					return res.status(404).json({ forbidden: 'Access denied' });
 				}
 				return res.json(project);
@@ -53,8 +47,8 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), (req, res) 
 // @desc Create a project
 // @access Private
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
-	const { name, privateProject, tickets, description } = req.body;
-	const projectFields = { name, privateProject, tickets, description };
+	const { name, description } = req.body;
+	const projectFields = { name, description, members: [ req.user.id ] };
 
 	projectFields.owner = req.user.id;
 	const newProject = new Project(projectFields);
@@ -68,8 +62,8 @@ router.post('/:id', passport.authenticate('jwt', { session: false }), (req, res)
 	Project.findById(req.params.id)
 		.then((project) => {
 			if (project.owner == req.user.id) {
-				const { name, privateProject, tickets, description } = req.body;
-				const projectFields = { name, privateProject, tickets, description };
+				const { name, description, members } = req.body;
+				const projectFields = { name, description, members };
 				Project.findByIdAndUpdate(req.params.id, { $set: projectFields }, { new: true })
 					.then((updatedProject) => res.json(updatedProject))
 					.catch((err) => res.status(404).json({ err }));

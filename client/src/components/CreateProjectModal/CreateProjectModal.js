@@ -63,20 +63,6 @@ export default class CreateProjectModal extends Component {
 									value={project.description}
 								/>
 							</Form.Group>
-							<Form.Group widths="equal">
-								<Form.Checkbox
-									name="privateProject"
-									checked={this.state.project.privateProject}
-									onChange={() =>
-										this.setState({
-											project: {
-												...this.state.project,
-												privateProject: !this.state.project.privateProject
-											}
-										})}
-									label="Private Project? (Only you will be able to see it)"
-								/>
-							</Form.Group>
 						</Form>
 					</Modal.Content>
 					<Modal.Actions>

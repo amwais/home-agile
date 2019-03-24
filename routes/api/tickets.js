@@ -14,15 +14,12 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
 	Ticket.find()
 		.populate('assignee', [ 'name', 'avatar' ])
 		.populate('createdBy', [ 'name', 'avatar' ])
-		.populate('project', [ 'name', 'privateProject', 'owner' ])
-		.populate('subProject', [ 'name' ])
+		.populate('project', [ 'name', 'members' ])
 		.then((tickets) => {
 			const filteredTickets = tickets.filter((ticket) => {
-				const { privateProject, owner } = ticket.project;
-				if (privateProject && owner != req.user.id) {
-					return false;
-				}
-				return true;
+				const { members } = ticket.project;
+				const stringMembers = members.map((member) => member.toString());
+				return stringMembers.includes(req.user.id);
 			});
 			res.json(filteredTickets);
 		})
@@ -36,16 +33,15 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), (req, res) 
 	Ticket.findById(req.params.id)
 		.populate('createdBy', [ 'name', 'avatar' ])
 		.populate('assignee', [ 'name', 'avatar' ])
-		.populate('project', [ 'name' ])
-		.populate('subProject', [ 'name' ])
+		.populate('project', [ 'name', 'members' ])
 		.then((ticket) => {
-			Project.findById(ticket.project._id).then((project) => {
-				if (project.privateProject && project.owner != req.user.id) {
-					return res.status(404).json({ notAllowed: 'You are not allowed to see this ticket' });
-				}
+			const { members } = ticket.project;
+			const stringMembers = members.map((member) => member.toString());
+			if (!stringMembers.includes(req.user.id)) {
+				return res.status(404).json({ notAllowed: 'You are not allowed to see this ticket' });
+			}
 
-				return res.json(ticket);
-			});
+			return res.json(ticket);
 		})
 		.catch((err) => res.status(404).json({ err }));
 });
@@ -89,22 +85,10 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 // @desc Edit a ticket
 // @access Private
 router.post('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
-	const {
-		project,
-		subProject,
-		ticketType,
-		title,
-		description,
-		component,
-		assignee,
-		sprint,
-		priority,
-		status
-	} = req.body;
+	const { project, ticketType, title, description, component, assignee, sprint, priority, status } = req.body;
 
 	const ticketFields = {
 		project,
-		subProject,
 		ticketType,
 		title,
 		description,

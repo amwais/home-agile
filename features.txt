@@ -7,4 +7,20 @@
 
 - manage projects
 
-- think about how to allow external users
+                    think about how to allow external users:
+
+      DONE - Project has an admin, that created it (P0) 
+      
+      DONE - Project holds one or more members
+
+      DONE - Each member sees only the projects he's a member of (Remove private / public projects) (P0)
+
+      FE:
+      
+      - When creating project, show add members
+
+      - Add members to projects
+
+      - Add hovering username display
+
+
