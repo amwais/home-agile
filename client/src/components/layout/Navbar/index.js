@@ -2,7 +2,7 @@ import Navbar from './Navbar';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../../actions/authActions';
 import { toggleCreateTicket, clearTicket } from '../../../actions/ticketActions';
-import { toggleCreateProject } from '../../../actions/projectActions';
+import { toggleCreateProject, toggleEditProject } from '../../../actions/projectActions';
 import { setProjectView } from '../../../actions/navBarActions';
 import { withRouter } from 'react-router-dom';
 
@@ -17,6 +17,7 @@ export default connect(mapStateToProps, {
 	logoutUser,
 	toggleCreateTicket,
 	toggleCreateProject,
+	toggleEditProject,
 	clearTicket,
 	setProjectView
 })(withRouter(Navbar));

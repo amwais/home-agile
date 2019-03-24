@@ -1,7 +1,7 @@
 import React, { Component, PureComponent } from 'react';
 import StatusColumn from './StatusColumn';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { Dimmer, Loader, Image, Segment } from 'semantic-ui-react';
+import { Dimmer, Loader } from 'semantic-ui-react';
 
 class InnerList extends PureComponent {
 	render() {

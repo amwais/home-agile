@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Select, Label, Menu, Button } from 'semantic-ui-react';
+import { Select, Icon, Popup, Label, Menu, Button } from 'semantic-ui-react';
 import { AddButton } from '../../Buttons/AddButton';
 import Ticket from '../../Ticket';
 import CreateTicketModal from '../../CreateTicketModal';
@@ -27,6 +26,11 @@ export default class Navbar extends Component {
 		this.props.toggleCreateProject();
 	};
 
+	onProjectEditButtonClick = (e, project) => {
+		e.preventDefault();
+		this.props.toggleEditProject(project);
+	};
+
 	handleViewChange = (e, { value }) => {
 		this.props.setProjectView(value);
 	};
@@ -47,18 +51,26 @@ export default class Navbar extends Component {
 		const { isAuthenticated, user } = this.props.auth;
 		const { isCreateTicketOpen, isEditTicketOpen, isDisplayTicketOpen } = this.props.ticket;
 		const { isCreateProjectOpen, isEditProjectOpen } = this.props.projects;
+		const { project } = this.props.navbar;
 
 		const authLinks = (
 			<div style={{ marginTop: 'auto', marginBottom: 'auto', left: '200px', position: 'relative' }}>
-				<img
-					className="rounded-circle"
-					style={{
-						width: '25px'
-					}}
-					src={user.avatar}
-					alt={user.name}
-					title="Gravatar goes here"
+				<Popup
+					trigger={
+						<img
+							className="rounded-circle"
+							style={{
+								width: '25px'
+							}}
+							src={user.avatar}
+							alt={user.name}
+						/>
+					}
+					size="small"
+					content={user.name}
+					position="bottom center"
 				/>
+
 				<Label as="a" onClick={this.onLogOutClick} color="red" ribbon="right">
 					Logout
 				</Label>
@@ -129,6 +141,25 @@ export default class Navbar extends Component {
 									onChange={this.handleViewChange}
 								/>
 							</Menu.Item>
+							{project !== '0' && (
+								<Menu.Item>
+									<Popup
+										trigger={
+											<Icon
+												name="pencil"
+												link
+												color="blue"
+												inverted
+												size="large"
+												onClick={(e) => this.onProjectEditButtonClick(e, project)}
+											/>
+										}
+										size="small"
+										content="Edit this project"
+										position="bottom center"
+									/>
+								</Menu.Item>
+							)}
 						</span>
 					) : (
 						undefined

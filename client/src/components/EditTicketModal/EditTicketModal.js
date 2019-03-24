@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Button, Modal, Form } from 'semantic-ui-react';
 import { ticketTypes, priorities } from '../../constants';
 
-const options = [ { key: 'm', text: 'Male', value: 'male' }, { key: 'f', text: 'Female', value: 'female' } ];
-
 export default class EditTicketModal extends Component {
 	state = {
 		open: this.props.isOpen,
@@ -14,9 +12,7 @@ export default class EditTicketModal extends Component {
 			ticketType: '',
 			title: '',
 			description: '',
-			component: '',
 			assignee: '',
-			sprint: '',
 			priority: null,
 			createdBy: null,
 			createdAt: null,
@@ -141,14 +137,6 @@ export default class EditTicketModal extends Component {
 								value={ticket.description}
 							/>
 							<Form.Group widths="equal">
-								<Form.Input
-									onChange={this.onChange}
-									name="component"
-									fluid
-									label="Component"
-									placeholder="Type to search..."
-									value={ticket.component}
-								/>
 								<Form.Select
 									onChange={this.onChange}
 									name="assignee"
@@ -178,18 +166,7 @@ export default class EditTicketModal extends Component {
 									options={priorities}
 									value={ticket.priority}
 								/>
-								<Form.Select
-									onChange={this.onChange}
-									name="sprint"
-									fluid
-									label="Sprint"
-									placeholder="Sprint"
-									options={options}
-									disabled
-									value={ticket.sprint}
-								/>
 							</Form.Group>
-							<Form.Checkbox label="Place in backlog (No sprint)" defaultChecked />
 						</Form>
 					</Modal.Content>
 					<Modal.Actions>

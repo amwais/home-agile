@@ -7,16 +7,25 @@ export default class EditProjectModal extends Component {
 		dimmer: 'blurring',
 		project: {
 			name: '',
-			privateProject: false,
-			description: ''
+			description: '',
+			members: []
 		}
 	};
 
 	componentDidMount() {
-		const { project } = this.props;
+		const { projects, project } = this.props;
 
 		if (project) {
-			this.setState({ project });
+			const projectData = projects.find((proj) => proj._id === project);
+			const { name, description, members } = projectData;
+
+			this.setState({
+				project: {
+					name,
+					description,
+					members
+				}
+			});
 		}
 		this.props.fetchProjects();
 	}
@@ -33,7 +42,8 @@ export default class EditProjectModal extends Component {
 	onSubmit = (e, projectData) => {
 		e.preventDefault();
 		this.props.editProject(projectData, this.props.history);
-		this.props.toggleEditProject(this.props.project);
+		// this.props.toggleEditProject(this.props.project);
+		this.props.toggleEditProject();
 	};
 
 	render() {
@@ -66,20 +76,6 @@ export default class EditProjectModal extends Component {
 									label="Project Description"
 									placeholder="Project Description"
 									value={project.description}
-								/>
-							</Form.Group>
-							<Form.Group widths="equal">
-								<Form.Checkbox
-									name="privateProject"
-									checked={this.state.project.privateProject}
-									onChange={() =>
-										this.setState({
-											project: {
-												...this.state.project,
-												privateProject: !this.state.project.privateProject
-											}
-										})}
-									label="Private Project? (Only you will be able to see it)"
 								/>
 							</Form.Group>
 						</Form>
