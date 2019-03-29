@@ -19,20 +19,27 @@ export const createProject = (projectData, history) => (dispatch) => {
 };
 
 export const fetchProject = (projectId) => (dispatch) => {
-	axios
-		.get(`/api/projects/${projectId}`)
-		.then((project) => {
-			dispatch({
-				type: 'FETCH_PROJECT_DETAILS',
-				payload: project.data
-			});
-		})
-		.catch((err) =>
-			dispatch({
-				type: 'GET_ERRORS',
-				payload: err.response.data
+	if (projectId !== '0') {
+		axios
+			.get(`/api/projects/${projectId}`)
+			.then((project) => {
+				dispatch({
+					type: 'FETCH_PROJECT_DETAILS',
+					payload: project.data
+				});
 			})
-		);
+			.catch((err) =>
+				dispatch({
+					type: 'GET_ERRORS',
+					payload: err.response.data
+				})
+			);
+	} else {
+		dispatch({
+			type: 'FETCH_PROJECT_DETAILS',
+			payload: null
+		});
+	}
 };
 
 export const fetchProjects = () => (dispatch) => {

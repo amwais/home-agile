@@ -70,21 +70,26 @@ export default class CreateTicketModal extends Component {
 	};
 
 	getProjectMembersOptions = () => {
-		const { users } = this.props;
-		const { members } = this.props.project;
+		if (this.state.ticket.project) {
+			const ticketProject = this.props.projects.find((project) => project._id === this.state.ticket.project);
+			const { users } = this.props;
+			const memberIds = ticketProject.members.map((member) => member._id);
 
-		const filteredUsers = users.filter((user) => members.includes(user._id));
+			const filteredUsers = users.filter((user) => memberIds.includes(user._id));
 
-		const options = filteredUsers.map((user) => {
-			return { text: user.name, value: user._id };
-		});
+			console.log(filteredUsers);
 
-		return options;
+			const options = filteredUsers.map((user) => {
+				return { text: user.name, value: user._id };
+			});
+
+			return options;
+		}
+		return [ { key: 0, text: 'Please select a project', value: '0' } ];
 	};
 
 	render() {
 		const { ticket, dimmer, errors } = this.state;
-		console.log(this.state.ticket.project);
 
 		return (
 			<div>
