@@ -8,6 +8,7 @@ const mapStateToProps = ({ ticket, users, projects, errors }) => ({
 	isOpen: ticket.isCreateTicketOpen,
 	ticket: ticket.ticket,
 	projects: projects.projects,
+	project: projects.project,
 	users: users.users
 });
 

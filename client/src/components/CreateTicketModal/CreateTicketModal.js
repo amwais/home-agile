@@ -69,8 +69,22 @@ export default class CreateTicketModal extends Component {
 		}
 	};
 
+	getProjectMembersOptions = () => {
+		const { users } = this.props;
+		const { members } = this.props.project;
+
+		const filteredUsers = users.filter((user) => members.includes(user._id));
+
+		const options = filteredUsers.map((user) => {
+			return { text: user.name, value: user._id };
+		});
+
+		return options;
+	};
+
 	render() {
 		const { ticket, dimmer, errors } = this.state;
+		console.log(this.state.ticket.project);
 
 		return (
 			<div>
@@ -133,9 +147,7 @@ export default class CreateTicketModal extends Component {
 									fluid
 									label="Assignee"
 									placeholder="Assignee"
-									options={this.props.users.map((user) => {
-										return { text: user.name, value: user._id };
-									})}
+									options={this.getProjectMembersOptions()}
 									value={ticket.assignee}
 									error={errors.assignee}
 								/>

@@ -67,7 +67,10 @@ export const toggleEditProject = (project) => (dispatch) => {
 	});
 };
 
-export const editProject = (projectData, history) => (dispatch) => {
+export const editProject = (projectData) => (dispatch, getState) => {
+	const currentState = getState();
+	const { projects } = currentState.projects;
+
 	axios
 		.post(`/api/projects/${projectData._id}`, projectData)
 		.then((project) => axios.get(`/api/projects/${projectData._id}`))
@@ -76,7 +79,18 @@ export const editProject = (projectData, history) => (dispatch) => {
 				type: 'EDIT_PROJECT',
 				payload: project.data
 			});
-			history.push(`/projects/${project.data._id}`);
+			const optimisticUpdatedProjects = projects.map((project) => {
+				if (project._id === projectData._id) {
+					project = projectData;
+					return project;
+				} else {
+					return project;
+				}
+			});
+			dispatch({
+				type: 'FETCH_PROJECTS',
+				payload: optimisticUpdatedProjects
+			});
 		})
 		.catch((err) =>
 			dispatch({
@@ -85,9 +99,3 @@ export const editProject = (projectData, history) => (dispatch) => {
 			})
 		);
 };
-
-// export const clearTicket = () => (dispatch) => {
-// 	dispatch({
-// 		type: 'CLEAR_TICKET'
-// 	});
-// };

@@ -4,10 +4,11 @@ import { fetchUsers } from '../../actions/userActions';
 import { fetchProjects, toggleEditProject, editProject } from '../../actions/projectActions';
 import { withRouter } from 'react-router-dom';
 
-const mapStateToProps = ({ projects }) => ({
+const mapStateToProps = ({ projects, users }) => ({
 	isOpen: projects.isEditProjectOpen,
 	projects: projects.projects,
-	project: projects.project
+	project: projects.project,
+	users: users
 });
 
 export default connect(mapStateToProps, { editProject, toggleEditProject, fetchUsers, fetchProjects })(

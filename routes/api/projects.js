@@ -4,6 +4,7 @@ const keys = require('../../config/keys');
 const passport = require('passport');
 
 const Project = require('../../models/Project');
+const User = require('../../models/User');
 
 // @route GET api/projects/
 // @desc Get all projects
@@ -11,9 +12,14 @@ const Project = require('../../models/Project');
 router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
 	Project.find()
 		.populate('owner', [ 'name', 'avatar' ])
+		.populate({
+			path: 'members',
+			model: User
+		})
 		.then((projects) => {
 			let resProjects = projects.filter((project) => {
-				const members = project.members.map((member) => member.toString());
+				const members = project.members.map((member) => member._id.toString());
+
 				return members.includes(req.user.id);
 			});
 			res.json(resProjects);

@@ -33,6 +33,7 @@ export default class Navbar extends Component {
 
 	handleViewChange = (e, { value }) => {
 		this.props.setProjectView(value);
+		this.props.fetchProject(value);
 	};
 
 	projectViewOptions = () => {
@@ -44,7 +45,8 @@ export default class Navbar extends Component {
 			})
 			.sort((a, b) => (a.text > b.text ? 1 : -1));
 
-		return [ ...projectOptions, { key: 100, text: 'All Projects', value: '0' } ];
+		return projectOptions;
+		// return [ ...projectOptions, { key: 100, text: 'All Projects', value: '0' } ];
 	};
 
 	render() {
@@ -96,6 +98,8 @@ export default class Navbar extends Component {
 			</Button.Group>
 		);
 
+		const projectViewOptions = this.projectViewOptions();
+
 		return (
 			<div
 				style={{
@@ -136,13 +140,13 @@ export default class Navbar extends Component {
 							<Menu.Item>
 								<Select
 									placeholder="Select Project"
-									options={this.projectViewOptions()}
-									value={this.props.navbar.project}
+									options={projectViewOptions}
+									value={projectViewOptions[0] && projectViewOptions[0].value}
 									onChange={this.handleViewChange}
 								/>
 							</Menu.Item>
 							{project !== '0' && (
-								<Menu.Item>
+								<Menu.Item style={{ marginLeft: '10px' }}>
 									<Popup
 										trigger={
 											<Icon

@@ -25,6 +25,7 @@ export const createTicket = (ticketData) => (dispatch, getState) => {
 
 export const editTicket = (ticketData) => (dispatch, getState) => {
 	const { tickets } = getState().ticket;
+
 	axios
 		.post(`/api/tickets/${ticketData._id}`, ticketData)
 		.then((ticket) => axios.get(`/api/tickets/${ticketData._id}`))
