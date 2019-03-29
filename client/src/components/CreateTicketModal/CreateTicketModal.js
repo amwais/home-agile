@@ -74,10 +74,7 @@ export default class CreateTicketModal extends Component {
 			const ticketProject = this.props.projects.find((project) => project._id === this.state.ticket.project);
 			const { users } = this.props;
 			const memberIds = ticketProject.members.map((member) => member._id);
-
 			const filteredUsers = users.filter((user) => memberIds.includes(user._id));
-
-			console.log(filteredUsers);
 
 			const options = filteredUsers.map((user) => {
 				return { text: user.name, value: user._id };
@@ -167,7 +164,11 @@ export default class CreateTicketModal extends Component {
 									error={errors.priority}
 								/>
 							</Form.Group>
-							{(errors.project || errors.ticketType || errors.title || errors.assignee) && (
+							{(errors.project ||
+								errors.ticketType ||
+								errors.title ||
+								errors.assignee ||
+								errors.priority) && (
 								<Message
 									error
 									header="Missing Fields"

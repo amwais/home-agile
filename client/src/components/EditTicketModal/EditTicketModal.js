@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, Form } from 'semantic-ui-react';
+import { Button, Modal, Form, Message } from 'semantic-ui-react';
 import { ticketTypes, priorities } from '../../constants';
 
 export default class EditTicketModal extends Component {
@@ -17,6 +17,9 @@ export default class EditTicketModal extends Component {
 			createdBy: null,
 			createdAt: null,
 			status: null
+		},
+		errors: {
+			title: false
 		}
 	};
 
@@ -31,6 +34,14 @@ export default class EditTicketModal extends Component {
 	}
 
 	onChange = (e, { name, value }) => {
+		if ([ name ] && this.state.errors[[ name ]]) {
+			this.setState({
+				errors: {
+					...this.state.errors,
+					[name]: false
+				}
+			});
+		}
 		if (name === 'assignee') {
 			const user = this.props.users.filter((user) => user._id === value)[0];
 			const { _id, name, avatar } = user;
@@ -70,12 +81,26 @@ export default class EditTicketModal extends Component {
 
 	onSubmit = (e, ticketData) => {
 		e.preventDefault();
-		this.props.editTicket(ticketData, this.props.history);
-		this.props.toggleEditTicket(this.props.ticket);
+		const { title } = ticketData;
+		const errorState = {
+			title: !title
+		};
+
+		this.setState({
+			errors: {
+				...errorState
+			}
+		});
+		if (errorState.project || errorState.assignee || errorState.title || errorState.title || errorState.priority) {
+			return;
+		} else {
+			this.props.editTicket(ticketData, this.props.history);
+			this.props.toggleEditTicket(this.props.ticket);
+		}
 	};
 
 	render() {
-		const { ticket, dimmer, open } = this.state;
+		const { ticket, dimmer, open, errors } = this.state;
 		const { columns } = this.props.ticketsView;
 
 		const userOptions = this.props.users.map((user) => {
@@ -101,6 +126,7 @@ export default class EditTicketModal extends Component {
 									fluid
 									label="Project"
 									value={ticket.project._id}
+									error={errors.project}
 									options={
 										this.props.projects ? (
 											this.props.projects.map((project, i) => {
@@ -119,6 +145,7 @@ export default class EditTicketModal extends Component {
 									options={ticketTypes}
 									placeholder="Ticket Type"
 									value={ticket.ticketType}
+									error={errors.ticketType}
 								/>
 							</Form.Group>
 							<Form.Input
@@ -128,6 +155,7 @@ export default class EditTicketModal extends Component {
 								label="Title"
 								placeholder="Short description of the task"
 								value={ticket.title}
+								error={errors.title}
 							/>
 							<Form.TextArea
 								onChange={this.onChange}
@@ -145,6 +173,7 @@ export default class EditTicketModal extends Component {
 									placeholder="Assignee"
 									options={userOptions}
 									value={ticket.assignee._id}
+									error={errors.assignee}
 								/>
 								<Form.Select
 									onChange={this.onChange}
@@ -168,6 +197,9 @@ export default class EditTicketModal extends Component {
 								/>
 							</Form.Group>
 						</Form>
+						{errors.title && (
+							<Message error header="Missing Fields" content="Please complete all the required fields." />
+						)}
 					</Modal.Content>
 					<Modal.Actions>
 						<Button negative onClick={() => this.props.toggleEditTicket(this.props.ticket)}>

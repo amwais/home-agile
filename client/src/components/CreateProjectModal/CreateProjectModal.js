@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, Form } from 'semantic-ui-react';
+import { Button, Modal, Form, Message } from 'semantic-ui-react';
 
 export default class CreateProjectModal extends Component {
 	state = {
@@ -7,12 +7,22 @@ export default class CreateProjectModal extends Component {
 		dimmer: 'blurring',
 		project: {
 			name: '',
-			privateProject: false,
 			description: ''
+		},
+		errors: {
+			name: false
 		}
 	};
 
 	onChange = (e, { name, value }) => {
+		if ([ name ] && this.state.errors[[ name ]]) {
+			this.setState({
+				errors: {
+					...this.state.errors,
+					[name]: false
+				}
+			});
+		}
 		this.setState({
 			project: {
 				...this.state.project,
@@ -23,12 +33,28 @@ export default class CreateProjectModal extends Component {
 
 	onSubmit = (e, projectData) => {
 		e.preventDefault();
-		this.props.createProject(projectData, this.props.history);
-		this.props.toggleCreateProject();
+		const { name } = projectData;
+
+		const errorState = {
+			name: !name
+		};
+
+		this.setState({
+			errors: {
+				...errorState
+			}
+		});
+
+		if (errorState.name) {
+			return;
+		} else {
+			this.props.createProject(projectData, this.props.history);
+			this.props.toggleCreateProject();
+		}
 	};
 
 	render() {
-		const { project, dimmer } = this.state;
+		const { project, dimmer, errors } = this.state;
 
 		return (
 			<div>
@@ -51,7 +77,8 @@ export default class CreateProjectModal extends Component {
 									fluid
 									label="Title"
 									placeholder="Project Title"
-									value={project.title}
+									value={project.name}
+									error={errors.name}
 								/>
 							</Form.Group>
 							<Form.Group widths="equal">
@@ -64,6 +91,9 @@ export default class CreateProjectModal extends Component {
 								/>
 							</Form.Group>
 						</Form>
+						{errors.name && (
+							<Message error header="Missing Fields" content="Please complete all the required fields." />
+						)}
 					</Modal.Content>
 					<Modal.Actions>
 						<Button negative onClick={() => this.props.toggleCreateProject()}>

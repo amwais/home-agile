@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, Header, Icon, Form, List, Image, Label } from 'semantic-ui-react';
+import { Button, Modal, Header, Icon, Form, List, Image, Message } from 'semantic-ui-react';
 import { isEmail } from '../../utils/isEmail';
 
 export default class EditProjectModal extends Component {
@@ -15,6 +15,13 @@ export default class EditProjectModal extends Component {
 		newMembers: {
 			currentNewMember: '',
 			membersToAdd: []
+		},
+		errors: {
+			name: false,
+			membersErrors: {
+				userNotFound: false,
+				invalidEmail: false
+			}
 		}
 	};
 
@@ -40,6 +47,14 @@ export default class EditProjectModal extends Component {
 	}
 
 	onChange = (e, { name, value }) => {
+		if ([ name ] && this.state.errors[[ name ]]) {
+			this.setState({
+				errors: {
+					...this.state.errors,
+					[name]: false
+				}
+			});
+		}
 		this.setState({
 			project: {
 				...this.state.project,
@@ -49,6 +64,18 @@ export default class EditProjectModal extends Component {
 	};
 
 	onMembersChange = (e, { value }) => {
+		const { invalidEmail, userNotFound } = this.state.errors.membersErrors;
+		if (userNotFound || invalidEmail) {
+			this.setState({
+				errors: {
+					...this.state.errors,
+					membersErrors: {
+						userNotFound: false,
+						invalidEmail: false
+					}
+				}
+			});
+		}
 		this.setState({
 			newMembers: {
 				...this.state.newMembers,
@@ -75,28 +102,57 @@ export default class EditProjectModal extends Component {
 					}
 				});
 			} else {
-				// TBD Add error user not found
+				this.setState({
+					errors: {
+						membersErrors: {
+							...this.state.errors.membersErrors,
+							userNotFound: true
+						}
+					}
+				});
 			}
 		} else {
-			// TBD Add error invalid email
+			this.setState({
+				errors: {
+					membersErrors: {
+						...this.state.errors.membersErrors,
+						invalidEmail: true
+					}
+				}
+			});
 		}
 	};
 
 	onSubmit = (e, projectData) => {
 		e.preventDefault();
+		const { name } = projectData;
 
-		projectData = {
-			...projectData,
-			members: this.state.newMembers.membersToAdd.map((member) => member._id)
+		const errorState = {
+			name: !name
 		};
 
-		this.props.editProject(projectData, this.props.history);
-		this.props.toggleEditProject();
+		this.setState({
+			errors: {
+				...errorState
+			}
+		});
+
+		if (errorState.name) {
+			return;
+		} else {
+			projectData = {
+				...projectData,
+				members: this.state.newMembers.membersToAdd.map((member) => member._id)
+			};
+
+			this.props.editProject(projectData, this.props.history);
+			this.props.toggleEditProject();
+		}
 	};
 
 	render() {
-		const { project, dimmer } = this.state;
-
+		const { project, dimmer, errors } = this.state;
+		const { userNotFound, invalidEmail } = this.state.errors.membersErrors;
 		return (
 			<div>
 				<Modal
@@ -115,6 +171,7 @@ export default class EditProjectModal extends Component {
 									label="Title"
 									placeholder="Project Title"
 									value={project.name}
+									error={errors.name}
 								/>
 							</Form.Group>
 							<Form.Group widths="equal">
@@ -170,11 +227,25 @@ export default class EditProjectModal extends Component {
 								style={{
 									flex: '1'
 								}}
+								error={invalidEmail || userNotFound}
 							/>
 							<Button positive icon onClick={this.handleAddMember}>
 								<Icon name="plus" />
 							</Button>
 						</div>
+						{(invalidEmail || userNotFound) && (
+							<Message
+								error
+								header={invalidEmail ? 'Invalid Email' : 'User not found'}
+								content={
+									invalidEmail ? (
+										'Please enter a valid Email address'
+									) : (
+										'This user is not signed up. Invite him to register.'
+									)
+								}
+							/>
+						)}
 					</Modal.Content>
 					<Modal.Actions>
 						<Button negative onClick={() => this.props.toggleEditProject(this.props.project)}>
