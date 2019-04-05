@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 
 export default class Landing extends Component {
@@ -13,24 +12,27 @@ export default class Landing extends Component {
 
 	render() {
 		return (
-			<div className="landing">
-				<div className="dark-overlay landing-inner text-light">
-					<div className="container">
-						<div className="row">
-							<div className="col-md-12 text-center">
-								<h1 className="display-3 mb-4">Home Agile</h1>
-								<p className="lead"> Get your shit together.</p>
-								<hr />
-								<Link to="/register" className="btn btn-lg btn-info mr-2">
-									Sign Up
-								</Link>
-								<Link to="/login" className="btn btn-lg btn-light">
-									Login
-								</Link>
-							</div>
+			<div>
+				<section className="hero">
+					<div
+						className="container center-col"
+						style={{
+							marginTop: '8rem',
+							padding: '10px'
+						}}
+					>
+						<h1 className="subtitle has-text-info is-size-2">Home Kanban</h1>
+						<p className="title has-text-light">Get your shit together.</p>
+						<div className="buttons">
+							<a href="/login" className="button is-rounded is-primary">
+								Login
+							</a>
+							<a href="/register" className="button is-rounded is-link">
+								Sign Up
+							</a>
 						</div>
 					</div>
-				</div>
+				</section>
 			</div>
 		);
 	}

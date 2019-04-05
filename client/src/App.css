@@ -6,6 +6,17 @@ img {
   width: 100%;
 }
 
+.center,
+.center-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center-col {
+  flex-direction: column
+}
+
 .App {
   /* background-image: url('./images/astronomy-cosmos-dark-733475.jpg'); */
   background-color: #172a3a;
@@ -16,12 +27,11 @@ img {
   background-repeat: repeat-y !important;
   background-size: cover !important;
   background-attachment: fixed !important;
-  color: rgb(54, 219, 4, 0.7);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .landing {
   position: relative;
-  /* background: url('./img/showcase.jpg') no-repeat; */
   background-size: cover;
   background-position: center;
   height: 100vh;
