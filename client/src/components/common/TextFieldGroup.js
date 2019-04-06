@@ -1,23 +1,34 @@
 import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
+import { Input } from 'semantic-ui-react';
 
 const TextFieldGroup = ({ name, placeholder, value, error, info, type, onChange, disabled }) => {
 	return (
-		<div className="form-group">
-			<input
-				type={type}
-				className={classnames('form-control form-control-lg', {
-					'is-invalid': error
-				})}
-				placeholder={placeholder}
-				name={name}
-				value={value}
-				onChange={onChange}
-				disabled={disabled}
-			/>
-			{info && <small className="form-text text-muted">{info}</small>}
-			{error && <div className="invalid-feedback">{error}</div>}
+		<div>
+			<div className="field">
+				<Input
+					style={{ width: '25rem' }}
+					focus
+					type={type}
+					className={classnames('input is-rounded', {
+						'is-danger': error
+					})}
+					placeholder={placeholder}
+					name={name}
+					value={value}
+					onChange={onChange}
+					disabled={disabled}
+					error={error}
+				/>
+				{info && (
+					<div>
+						<small>{info}</small>
+					</div>
+				)}
+				{error && <div style={{ color: 'red' }}>{error}</div>}
+			</div>
+			<br />
 		</div>
 	);
 };

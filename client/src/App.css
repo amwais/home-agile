@@ -65,22 +65,22 @@ img {
   color: #bbb !important;
 }
 
-.dimmed.dimmable>.ui.animating.dimmer,
+/* .dimmed.dimmable>.ui.animating.dimmer,
 .dimmed.dimmable>.ui.visible.dimmer,
 .ui.active.dimmer {
   display: flex !important;
   align-items: center;
   justify-content: center;
-}
+} */
 
 
 .ui.modal.transition.visible.active {
-  height: 94%;
+  /* height: 94%;
   margin-left: auto;
   margin-right: auto;
   margin-top: 25px;
   overflow: auto;
-  height: 85%;
+  height: 85%; */
 }
 
 .actions {

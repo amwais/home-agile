@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
+import { Header, Icon, Button } from 'semantic-ui-react';
 
 export default class Landing extends Component {
 	componentDidMount() {
@@ -12,27 +13,29 @@ export default class Landing extends Component {
 
 	render() {
 		return (
-			<div>
-				<section className="hero">
-					<div
-						className="container center-col"
-						style={{
-							marginTop: '8rem',
-							padding: '10px'
-						}}
-					>
-						<h1 className="subtitle has-text-info is-size-2">Home Kanban</h1>
-						<p className="title has-text-light">Get your shit together.</p>
-						<div className="buttons">
-							<a href="/login" className="button is-rounded is-primary">
-								Login
-							</a>
-							<a href="/register" className="button is-rounded is-link">
-								Sign Up
-							</a>
-						</div>
-					</div>
-				</section>
+			<div
+				className="center-col"
+				style={{
+					marginTop: '8rem',
+					padding: '10px'
+				}}
+			>
+				<div>
+					<Header inverted as="h1" icon>
+						<Icon name="braille" color="teal" />
+						<Header.Content style={{ marginBottom: '5px' }}>Home Kanban</Header.Content>
+						<Header.Subheader>Get your shit together.</Header.Subheader>
+					</Header>
+				</div>
+
+				<Button.Group className="center" style={{ marginTop: '10px' }}>
+					<Button style={{ marginRight: '1.5rem' }} as="a" href="/login" inverted color="green">
+						Login
+					</Button>
+					<Button as="a" href="/register" inverted color="red">
+						Sign Up
+					</Button>
+				</Button.Group>
 			</div>
 		);
 	}
