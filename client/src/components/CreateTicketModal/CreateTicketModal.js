@@ -91,10 +91,6 @@ export default class CreateTicketModal extends Component {
 		return (
 			<div>
 				<Modal
-					style={{
-						height: '70%',
-						marginTop: '5%'
-					}}
 					dimmer={dimmer}
 					open={this.props.isOpen}
 					onClose={() => this.props.toggleCreateTicket(this.props.ticket)}

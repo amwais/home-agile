@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
+import { Header, Icon, Button } from 'semantic-ui-react';
 
 export default class Landing extends Component {
 	componentDidMount() {
@@ -13,24 +13,29 @@ export default class Landing extends Component {
 
 	render() {
 		return (
-			<div className="landing">
-				<div className="dark-overlay landing-inner text-light">
-					<div className="container">
-						<div className="row">
-							<div className="col-md-12 text-center">
-								<h1 className="display-3 mb-4">Home Agile</h1>
-								<p className="lead"> Get your shit together.</p>
-								<hr />
-								<Link to="/register" className="btn btn-lg btn-info mr-2">
-									Sign Up
-								</Link>
-								<Link to="/login" className="btn btn-lg btn-light">
-									Login
-								</Link>
-							</div>
-						</div>
-					</div>
+			<div
+				className="center-col"
+				style={{
+					marginTop: '8rem',
+					padding: '10px'
+				}}
+			>
+				<div>
+					<Header inverted as="h1" icon>
+						<Icon name="braille" color="teal" />
+						<Header.Content style={{ marginBottom: '5px' }}>Home Kanban</Header.Content>
+						<Header.Subheader>Get your shit together.</Header.Subheader>
+					</Header>
 				</div>
+
+				<Button.Group className="center" style={{ marginTop: '10px' }}>
+					<Button style={{ marginRight: '1.5rem' }} as="a" href="/login" inverted color="green">
+						Login
+					</Button>
+					<Button as="a" href="/register" inverted color="red">
+						Sign Up
+					</Button>
+				</Button.Group>
 			</div>
 		);
 	}

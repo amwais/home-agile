@@ -35,7 +35,7 @@ const handleAuth = () => {
 			store.dispatch(logoutUser());
 
 			// Redirect to login
-			window.location.href = '/login';
+			window.location.href = '/';
 		}
 	}
 };
@@ -43,8 +43,7 @@ const handleAuth = () => {
 const PrivateRoute = ({ component: Component, ...rest }) => (
 	<Route
 		{...rest}
-		render={(props) =>
-			store.getState().auth.isAuthenticated ? <Component {...props} /> : <Redirect to="/login" />}
+		render={(props) => (store.getState().auth.isAuthenticated ? <Component {...props} /> : <Redirect to="/" />)}
 	/>
 );
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import TextFieldGroup from '../../common/TextFieldGroup';
+import { Header, Button } from 'semantic-ui-react';
 
 export default class Login extends Component {
 	state = {
@@ -43,35 +44,40 @@ export default class Login extends Component {
 		const { errors } = this.props;
 
 		return (
-			<div className="login">
-				<div className="container">
-					<div className="row">
-						<div className="col-md-8 m-auto">
-							<h1 className="display-4 text-center">Log In</h1>
-							<p className="lead text-center">Home Agile</p>
-							<form noValidate onSubmit={this.onSubmit}>
-								<TextFieldGroup
-									placeholder="Email Address"
-									name="email"
-									type="email"
-									value={this.state.email}
-									onChange={this.onChange}
-									error={errors.email}
-								/>
-								<TextFieldGroup
-									placeholder="Password"
-									name="password"
-									type="password"
-									value={this.state.password}
-									onChange={this.onChange}
-									error={errors.password}
-								/>
-
-								<input type="submit" className="btn btn-info btn-block mt-4" value="Submit" />
-							</form>
-						</div>
+			<div
+				className="center-col"
+				style={{
+					marginTop: '4rem',
+					padding: '10px'
+				}}
+			>
+				<Header inverted as="h1" icon>
+					<Header.Content style={{ marginBottom: '5px' }}>Login</Header.Content>
+					<Header.Subheader>Home Kanban</Header.Subheader>
+				</Header>
+				<form noValidate onSubmit={this.onSubmit}>
+					<TextFieldGroup
+						placeholder="Email"
+						name="email"
+						type="email"
+						value={this.state.email}
+						onChange={this.onChange}
+						error={errors.email}
+					/>
+					<TextFieldGroup
+						placeholder="Password"
+						name="password"
+						type="password"
+						value={this.state.password}
+						onChange={this.onChange}
+						error={errors.password}
+					/>
+					<div className="center">
+						<Button type="submit" color="green" value="Submit">
+							Submit
+						</Button>
 					</div>
-				</div>
+				</form>
 			</div>
 		);
 	}
