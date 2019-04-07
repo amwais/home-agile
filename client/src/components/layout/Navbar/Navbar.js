@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Select, Icon, Popup, Label, Menu, Button } from 'semantic-ui-react';
+import { Select, Icon, Popup, Label, Menu, Button, Image } from 'semantic-ui-react';
 import { AddButton } from '../../Buttons/AddButton';
 import Ticket from '../../Ticket';
 import CreateTicketModal from '../../CreateTicketModal';
@@ -56,16 +56,7 @@ export default class Navbar extends Component {
 		const authLinks = (
 			<div style={{ marginTop: 'auto', marginBottom: 'auto', left: '200px', position: 'relative' }}>
 				<Popup
-					trigger={
-						<img
-							className="rounded-circle"
-							style={{
-								width: '25px'
-							}}
-							src={user.avatar}
-							alt={user.name}
-						/>
-					}
+					trigger={<Image avatar src={user.avatar} alt={user.name} />}
 					size="small"
 					content={user.name}
 					position="bottom center"
@@ -143,25 +134,23 @@ export default class Navbar extends Component {
 									onChange={this.handleViewChange}
 								/>
 							</Menu.Item>
-							{project !== '0' && (
-								<Menu.Item style={{ marginLeft: '10px' }}>
-									<Popup
-										trigger={
-											<Icon
-												name="pencil"
-												link
-												color="blue"
-												inverted
-												size="large"
-												onClick={(e) => this.onProjectEditButtonClick(e, project)}
-											/>
-										}
-										size="small"
-										content="Edit this project"
-										position="bottom center"
-									/>
-								</Menu.Item>
-							)}
+							<Menu.Item style={project === '0' ? { display: 'none' } : { padding: '0' }}>
+								<Popup
+									trigger={
+										<Icon
+											name="pencil"
+											link
+											color="blue"
+											inverted
+											size="large"
+											onClick={(e) => this.onProjectEditButtonClick(e, project)}
+										/>
+									}
+									size="small"
+									content="Edit this project"
+									position="bottom center"
+								/>
+							</Menu.Item>
 						</span>
 					) : (
 						undefined
