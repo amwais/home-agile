@@ -100,3 +100,9 @@ img {
 .ticket-header {
   text-align: center;
 }
+
+.floating-btn {
+  position: absolute;
+  right: 50px;
+  bottom: 50px;
+}

@@ -1,11 +1,17 @@
-import React, { Component, PureComponent } from 'react';
-import StatusColumn from './StatusColumn';
-import { DragDropContext } from 'react-beautiful-dnd';
-import { Dimmer, Loader } from 'semantic-ui-react';
+import React, { Component, PureComponent } from "react";
+import StatusColumn from "./StatusColumn";
+import { DragDropContext } from "react-beautiful-dnd";
+import { Dimmer, Loader, Button, Popup } from "semantic-ui-react";
 
 class InnerList extends PureComponent {
 	render() {
-		const { column, tickets, index, toggleEditTicket, toggleDisplayTicket } = this.props;
+		const {
+			column,
+			tickets,
+			index,
+			toggleEditTicket,
+			toggleDisplayTicket,
+		} = this.props;
 
 		return (
 			<StatusColumn
@@ -48,24 +54,44 @@ export default class TicketsView extends Component {
 		return (
 			<div
 				style={{
-					display: 'flex',
-					justifyContent: 'space-evenly'
+					display: "flex",
+					justifyContent: "space-evenly",
 				}}
 			>
 				<Dimmer active={ticketsView.loading}>
 					<Loader size="large">Loading</Loader>
 				</Dimmer>
-				<DragDropContext onDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
+
+				<Popup
+					content="Clear Done tickets"
+					position="top center"
+					trigger={
+						<Button
+							circular
+							size="massive"
+							color="red"
+							icon="delete"
+							className="floating-btn"
+							onClick={() => this.props.clearDoneTickets()}
+						/>
+					}
+				/>
+				<DragDropContext
+					onDragStart={this.onDragStart}
+					onDragEnd={this.onDragEnd}
+				>
 					{ticketsView.colIds.map((colId, index) => {
 						const column = ticketsView.columns[colId];
 						const { project } = this.props.navbar;
 
 						const colTickets =
-							project === '0'
+							project === "0"
 								? tickets.filter((ticket) => ticket.status === column.id)
 								: tickets.filter(
-										(ticket) => ticket.status === column.id && ticket.project._id === project
-									);
+										(ticket) =>
+											ticket.status === column.id &&
+											ticket.project._id === project
+								  );
 
 						return (
 							<InnerList
